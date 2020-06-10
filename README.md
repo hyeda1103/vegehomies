@@ -1,11 +1,10 @@
-# 11min Tutorial - Github 
-> 하루에 1번, 11분 tutorial - Github repository 관리
+# 내 친구는 채식주의자🥗
+> 채식하는 친구와 만나는 일시 및 장소를 입력하면 만남의 장소를 안내받을 수 있다.
 
-[![author-ohahohah](https://img.shields.io/badge/author-ohahohah-blue.svg)](https://github.com/ohahohah/)
-[![15min-tutorial-github](https://img.shields.io/badge/15min--tutorial-github-red.svg)](https://github.com/topics/15min-tutorial)
+[![author-hyeda1103](https://img.shields.io/badge/author-hyeda1103-blue.svg)](https://github.com/hyeda1103/)
+[![5min-tutorial-github](https://img.shields.io/badge/5min--tutorial-github-red.svg)](https://github.com/topics/5min-tutorial)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/ohahohah/readme-template/graphs/commit-activity) 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)  
-***유용하게 쓰셨다면 상단 star [![GitHub stars](https://img.shields.io/github/stars/ohahohah/github-tutorial.svg?style=social)](https://github.com/ohahohah/github-tutorial) 를 눌러주세요!***
 
 
 - template 제공 - 상단 초록색 버튼 [`Use this template`](https://github.com/ohahohah/github-tutorial/generate)을 사용해 템플릿으로 사용해보세요.
