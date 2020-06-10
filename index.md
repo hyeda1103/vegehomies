@@ -1,39 +1,12 @@
 ## 내 친구는 채식주의자🥗
 
-You can use the [editor on GitHub](https://github.com/hyeda1103/vegehomie.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+> 2020-06-10
+논 베지테리언이 즐길 수 있는 음식점 추천 서비스가 다양하게 존재하는만큼 베지테리언을 위한 서비스도 더 많아졌으면 좋겠어요. 비거니즘의 실천이 보다 수월해졌으면 하는 마음에 본 프로젝트를 기획하게 되었습니다, **베지테리언을 위한 지역 기반 음식점 추천 서비스!** <br>
+사용자가 날짜 및 시간, 지역을 선택하고 <span style="color:green">"내 친구는 채식주의자🥗"</span> 버튼을 누르면 베지테리안 메뉴를 제공하는 음식점을 추천받을 수 있습니다. 음식점은 비건 메뉴의 비율이 높은 순으로 정렬되어 보입니다.
 
 ![Image](./static/screenimg.png)
 
-### Markdown
+### To-do list
+- 프론트엔드 개발하기
+- API 직접 만드는 법 알아보기
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](./static/screenimg.png)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/hyeda1103/vegehomie.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
