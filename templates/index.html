@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- WebPage Title -->
+    <title>술고래는 채식주의자</title>
+
+    <!-- Required Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Style -->
+    <style type="text/css">
+        /* KAKAO MAP */
+        .customoverlay {
+            position: relative;
+            bottom: 85px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            border-bottom: 2px solid #ddd;
+            float: left;
+        }
+
+        .customoverlay:nth-of-type(n) {
+            border: 0;
+            box-shadow: 0px 1px 2px #888;
+        }
+
+        .customoverlay a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            background: #d95050;
+            background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+        }
+
+        .customoverlay .title {
+            display: block;
+            text-align: center;
+            background: #fff;
+            margin-right: 35px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .customoverlay:after {
+            content: '';
+            position: absolute;
+            margin-left: -12px;
+            left: 50%;
+            bottom: -12px;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+        }
+
+        /* Header Menu */
+
+        .menu_top {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu_top .inner {
+            display: flex;
+
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu_btn_grp {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu_btn {
+            position: fixed;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 80%;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .btn_menu img {
+            padding-top: 130px;
+            width: 500px;
+        }
+
+        .menu_top .theme_title {
+            font-size: 18px;
+            font-weight: 500;
+            color: black;
+            /* padding-top: 20px;
+            padding-left: 400px; */
+            cursor: pointer;
+        }
+
+        /* Carrot Market */
+
+        .hr-center {
+            display: block;
+            margin-top: 0em;
+            margin-bottom: 0.5em;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: inset;
+            border-width: 1px;
+            border-color: chartreuse;
+            opacity: 0.6;
+        }
+
+        input[type=checkbox] {
+            display: none;
+        }
+
+        input[type=checkbox]+label {
+            display: inline-block;
+            position: absolute;
+            left: 1px;
+            top: 5px;
+            padding: 8px;
+            background-color: #5e00b58f;
+            border-radius: 4px;
+
+        }
+
+        input[type=checkbox]:checked+label {
+            background-color: #5e00b5;
+            color: #A4B7C6;
+        }
+
+        input[type=checkbox]:checked+label:after {
+            position: absolute;
+            left: 4px;
+            top: 0px;
+            color: #ff8000;
+            content: '\2714';
+            font-size: 10px;
+        }
+
+        element.style {
+            white-space: nowrap;
+        }
+
+        .textContainer {
+            color: #000000;
+            height: 100%;
+            width: calc(20% - 10px);
+            /* background: linear-gradient(180deg, rgb(250, 250, 250, 1), rgba(250, 250, 250, 0) 100%), url(static/recycled.jpg); */
+            /* z-index: -1; */
+            /* background-image: url(static/paper.jpg); */
+            font-family: 'Nanum Myeongjo', serif;
+            float: left;
+            padding-top: 15px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 15px;
+            text-align: left;
+            margin-top: 15px;
+            margin-left: 15px;
+            /* margin-right: 15px; */
+            margin-bottom: 10px;
+            border-left: 1px dotted black;
+            border-right: 1px solid black;
+            border-bottom: 1px dotted black;
+        }
+
+        .contentsContainer {
+            color: #000000;
+            height: 100%;
+            width: calc(80% - 30px);
+            /* background: linear-gradient(180deg, rgb(250, 250, 250, 1), rgba(250, 250, 250, 0) 100%), url(static/recycled.jpg); */
+            /* z-index: -1; */
+            /* background-image: url(static/paper.jpg); */
+            font-family: 'Nanum Myeongjo', serif;
+            float: left;
+            padding-top: 15px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 15px;
+            text-align: left;
+            margin-top: 15px;
+            margin-left: 15px;
+            /* margin-right: 15px; */
+            margin-bottom: 10px;
+            border-left: 1px dotted black;
+            border-right: 1px solid black;
+            border-bottom: 1px dotted black;
+        }
+
+        .mapContainer {
+            color: #000000;
+            /* background: url(static/recycled.jpg); */
+            height: 900px;
+            width: calc(80% - 30px);
+            float: right;
+            padding: 15px;
+            margin-top: 15px;
+            /* margin-left: 15px; */
+            margin-right: 15px;
+            margin-bottom: 10px;
+            /* border: 1px dotted black; */
+            /* border-top: 1px dotted black; */
+            /* border-left: 1px dotted black; */
+            border-right: 1px solid black;
+            border-bottom: 1px dotted black;
+        }
+
+
+        .menu_top:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(180deg, #34b401 0.005%, rgba(250, 250, 250, 0) 100%);
+            z-index: -1;
+            pointer-events: none;
+            transition: 0.5s opacity;
+        }
+
+
+        .menu_wave {
+            margin-right: 15px;
+            margin-top: 150;
+            top: 90px;
+            float: right;
+            width: calc(80% - 30px);
+            background-image: url(static/wave-form.png);
+            height: 5px;
+            background-size: contain;
+            background-repeat: repeat-x;
+        }
+
+        .body {
+            font-family: 'Nanum Myeongjo', serif;
+            width: 100%;
+            height: 100%;
+            line-height: inherit;
+        }
+
+        .titleContainer {
+            height: 30px;
+            width: calc(20% - 10px);
+            background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);
+            z-index: -1;
+            border-radius: 80%;
+            cursor: pointer;
+            transition: 0.5s opacity;
+            float: left;
+            padding-top: 60px;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-bottom: 60px;
+            margin-top: 15px;
+            margin-left: 15px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-top: transparent;
+            border-left: transparent;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        .titleContainer_grp {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Nanum Myeongjo', serif;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        .card-columns {
+            width: 680px;
+            margin: auto;
+        }
+
+        .comment {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .form-post {
+            max-width: 500px;
+            padding: 2rem;
+            margin: 2rem auto;
+            border-color: #e9ecef;
+            border-radius: 0.3rem;
+            border: solid;
+            display: block;
+        }
+
+        #posting-box {
+            display: none;
+        }
+    </style>
+
+    <script>
+
+        function openclose() {
+            if ($('#posting-box').css('display') == 'block') {
+                $('#posting-box').hide();
+                $('#doc').text('채식주의자에 대한 토막글 기고하기▼')
+            } else {
+                $('#posting-box').show();
+                $('#doc').text('채식주의자에 대한 토막글 기고하기▲')
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div class="titleContainer">
+        <div class="titleContainer_grp">
+            "술고래는 채식주의자"
+        </div>
+    </div>
+
+
+
+
+    <!-- <div class="menu_wave" style="margin-top: 10px;"></div> 
+    <div class="menu_wave"></div> -->
+
+
+    <div class="mapContainer">
+        <div id="map"></div>
+
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a3b30143ac575087758f5d636d25c4c"></script>
+
+            
+
+        <script>
+             var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new kakao.maps.LatLng(37.554278, 126.929903), // 지도의 중심좌표
+                        level: 4 // 지도의 확대 레벨
+                    };
+
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            $(document).ready(function () {
+                drunkenVegeMap();
+            });
+
+            function drunkenVegeMap() {
+
+                //DB에 있는 장소들을 마커로 표시합니다.
+                $.ajax({
+                    type: 'GET',
+                    url: '/vegeInfo',
+                    data: {},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            let drunkenVege = response['drunkenVege']
+                            for (let i = 0; i < drunkenVege.length; i++) {
+
+                                // 마커 이미지의 이미지 크기 입니다
+                                var imageSize = new kakao.maps.Size(24, 35);
+
+                                // 마커 이미지를 생성합니다    
+                                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+                                // 마커를 생성합니다
+                                var marker = new kakao.maps.Marker({
+                                    map: map, // 마커를 표시할 지도
+                                    position: new kakao.maps.LatLng(drunkenVege[i]['latitude'], drunkenVege[i]['longitude']), // 마커를 표시할 위치
+                                    title: drunkenVege[i]['name'], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                                    image: markerImage // 마커 이미지 
+                                });
+                            }
+                        }
+                    }
+                });
+
+
+            }
+        </script>
+
+    </div>
+
+
+    <div class="textContainer" style="overflow:auto; height: 480px;">
+        <p> 포항에서 월, 화 이틀을 보내고 돌아오는 길, 기차에서 최승자의 시집을 폈다. 언제 넣어 둔 건지 마른 낙엽이 툭 떨어졌다.
+            책장을 넘기자 시편들에서 '포항', '구룡포'같은 지명이 굴러 나온다. 이게 무슨 우연인가 갸웃거리다 퍼뜩 떠올랐다.
+            그렇다. 시인이 정신 분열증으로 유배된 도시가 포항이었다. 포항, 그 포항.<br> <br>
+            "포항에 병문안 가야 하는 거 아니니?" <br><br>
+            2010년 어느 날 밤 , 조선일보에 최승자 시인 인터뷰 기사가 나온 걸 본 친구가 전화해
+            다급한 목소리로 말했다. 기사에는 키 149센티미터, 체중 34킬로그램으로 삭은 몸, 책갈피에서 얇아진 낙엽 같은 시인이 들어 있었다.
+            시인의 눈빛과 정신은 여전히 형형했다. 가령 당신은 어쩌다 폐인처럼 됐느냐는 기자의 질문에 이렇게 말한다. </P>
+
+        <br>
+
+        <div id="doc" onclick="openclose()">
+            <p><u>채식주의자에 대한 토막글 기고하기▼</u></p>
+        </div>
+
+        <div id="posting-box">
+            <li> 800자 이내로 작성하시오. </li>
+            <li> 후... </li>
+            <li> dalgona92@gmail.com로 보내시오. </li>
+        </div>
+    </div>
+
+    <div class="textContainer" style="overflow:auto; height: 120px;">
+        약속한 장소는 : &nbsp; <input type="text" id="district" placeholder="ex_서울시 마포구"
+            style="width: 200px; height: 32px; text-align: center; font-family: 'Nanum Myeongjo', serif; border-width: 1px; background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);">
+
+        <br> <br>
+
+        약속한 요일은 : &nbsp;
+        <input type="text" id="district" placeholder="ex_목요일"
+            style="width: 200px; height: 32px; text-align: center; font-family: 'Nanum Myeongjo', serif; border-width: 1px; background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);">
+
+    </div>
+
+    <div class="textContainer" style="overflow:auto; height: 110px;">
+        <button type="button" id="search"
+            style="cursor: pointer; width: 330px; height: 32px; text-align: center; font-family: 'Nanum Myeongjo', serif; 
+        border-width: 1px; background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);">"술고래는
+            채식주의자!"</button>
+    </div>
+
+
+
+
+</body>
+
+</html>
