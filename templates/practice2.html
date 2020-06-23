@@ -588,7 +588,7 @@
                 success: function (response) {
                     if (response['result'] == 'success') {
                         let drunkenVege = response['drunkenVege']
-                        
+
                         //  
                         var places = [];
 
@@ -661,6 +661,32 @@
 
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
             map.setBounds(bounds);
+        }
+
+
+
+        // 검색결과 항목을 Element로 반환하는 함수입니다
+        function getListItem(index, places) {
+
+            var el = document.createElement('li'),
+                itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+                    '<div class="info">' +
+                    '   <h5>' + places.name + '</h5>';
+
+            if (places.road_address_name) {
+                itemStr += '    <span>' + places.road_address_name + '</span>' +
+                    '   <span class="jibun gray">' + places.address_name + '</span>';
+            } else {
+                itemStr += '    <span>' + places.address_name + '</span>';
+            }
+
+            itemStr += '  <span class="tel">' + places.phone + '</span>' +
+                '</div>';
+
+            el.innerHTML = itemStr;
+            el.className = 'item';
+
+            return el;
         }
 
 
@@ -740,7 +766,7 @@
             infowindow.open(map, marker);
         }
 
-        
+
 
         // 검색결과 목록의 자식 Element를 제거하는 함수입니다
         function removeAllChildNods(el) {
@@ -750,7 +776,7 @@
         }
 
     </script>
-    
+
     </div>
 
 
