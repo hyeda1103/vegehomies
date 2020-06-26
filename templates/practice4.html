@@ -553,22 +553,27 @@
 
 
     <script>
+        // 마커를 담을 배열입니다.
         var markers = [];
 
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = {
                 center: new kakao.maps.LatLng(37.5638, 126.9084), // 지도의 중심좌표
-                level: 6 // 지도의 확대 레벨
+                level: 3 // 지도의 확대 레벨
             };
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+        
+        // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
+        // 키워드로 장소를 검색합니다.
         searchPlaces();
 
+        // 키워드 검색을 요청하는 함수입니다.
         function searchPlaces() {
 
-            //DB에 있는 장소들을 마커로 표시합니다.
             $.ajax({
                 type: 'GET',
                 url: '/vegeInfo',
@@ -585,6 +590,7 @@
                             return false;
                         }
 
+                        // 키워드에 알맞은 장소들에 대한 정보를 담을 배열을 생성합니다.
                         var places = [];
 
                         for (let i = 0; i < drunkenVege.length; i++) {
@@ -596,13 +602,12 @@
 
                             if (keyword == district) {
                                 places.push(drunkenVege[i]);
-                                // places가 잘 생성되었는지 확인해보자.
+                                
                             }
-
-                            displaySearch(places);
-                            console.log(places);
-
                         }
+                        displaySearch(places);
+                            // places가 잘 생성되었는지 확인해보자.
+                        console.log(places);
 
                     }
                 }
@@ -616,11 +621,11 @@
             var listEl = document.getElementById('placesList'),
                 menuEl = document.getElementById('menu_wrap'),
                 fragment = document.createDocumentFragment(),
-                bounds = new kakao.maps.LatLngBounds(),
+                bounds = new kakao.maps.LatLngBounds(), 
                 listStr = '';
 
             // 검색 결과 목록에 추가된 항목들을 제거합니다.
-            removeAllChildNodes(listEl);
+            removeAllChildNods(listEl);
 
             // 지도에 표시되고 있는 마커를 제거합니다.
             removeMarker();
@@ -638,24 +643,6 @@
                 // 마커와 검색결과 항목에 mouseover 했을 때,
                 // 해당 장소에 인포윈도우에 장소명을 표시합니다.
                 // mouseout 했을 때는 인포윈도우를 닫습니다.
-
-                (function (marker, title) {
-                    kakao.maps.event.addListener(marker, 'mouseover', function() {
-                        displayInfowindow(marker, title);
-                    });
-
-                    kakao.maps.event.addListener(marker, 'mouseout', function() {
-                        infowindow.close();
-                    });
-
-                    itemEl.onmouseover = function() {
-                        displayInfowindow(marker, title);
-                    }; 
-
-                    itemEl.onmouseout = function() {
-                        infowindow.close();
-                    };
-                })(marker, places[i]['name']);
 
                 fragment.appendChild(itemEl);
             }
@@ -682,8 +669,8 @@
             } else {
                 itemStr += '    <span>' + places.address_name + '</span>';
             }
-
-            itemStr += '  <span class="tel">' + places.phone + '</span>' +
+            
+            itemStr += '  <span class="tel">' + '@' + places.instaID + '</span>' +
                 '</div>';
 
             el.innerHTML = itemStr;
@@ -768,7 +755,7 @@
 
 
         // 검색결과 목록의 자식 Element를 제거하는 함수입니다.
-        function removeAllChildNodes(el) {
+        function removeAllChildNods(el) {
             while (el.hasChildNodes()) {
                 el.removeChild(el.lastChild);
             }
