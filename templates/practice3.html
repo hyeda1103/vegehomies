@@ -615,7 +615,8 @@
                 if (keyword == district) {
                     places.push(drunkenVege[i]);
 
-                }  // 검색 목록과 마커를 표출합니다.
+                } // else 구문으로 검색 결과 없다고 alert 띄우면 어떤 키워드를 쳐도 alert가 뜬다. 
+                  // else 구문부터 실행되는 거 같던데 왜일까?😑
 
             }
 
@@ -643,7 +644,6 @@
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                 // LatLngBounds 객체에 좌표를 추가합니다
                 bounds.extend(placePosition);
-
                 fragment.appendChild(itemEl);
                 // displayInfowindow(marker, places[i]['name']);
 
@@ -652,8 +652,9 @@
             // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
             listEl.appendChild(fragment);
             menuEl.scrollTop = 0;
-            map.setBounds(bounds);
 
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다. 
+            map.setBounds(bounds);
         }
 
 
@@ -674,17 +675,6 @@
             el.className = 'item';
 
             return el;
-        }
-
-
-        // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다.
-        // 인포윈도우에 장소명을 표시합니다.
-        function displayInfowindow(marker, title) {
-            var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-            infowindow.setContent(content);
-            // 얘만 켜면 지도가 꺼짐
-            infowindow.open(map, marker);
         }
 
 
@@ -751,8 +741,6 @@
             }
             paginationEl.appendChild(fragment);
         }
-
-
 
 
         // 검색결과 목록의 자식 Element를 제거하는 함수입니다.
