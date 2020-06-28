@@ -1,5 +1,5 @@
 # 내 친구는 채식주의자🥗
-> 채식하는 친구와 밥을 먹으러 간다.
+> 채식하는 친구와 을 먹으러 간다.
 
 [![author-hyeda1103](https://img.shields.io/badge/author-hyeda1103-blue.svg)](https://github.com/hyeda1103/)
 [![5min-tutorial-github](https://img.shields.io/badge/5min--tutorial-github-red.svg)](https://github.com/topics/5min-tutorial)
