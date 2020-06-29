@@ -25,7 +25,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Style -->
     <style type="text/css">
         /* KAKAO MAP */
@@ -337,140 +337,392 @@
         #posting-box {
             display: none;
         }
-    </style>
 
-    <script>
-
-        function openclose() {
-            if ($('#posting-box').css('display') == 'block') {
-                $('#posting-box').hide();
-                $('#doc').text('채식주의자에 대한 토막글 기고하기▼')
-            } else {
-                $('#posting-box').show();
-                $('#doc').text('채식주의자에 대한 토막글 기고하기▲')
-            }
+        /* 키워드로 장소검색하고 목록으로 표출하기 */
+        .map_wrap,
+        .map_wrap * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+            font-size: 12px;
         }
 
-    </script>
+        .map_wrap a,
+        .map_wrap a:hover,
+        .map_wrap a:active {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .map_wrap {
+            position: relative;
+            width: 100%;
+            height: 700px;
+        }
+
+        #menu_wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 300px;
+            margin: 10px 0 30px 10px;
+            padding: 5px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        .bg_white {
+            background: #fff;
+        }
+
+        #menu_wrap hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 2px solid #5F5F5F;
+            margin: 3px 0;
+        }
+
+        #menu_wrap .option {
+            text-align: center;
+        }
+
+        #menu_wrap .option p {
+            margin: 5px 0;
+        }
+
+        #menu_wrap .option button {
+            margin-left: 10px;
+        }
+
+        #placesList li {
+            list-style: none;
+        }
+
+        #placesList .item {
+            position: relative;
+            border-bottom: 1px solid #888;
+            overflow: hidden;
+            cursor: pointer;
+            min-height: 65px;
+        }
+
+        #placesList .item span {
+            display: block;
+            margin-top: 4px;
+        }
+
+        #placesList .item h5,
+        #placesList .item .info {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        #placesList .item .info {
+            padding: 10px 0 10px 55px;
+        }
+
+        #placesList .info .gray {
+            color: #8a8a8a;
+        }
+
+        #placesList .info .jibun {
+            padding-left: 26px;
+            background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
+        }
+
+        #placesList .info .tel {
+            color: #009900;
+        }
+
+        #placesList .item .markerbg {
+            float: left;
+            position: absolute;
+            width: 36px;
+            height: 37px;
+            margin: 10px 0 0 10px;
+            background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+        }
+
+        #placesList .item .marker_1 {
+            background-position: 0 -10px;
+        }
+
+        #placesList .item .marker_2 {
+            background-position: 0 -56px;
+        }
+
+        #placesList .item .marker_3 {
+            background-position: 0 -102px
+        }
+
+        #placesList .item .marker_4 {
+            background-position: 0 -148px;
+        }
+
+        #placesList .item .marker_5 {
+            background-position: 0 -194px;
+        }
+
+        #placesList .item .marker_6 {
+            background-position: 0 -240px;
+        }
+
+        #placesList .item .marker_7 {
+            background-position: 0 -286px;
+        }
+
+        #placesList .item .marker_8 {
+            background-position: 0 -332px;
+        }
+
+        #placesList .item .marker_9 {
+            background-position: 0 -378px;
+        }
+
+        #placesList .item .marker_10 {
+            background-position: 0 -423px;
+        }
+
+        #placesList .item .marker_11 {
+            background-position: 0 -470px;
+        }
+
+        #placesList .item .marker_12 {
+            background-position: 0 -516px;
+        }
+
+        #placesList .item .marker_13 {
+            background-position: 0 -562px;
+        }
+
+        #placesList .item .marker_14 {
+            background-position: 0 -608px;
+        }
+
+        #placesList .item .marker_15 {
+            background-position: 0 -654px;
+        }
+
+        #pagination {
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        #pagination a {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        #pagination .on {
+            font-weight: bold;
+            cursor: default;
+            color: #777;
+        }
+    </style>
+
 </head>
 
 <body>
+    <div class="map_wrap">
 
-    <div class="titleContainer">
-        <div class="titleContainer_grp">
-            "술고래는 채식주의자"
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+        <div id="menu_wrap" class="bg_white">
+            <div class="option">
+                <div>
+                    <form onsubmit="searchPlaces(); return false;">
+                        키워드 : <input type="text" placeholder="서울시 마포구" id="keyword" size="15">
+                        <button type="submit">검색하기</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <ul id="placesList"></ul>
+            <div id="pagination"></div>
         </div>
     </div>
 
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a3b30143ac575087758f5d636d25c4c&libraries=services"></script>
+
+
+    <script>
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+            mapOption = {
+                center: new kakao.maps.LatLng(37.5638, 126.9084), // 지도의 중심좌표
+                level: 6 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 
 
-    <!-- <div class="menu_wave" style="margin-top: 10px;"></div> 
-    <div class="menu_wave"></div> -->
+        // 키워드로 장소를 검색합니다.
+        $(document).ready(function () {
+            searchPlaces();
+        });
 
+        // 키워드 검색을 요청하는 함수입니다.
+        function searchPlaces() {
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
 
-    <div class="mapContainer">
-        <div id="map" style="width:100%;height: 100%;"></div>
+                        var keyword = document.getElementById('keyword').value;
 
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a3b30143ac575087758f5d636d25c4c"></script>
-            
-
-        <script>
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-                mapOption = { 
-                    center: new kakao.maps.LatLng(37.5638, 126.9084), // 지도의 중심좌표
-                    level: 6 // 지도의 확대 레벨
-                };
-
-            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
- 
-
-            $(document).ready(function () {
-                drunkenVegeMap();
-            });
-
-            function drunkenVegeMap() {
-
-                //DB에 있는 장소들을 마커로 표시합니다.
-                $.ajax({
-                    type: 'GET',
-                    url: '/vegeInfo',
-                    data: {},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            let drunkenVege = response['drunkenVege']
-
-                            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-
-                            for (let i = 0; i < drunkenVege.length; i++) {
-
-                                // 마커 이미지의 이미지 크기 입니다
-                                var imageSize = new kakao.maps.Size(24, 35);
-
-                                // 마커 이미지를 생성합니다    
-                                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-                                // 마커를 생성합니다
-                                var marker = new kakao.maps.Marker({
-                                    map: map, // 마커를 표시할 지도
-                                    position: new kakao.maps.LatLng(drunkenVege[i]['latitude'], drunkenVege[i]['longitude']), // 마커를 표시할 위치
-                                    title: drunkenVege[i]['name'], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                                    image: markerImage // 마커 이미지 
-                                });
-                            }
+                        if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                            alert('키워드를 입력해주세요!');
+                            return false;
                         }
+
+                        displayPlaces(drunkenVege, keyword);
                     }
+                }
+            })
+        }
+
+
+        // 검색 결과 목록과 마커를 표출하는 함수입니다.
+        function displayPlaces(drunkenVege, keyword) {
+
+            var listEl = document.getElementById('placesList'),
+                menuEl = document.getElementById('menu_wrap'),
+                fragment = document.createDocumentFragment(),
+                listStr = '';
+
+            // 검색 결과 목록에 추가된 항목들을 제거합니다
+            removeAllChildNods(listEl);
+
+            var places = [];
+
+            for (let i = 0; i < drunkenVege.length; i++) {
+                // DB 지역구
+                var district = drunkenVege[i]['district'];
+
+                // 입력된 키워드
+                var keyword = document.getElementById('keyword').value;
+
+                if (keyword == district) {
+                    places.push(drunkenVege[i]);
+
+                }
+            }
+
+            // places가 잘 생성되었는지 확인해보자.
+            console.log(places);
+
+
+
+            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+            var bounds = new kakao.maps.LatLngBounds();
+
+            for (var i = 0; i < places.length; i++) {
+
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                // LatLngBounds 객체에 좌표를 추가합니다
+                bounds.extend(new kakao.maps.LatLng(places[i]['latitude'], places[i]['longitude']));
+
+                // 마커 이미지의 이미지 크기 입니다
+                var imageSize = new kakao.maps.Size(24, 35);
+
+                var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+                    imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+                    imgOptions = {
+                        spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+                        spriteOrigin: new kakao.maps.Point(0, (i * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+                        offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+                    };
+
+
+                // 마커 이미지를 생성합니다    
+                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions)
+
+                // 마커를 생성합니다
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: new kakao.maps.LatLng(places[i]['latitude'], places[i]['longitude']), // 마커를 표시할 위치
+                    title: places[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image: markerImage // 마커 이미지
                 });
 
+                var itemEl = getListItem(i, places[i]);
+
+                // 마커에 표시할 인포윈도우를 생성합니다 
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: places[i].name // 인포윈도우에 표시할 내용
+                });
+
+                // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
+                // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                (function (marker, infowindow) {
+                    // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+                    kakao.maps.event.addListener(marker, 'mouseover', function () {
+                        infowindow.open(map, marker);
+                    });
+
+                    // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+                    kakao.maps.event.addListener(marker, 'mouseout', function () {
+                        infowindow.close();
+                    });
+                })(marker, infowindow);
+
+                fragment.appendChild(itemEl);
 
             }
-        </script>
+
+            // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+            listEl.appendChild(fragment);
+            menuEl.scrollTop = 0;
+
+            map.setBounds(bounds);
+
+        }
+
+
+
+        // 검색결과 항목을 Element로 반환하는 함수입니다
+        function getListItem(index, places) {
+            var el = document.createElement('li'),
+                itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+                    '<div class="info">' +
+                    '   <h5>' + places.name + '</h5>';
+
+            itemStr += '    <span>' + places.address + '</span>';
+
+            itemStr += '  <span class="tel">' + '@' + places.instaID + '</span>' +
+                '</div>';
+
+
+            el.innerHTML = itemStr;
+            el.className = 'item';
+
+            return el;
+        }
+
+
+        // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+        function removeAllChildNods(el) {
+            while (el.hasChildNodes()) {
+                el.removeChild(el.lastChild);
+            }
+        }
+
+
+
+    </script>
 
     </div>
-
-
-    <div class="textContainer" style="overflow:auto; height: 480px;">
-        <p> 포항에서 월, 화 이틀을 보내고 돌아오는 길, 기차에서 최승자의 시집을 폈다. 언제 넣어 둔 건지 마른 낙엽이 툭 떨어졌다.
-            책장을 넘기자 시편들에서 '포항', '구룡포'같은 지명이 굴러 나온다. 이게 무슨 우연인가 갸웃거리다 퍼뜩 떠올랐다.
-            그렇다. 시인이 정신 분열증으로 유배된 도시가 포항이었다. 포항, 그 포항.<br> <br>
-            "포항에 병문안 가야 하는 거 아니니?" <br><br>
-            2010년 어느 날 밤 , 조선일보에 최승자 시인 인터뷰 기사가 나온 걸 본 친구가 전화해
-            다급한 목소리로 말했다. 기사에는 키 149센티미터, 체중 34킬로그램으로 삭은 몸, 책갈피에서 얇아진 낙엽 같은 시인이 들어 있었다.
-            시인의 눈빛과 정신은 여전히 형형했다. 가령 당신은 어쩌다 폐인처럼 됐느냐는 기자의 질문에 이렇게 말한다. </P>
-
-        <br>
-
-        <div id="doc" onclick="openclose()">
-            <p><u>채식주의자에 대한 토막글 기고하기▼</u></p>
-        </div>
-
-        <div id="posting-box">
-            <li> 800자 이내로 작성하시오. </li>
-            <li> 후... </li>
-            <li> dalgona92@gmail.com로 보내시오. </li>
-        </div>
-    </div>
-
-    <div class="textContainer" style="overflow:auto; height: 120px;">
-        약속한 장소는 : &nbsp; <input type="text" id="district" placeholder="ex_서울시 마포구"
-            style="width: 200px; height: 32px; text-align: center; font-family: 'Nanum Myeongjo', serif; border-width: 1px; background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);">
-
-        <br> <br>
-
-        약속한 요일은 : &nbsp;
-        <input type="text" id="district" placeholder="ex_목요일"
-            style="width: 200px; height: 32px; text-align: center; font-family: 'Nanum Myeongjo', serif; border-width: 1px; background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);">
-
-    </div>
-
-    <div class="textContainer" style="overflow:auto; height: 110px;">
-        <button type="button" id="search"
-            style="cursor: pointer; width: 330px; height: 32px; text-align: center; font-family: 'Nanum Myeongjo', serif; 
-        border-width: 1px; background: linear-gradient(336deg, rgba(39, 214, 23, 0.8), rgba(39, 214, 23, 0) 70.71%), url(static/recycled.jpg);">"술고래는
-            채식주의자!"</button>
-    </div>
-
-
 
 
 </body>
