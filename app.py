@@ -11,7 +11,7 @@ db = client.dbsparta                      # 'dbsparta'라는 이름의 db를 만
 ## HTML을 주는 부분
 @app.route('/')
 def home():
-   return render_template('practice3.html')
+   return render_template('index.html')
 
 @app.route('/vegeInfo', methods=['GET'])
 def listing():
