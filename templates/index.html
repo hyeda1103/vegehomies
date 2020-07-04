@@ -609,7 +609,6 @@
             // 검색 결과 목록에 추가된 항목들을 제거합니다
             removeAllChildNods(listEl);
 
-
             var places = [];
 
             for (let i = 0; i < drunkenVege.length; i++) {
@@ -621,7 +620,6 @@
 
                 if (keyword == district) {
                     places.push(drunkenVege[i]);
-
                 }
             }
 
@@ -629,53 +627,55 @@
             // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
             var bounds = new kakao.maps.LatLngBounds();
 
-
             // 지도에 표시되고 있는 마커를 제거합니다
             removeMarker();
 
-            for (var i = 0; i < places.length; i++) {
+            if (places.length != 0) {
+                for (var i = 0; i < places.length; i++) {
+
+                    // 마커를 생성합니다
+                    var placePosition = new kakao.maps.LatLng(places[i]['latitude'], places[i]['longitude']),
+                        title = places[i]['name'],
+                        marker = addMarker(placePosition, i, title), // 검색 결과 마커를 생성합니다
+                        itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
 
-                // 마커를 생성합니다
-                var placePosition = new kakao.maps.LatLng(places[i]['latitude'], places[i]['longitude']),
-                    title = places[i].name,
-                    marker = addMarker(placePosition, i, title),
-                    itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    bounds.extend(placePosition);
 
-
-                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                // LatLngBounds 객체에 좌표를 추가합니다
-                bounds.extend(placePosition);
-
-                // 마커에 표시할 인포윈도우를 생성합니다 
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: places[i].name // 인포윈도우에 표시할 내용
-                });
-
-
-                // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
-                // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                (function (marker, infowindow) {
-                    // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
-                    kakao.maps.event.addListener(marker, 'mouseover', function () {
-                        infowindow.open(map, marker);
+                    // 마커에 표시할 인포윈도우를 생성합니다 
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: '<div style="padding:10px; z-index:1;">' + places[i]['name'] + '</div>' // 인포윈도우에 표시할 내용
                     });
 
-                    // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-                    kakao.maps.event.addListener(marker, 'mouseout', function () {
-                        infowindow.close();
-                    });
-                })(marker, infowindow);
+                    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
+                    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                    (function (marker, infowindow) {
+                        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+                        kakao.maps.event.addListener(marker, 'mouseover', function () {
+                            infowindow.open(map, marker);
+                        });
 
-                fragment.appendChild(itemEl);
+                        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+                        kakao.maps.event.addListener(marker, 'mouseout', function () {
+                            infowindow.close();
+                        });
+                    })(marker, infowindow);
 
+                    fragment.appendChild(itemEl);
+
+                }
+
+                // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+                listEl.appendChild(fragment);
+                menuEl.scrollTop = 0;
+
+                map.setBounds(bounds);
+            } else { // 키워드에 알맞은 장소가 DB 내에 없는 경우, 검색 결과가 존재하지 않는다는 알림창을 띄워줍니다. 
+                alert('검색 결과가 존재하지 않습니다.');
+                return false;
             }
-
-            // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-            listEl.appendChild(fragment);
-            menuEl.scrollTop = 0;
-
-            map.setBounds(bounds);
 
         }
 
@@ -692,7 +692,6 @@
 
             itemStr += '  <span class="tel">' + '@' + places.instaID + '</span>' +
                 '</div>';
-
 
             el.innerHTML = itemStr;
             el.className = 'item';
