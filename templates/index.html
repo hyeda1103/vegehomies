@@ -375,6 +375,21 @@
             border-radius: 10px;
         }
 
+        #menu_wrap2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 300px;
+            margin: 100px 0 30px 10px;
+            padding: 5px;
+            overflow-y: auto;
+            background: rgba(0, 255, 255, 0.8);
+            z-index: 1;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
         .bg_white {
             background: #fff;
         }
@@ -508,22 +523,6 @@
         #placesList .item .marker_15 {
             background-position: 0 -654px;
         }
-
-        #pagination {
-            margin: 10px auto;
-            text-align: center;
-        }
-
-        #pagination a {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        #pagination .on {
-            font-weight: bold;
-            cursor: default;
-            color: #777;
-        }
     </style>
 
 </head>
@@ -544,7 +543,6 @@
             </div>
             <hr>
             <ul id="placesList"></ul>
-            <div id="pagination"></div>
         </div>
     </div>
 
@@ -609,16 +607,33 @@
             // 검색 결과 목록에 추가된 항목들을 제거합니다
             removeAllChildNods(listEl);
 
+            // 
             var places = [];
 
             for (let i = 0; i < drunkenVege.length; i++) {
+
+                // 특수문자 포함여부를 확인하기 위한 정규표현식 
+                var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
+
                 // DB 지역구
                 var district = drunkenVege[i]['district'];
+                var cityOnly = district.split(' ')[0];
+                var districtOnly = district.split(' ')[1];
+                var districtRe = district.replace(/(\s*)/g, ""); // 지역구의 모든 공백을 제거
+                var newDistrict = districtRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+                // DB 식당이름
+                var name = drunkenVege[i]['name'];
+                var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
+                var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
 
                 // 입력된 키워드
                 var keyword = document.getElementById('keyword').value;
-
-                if (keyword == district) {
+                var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
+                var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
+                
+               
+                if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == districtOnly) {
                     places.push(drunkenVege[i]);
                 }
             }
