@@ -17,8 +17,11 @@ def home():
 def listing():
     # 모든 document 찾기 & _id 값은 출력에서 제외하기
     result = list(db.drunkenVege.find({},{'_id':0}))
-    # vegeRestaurants라는 키 값으로 비건식당정보 내려주기
+    # drunkenVege라는 키 값으로 비건술집정보 내려주기
     return jsonify({'result':'success', 'drunkenVege':result})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
+
+
+
