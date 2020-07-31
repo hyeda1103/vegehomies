@@ -1,0 +1,180 @@
+/* KAKAO MAP */
+
+.map_wrap,
+.map_wrap * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.map_wrap {
+    position: relative;
+}
+
+#menu_wrap {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+#menu_wrap2 {
+    display: none;
+    background: rgba(13, 173, 93, 0.8);
+}
+
+.bg_white {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 19%;
+    margin: 10px 10px 10px 10px;
+    padding: 20px 5px 5px 5px;
+    overflow-y: auto;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+#menu_wrap hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid rgba(130, 7, 187, 0.774);
+    margin: 20px 3px;
+}
+
+#placesList li {
+    list-style: none;
+}
+
+#placesList .item {
+    position: relative;
+    border-bottom: 1px dotted rgba(130, 7, 187, 0.774);
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 65px;
+    margin-top: 20px;
+}
+
+#placesList .item span {
+    display: block;
+    margin-top: 4px;
+}
+
+#placesList .item h2,
+#placesList .item .info {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#placesList .item .info {
+    padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+    color: #8a8a8a;
+}
+
+#placesList .info .tel {
+    color: #009900;
+}
+
+#placesList .item .markerbg {
+    float: left;
+    position: absolute;
+    width: 36px;
+    height: 37px;
+    margin: 10px 0 0 10px;
+    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+}
+
+#placesList .item .marker_1 {
+    background-position: 0 -10px;
+}
+
+#placesList .item .marker_2 {
+    background-position: 0 -56px;
+}
+
+#placesList .item .marker_3 {
+    background-position: 0 -102px
+}
+
+#placesList .item .marker_4 {
+    background-position: 0 -148px;
+}
+
+#placesList .item .marker_5 {
+    background-position: 0 -194px;
+}
+
+#placesList .item .marker_6 {
+    background-position: 0 -240px;
+}
+
+#placesList .item .marker_7 {
+    background-position: 0 -286px;
+}
+
+#placesList .item .marker_8 {
+    background-position: 0 -332px;
+}
+
+#placesList .item .marker_9 {
+    background-position: 0 -378px;
+}
+
+#placesList .item .marker_10 {
+    background-position: 0 -423px;
+}
+
+#placesList .item .marker_11 {
+    background-position: 0 -470px;
+}
+
+#placesList .item .marker_12 {
+    background-position: 0 -516px;
+}
+
+#placesList .item .marker_13 {
+    background-position: 0 -562px;
+}
+
+#placesList .item .marker_14 {
+    background-position: 0 -608px;
+}
+
+#placesList .item .marker_15 {
+    background-position: 0 -654px;
+}
+
+#grad1 {
+    background-image: linear-gradient(rgba(0, 155, 34, 0.8), rgb(241, 241, 238), rgba(94, 0, 202, 0.8));
+}
+
+.searchContainer {
+    background-color: #FFF;
+    position: relative;
+    border-radius: 10px;
+    padding: 3px 50px 3px 10px;
+}
+
+.searchBox {
+    background-color: transparent;
+    outline: none;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    width: 100%;
+}
+
+.searchButton {
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 0;
+    color: black;
+    outline: 0;
+}
