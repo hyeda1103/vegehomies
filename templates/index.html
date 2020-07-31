@@ -59,7 +59,7 @@
             top: 0;
             left: 0;
             bottom: 0;
-            width: 19%;
+            width: 22%;
             margin: 10px 10px 10px 10px;
             padding: 20px 5px 5px 5px;
             overflow-y: auto;
@@ -72,7 +72,7 @@
             height: 1px;
             border: 0;
             border-top: 2px solid rgba(130, 7, 187, 0.774);
-            margin: 20px 3px;
+            margin: 8px 3px ;
         }
 
         #placesList li {
@@ -190,7 +190,7 @@
         .searchContainer {
             background-color: #FFF;
             position: relative;
-            border-radius: 10px;
+            border-radius: 5px;
             padding: 3px 50px 3px 10px;
         }
 
@@ -205,18 +205,95 @@
 
         .searchButton {
             position: absolute;
-            right: 6px;
-            top: 6px;
+            right: 14px;
+            top: 8px;
             background-color: transparent;
             border-radius: 50%;
             border: 0;
             color: black;
+            font-size: 15px;
             outline: 0;
         }
 
-        .whaleSays {
-            font-size: 13px;
+        .dayFilter {
             text-align: center;
+            display: none;
+        }
+
+        .filterBtn {
+            text-align: left;
+            padding: 3px 10px;
+            margin-top: 8px;
+            font-size: 12px;
+            border: 0;
+            background-color: white;
+            border-radius: 10%;
+        }
+
+        .sun {
+           color: tomato;
+        }
+
+        .mon {
+            color: teal;
+        }
+
+        .tue {
+            color: teal;
+        }
+
+        .wed {
+            color: teal;
+        }
+
+        .thr {
+            color: teal;
+        }
+
+        .fri {
+            color: teal;
+        }
+
+        .sat {
+            color: mediumblue;
+        }
+
+        .day {
+            color: peru;
+        }
+
+        .night {
+            color: slateblue;
+        }
+
+        .midnight {
+            color: midnightblue;
+        }
+
+        .filterBtn.day:hover {
+            background-color: peru;
+            color: midnightblue;
+        }
+
+        .filterBtn.night:hover {
+            background-color: slateblue;
+            color: thistle;
+        }
+
+        .filterBtn.midnight:hover {
+            background-color: midnightblue;
+            color: peru;
+        }
+
+        .filterBtn:hover {
+            background: mediumseagreen;
+            color: whitesmoke;
+        }
+
+        .timeFilter {
+            margin-bottom: 9px;
+            text-align: center;
+            display: none;
         }
     </style>
 
@@ -226,20 +303,38 @@
 <body>
     <div class="map_wrap" id="grad1" style="height: 100vh; padding: 10px;">
 
-        <div id="map" style="width: 80%; height:100%; position:relative;
-        overflow:hidden;margin-left:19.8%; border-radius: 10px;"></div>
+        <div id="map" style="width: 77%; height:100%; position:relative;
+        overflow:hidden;margin-left: 22.8%; border-radius: 10px;"></div>
 
         <div id="menu_wrap" class="bg_white">
             <div class="searchContainer">
                 <form onsubmit="searchPlaces(); return false;">
                     <div>
                         <input type="text" class="searchBox" placeholder=" " id="search">
-                        <button id="searchBtn" class="searchButton" type="submit">검색🧙‍♀️</button>
+                        <button id="searchBtn" class="searchButton" type="submit">검색</button>
                     </div>
                 </form>
 
             </div>
-            <hr>
+            <button id="searchBtn" class="filterBtn" type="submit" onclick="filterDay()">요일고르기</button>
+            <button id="searchBtn" class="filterBtn" type="submit" onclick="filterTime()">시간고르기</button>
+
+            <div id="filterDiv1" class="dayFilter">
+                <button id="searchBtn" class="filterBtn sun" type="submit">일요일</button>
+                <button id="searchBtn" class="filterBtn mon" type="submit">월요일</button>
+                <button id="searchBtn" class="filterBtn tue" type="submit">화요일</button>
+                <button id="searchBtn" class="filterBtn wed" type="submit">수요일</button>
+                <button id="searchBtn" class="filterBtn thr" type="submit">목요일</button>
+                <button id="searchBtn" class="filterBtn fri" type="submit">금요일</button>
+                <button id="searchBtn" class="filterBtn sat" type="submit">토요일</button>
+            </div>
+
+            <div id="filterDiv2" class="timeFilter">
+                <button id="searchBtn" class="filterBtn day" type="submit">낮술 (오후 3시 전)</button>
+                <button id="searchBtn" class="filterBtn night" type="submit">저녁술 (오후 6시~10시)</button>
+                <button id="searchBtn" class="filterBtn midnight" type="submit">심야술 (오후 11시 후)</button>
+            </div>
+
             <ul id="placesList"></ul>
         </div>
 
@@ -312,8 +407,6 @@
 
                         // 검색창에 키워드가 입력하기를 요청합니다.
                         var keyword = document.getElementById('search').value;
-
-
 
                         if (!keyword.replace(/^\s+|\s+$/g, '')) {
                             alert('키워드를 입력해주세요!');
@@ -425,6 +518,7 @@
                 // DB 지역구
                 var district = drunkenVege[i]['district'];
                 var cityOnly = district.split(' ')[0];
+                var citynameOnly = cityOnly.split('')[0, 1];
                 var districtOnly = district.split(' ')[1];
                 var districtRe = district.replace(/(\s*)/g, ""); // 지역구의 모든 공백을 제거
                 var newDistrict = districtRe.replace(regExp, ""); // 모든 특수문자를 제거
@@ -440,7 +534,7 @@
                 var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
 
 
-                if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == districtOnly) {
+                if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == citynameOnly || newKeyword == districtOnly) {
                     places.push(drunkenVege[i]);
                 }
             }
@@ -588,6 +682,27 @@
                 el.removeChild(el.lastChild);
             }
         }
+
+        function filterDay() {
+            var x = document.getElementById("filterDiv1");
+
+            if (x.style.display == 'block') {
+                x.style.display = 'none';
+            } else {
+                x.style.display = 'block';
+            }
+        }
+
+        function filterTime() {
+            var x = document.getElementById("filterDiv2");
+
+            if (x.style.display == 'block') {
+                x.style.display = 'none';
+            } else {
+                x.style.display = 'block';
+            }
+        }
+
     </script>
 
 
