@@ -62,17 +62,29 @@
             width: 22%;
             margin: 10px 10px 10px 10px;
             padding: 20px 5px 5px 5px;
-            overflow-y: auto;
+            overflow-y: scroll;
             z-index: 1;
             border-radius: 10px;
+        }
+
+       .bg_white::-webkit-scrollbar {
+            display: none;
+        }
+
+        .bg_white .informResults {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            font-family: sans-serif;
+            margin-top: 30px;
         }
 
         #menu_wrap hr {
             display: block;
             height: 1px;
             border: 0;
-            border-top: 2px solid rgba(130, 7, 187, 0.774);
-            margin: 8px 3px ;
+            border-top: 1px solid rgba(130, 7, 187, 0.774);
+            margin: 8px 3px;
         }
 
         #placesList li {
@@ -100,6 +112,7 @@
             white-space: nowrap;
             font-size: 15px;
         }
+
 
         #placesList .item .info {
             padding: 10px 0 10px 55px;
@@ -231,7 +244,7 @@
         }
 
         .sun {
-           color: tomato;
+            color: tomato;
         }
 
         .mon {
@@ -291,7 +304,7 @@
         }
 
         .timeFilter {
-            margin-bottom: 9px;
+            /* margin-bottom: 9px; */
             text-align: center;
             display: none;
         }
@@ -307,6 +320,7 @@
         overflow:hidden;margin-left: 22.8%; border-radius: 10px;"></div>
 
         <div id="menu_wrap" class="bg_white">
+
             <div class="searchContainer">
                 <form onsubmit="searchPlaces(); return false;">
                     <div>
@@ -316,6 +330,7 @@
                 </form>
 
             </div>
+
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filterDay()">요일고르기</button>
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filterTime()">시간고르기</button>
 
@@ -335,17 +350,23 @@
                 <button id="searchBtn" class="filterBtn midnight" type="submit">심야술 (오후 11시 후)</button>
             </div>
 
+            <br>
+
+            <p id="numofResults" class="informResults"></p>
+
+            <hr>
+
             <ul id="placesList"></ul>
+
         </div>
 
-        <div id="menu_wrap2" class="bg_white">
-            <div>
-                <div>
-                    <button id="searchBtn" onclick="switchVisible();" class="searchButton"
-                        type="submit"><u>뒤로🐢</u></button>
-                </div>
 
-            </div>
+        <div id="menu_wrap2" class="bg_white">
+
+            <button id="searchBtn" onclick="switchVisible();" class="searchButton" type="submit"><u>뒤로🐢</u></button>
+
+            <p id="detailInfo"></p>
+
         </div>
 
     </div>
@@ -387,7 +408,7 @@
                     if (response['result'] == 'success') {
                         let drunkenVege = response['drunkenVege']
 
-                        displayRandomPlaces(drunkenVege);
+                        displayAllPlace(drunkenVege);
 
 
                         // DB에 있는 비건술집 이름을 랜덤으로 골라서 placeholder값으로 넣습니다. 
@@ -422,7 +443,7 @@
 
 
         // 기본적으로 DB에 있는 모든 비건술집이 정보창과 지도에 떠있게 하는 함수입니다.
-        function displayRandomPlaces(drunkenVege) {
+        function displayAllPlace(drunkenVege) {
 
             var listEl = document.getElementById('placesList'),
                 menuEl = document.getElementById('menu_wrap'),
@@ -479,6 +500,7 @@
 
                 }
 
+
                 // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
                 listEl.appendChild(fragment);
                 menuEl.scrollTop = 0;
@@ -499,7 +521,8 @@
         // 검색 결과 목록과 마커를 표출하는 함수입니다.
         function displayPlaces(drunkenVege, keyword) {
 
-            var listEl = document.getElementById('placesList'),
+            var numStr = document.getElementById('numofResults'),
+                listEl = document.getElementById('placesList'),
                 menuEl = document.getElementById('menu_wrap'),
                 fragment = document.createDocumentFragment(),
                 listStr = '';
@@ -518,10 +541,11 @@
                 // DB 지역구
                 var district = drunkenVege[i]['district'];
                 var cityOnly = district.split(' ')[0];
-                var citynameOnly = cityOnly.split('')[0, 1];
+                var citynameOnly = cityOnly.slice(0, -1);
                 var districtOnly = district.split(' ')[1];
                 var districtRe = district.replace(/(\s*)/g, ""); // 지역구의 모든 공백을 제거
                 var newDistrict = districtRe.replace(regExp, ""); // 모든 특수문자를 제거
+
 
                 // DB 식당이름
                 var name = drunkenVege[i]['name'];
@@ -545,6 +569,7 @@
 
             // 지도에 표시되고 있는 마커를 제거합니다
             removeMarker();
+
 
             if (places.length != 0) {
                 for (var i = 0; i < places.length; i++) {
@@ -583,15 +608,48 @@
 
                 }
 
+                // 검색결과 항목 수를 보여줍니다
+                var numStr = i;
+                console.log(numStr);
+
+                informNumofResults(numStr);
+
                 // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
                 listEl.appendChild(fragment);
                 menuEl.scrollTop = 0;
 
                 map.setBounds(bounds);
-            } else { // 키워드에 알맞은 장소가 DB 내에 없는 경우, 검색 결과가 존재하지 않는다는 알림창을 띄워줍니다. 
-                alert('검색 결과가 존재하지 않습니다.');
+
+            } else {
+
+                informNoresults(drunkenVege);
+
                 return false;
             }
+
+        }
+
+
+
+        function informNumofResults(numStr) {
+            document.getElementById("numofResults").innerHTML = '<p>' + '총 ' + numStr + '개의 검색결과가 있습니다.' + '</p>';
+        }
+
+
+        // 검색결과가 없음을 알려주는 함수입니다
+        function informNoresults(drunkenVege) {
+
+            document.getElementById("numofResults").innerHTML = '<p>' + '검색결과가 존재하지 않습니다.' + '</p>';
+            // 1.5초 뒤에 검색결과가 없음을 알리는 메시지가 사라집니다
+            $('#numofResults').fadeIn('slow', function () {
+                $('#numofResults').delay(1500).fadeOut();
+
+            });
+
+            // 3초 뒤에 검색 첫 화면으로 돌아갑니다
+            setTimeout(() => {
+                displayAllPlace(drunkenVege);
+            }, 3000);
 
         }
 
@@ -613,7 +671,7 @@
 
             itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<span class="tel">' + '@' + places.instaID + '</span>' + '</a>';
 
-            itemStr += '<p style="text-align: right" onclick="switchVisible();">' + '술집구경👀' + (index + 1) + '</p>'
+            itemStr += '<p style="text-align: right; margin-right: 8px" onclick="switchVisible();">' + '술집구경👀' + (index + 1) + '</p>'
 
             el.innerHTML = itemStr;
             el.className = 'item';
@@ -683,24 +741,14 @@
             }
         }
 
-        function filterDay() {
-            var x = document.getElementById("filterDiv1");
 
-            if (x.style.display == 'block') {
-                x.style.display = 'none';
-            } else {
-                x.style.display = 'block';
-            }
+        function filterDay() {
+            $('#filterDiv1').slideToggle();
         }
 
-        function filterTime() {
-            var x = document.getElementById("filterDiv2");
 
-            if (x.style.display == 'block') {
-                x.style.display = 'none';
-            } else {
-                x.style.display = 'block';
-            }
+        function filterTime() {
+            $('#filterDiv2').slideToggle();
         }
 
     </script>
