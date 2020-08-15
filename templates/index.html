@@ -51,7 +51,7 @@
 
         #menu_wrap2 {
             display: none;
-            background: rgba(13, 173, 93, 0.8);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .bg_white {
@@ -67,7 +67,7 @@
             border-radius: 10px;
         }
 
-       .bg_white::-webkit-scrollbar {
+        .bg_white::-webkit-scrollbar {
             display: none;
         }
 
@@ -221,12 +221,25 @@
             right: 14px;
             top: 8px;
             background-color: transparent;
-            border-radius: 50%;
+            border-radius: 40%;
             border: 0;
             color: black;
             font-size: 15px;
             outline: 0;
         }
+
+        .toggleButton {
+            position: absolute;
+            right: 14px;
+            top: 8px;
+            background-color: transparent;
+            border-radius: 40%;
+            border: 0;
+            color: black;
+            font-size: 13px;
+            outline: 0;
+        }
+
 
         .dayFilter {
             text-align: center;
@@ -299,7 +312,7 @@
         }
 
         .filterBtn:hover {
-            background: mediumseagreen;
+            background: rgb(91, 15, 214);
             color: whitesmoke;
         }
 
@@ -307,6 +320,74 @@
             /* margin-bottom: 9px; */
             text-align: center;
             display: none;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        .bg_white button {
+            transition: 0.3s;
+        }
+
+        .bg_white button:hover {
+            background-color: rgba(64, 224, 208, 0.8);
+        }
+
+        .make-center {
+            text-align: center;
+        }
+
+
+        /* menu_wrap2에 나오는 메뉴 리스트  */
+        .star-list {
+            width: 500px;
+            margin: 20px auto 0 auto;
+        }
+
+        .star-name {
+            display: inline-block;
+        }
+
+        .star-name:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            margin-bottom: 15px;
         }
     </style>
 
@@ -319,7 +400,18 @@
         <div id="map" style="width: 77%; height:100%; position:relative;
         overflow:hidden;margin-left: 22.8%; border-radius: 10px;"></div>
 
+        <!-- 장소와 요일 기반 검색 -->
         <div id="menu_wrap" class="bg_white">
+
+            <div>
+
+                <button id="searchBtn" onclick="switchSearchOption();" class="toggleButton" type="submit"><u> 안주와 술 기반
+                        검색🐇</u></button>
+
+            </div>
+
+            <br>
+
 
             <div class="searchContainer">
                 <form onsubmit="searchPlaces(); return false;">
@@ -331,17 +423,18 @@
 
             </div>
 
+
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filterDay()">요일고르기</button>
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filterTime()">시간고르기</button>
 
             <div id="filterDiv1" class="dayFilter">
-                <button id="searchBtn" class="filterBtn sun" type="submit">일요일</button>
-                <button id="searchBtn" class="filterBtn mon" type="submit">월요일</button>
-                <button id="searchBtn" class="filterBtn tue" type="submit">화요일</button>
-                <button id="searchBtn" class="filterBtn wed" type="submit">수요일</button>
-                <button id="searchBtn" class="filterBtn thr" type="submit">목요일</button>
-                <button id="searchBtn" class="filterBtn fri" type="submit">금요일</button>
-                <button id="searchBtn" class="filterBtn sat" type="submit">토요일</button>
+                <button id="searchBtn" class="filterBtn sun" type="submit" onclick="filterSelection('sun')">일요일</button>
+                <button id="searchBtn" class="filterBtn mon" type="submit" onclick="filterSelection('mon')">월요일</button>
+                <button id="searchBtn" class="filterBtn tue" type="submit" onclick="filterSelection('tue')">화요일</button>
+                <button id="searchBtn" class="filterBtn wed" type="submit" onclick="filterSelection('wed')">수요일</button>
+                <button id="searchBtn" class="filterBtn thr" type="submit" onclick="filterSelection('thr')">목요일</button>
+                <button id="searchBtn" class="filterBtn fri" type="submit" onclick="filterSelection('fri')">금요일</button>
+                <button id="searchBtn" class="filterBtn sat" type="submit" onclick="filterSelection('sat')">토요일</button>
             </div>
 
             <div id="filterDiv2" class="timeFilter">
@@ -360,12 +453,32 @@
 
         </div>
 
-
+        <!-- 안주와 술 기반 검색 -->
         <div id="menu_wrap2" class="bg_white">
 
-            <button id="searchBtn" onclick="switchVisible();" class="searchButton" type="submit"><u>뒤로🐢</u></button>
+            <div>
+                <button id="searchBtn" onclick="switchSearchOption();" class="toggleButton" type="submit"><u>장소와 요일 기반
+                        검색🐢</u></button>
+            </div>
 
-            <p id="detailInfo"></p>
+            <br>
+            <div class="searchContainer">
+                <form onsubmit="searchPlaces(); return false;">
+                    <div>
+                        <input type="text" class="searchBox" placeholder=" " id="search">
+                        <button id="searchBtn" class="searchButton" type="submit">검색</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <br>
+
+            <p id="numofResults" class="informResults"></p>
+
+            <hr>
+
+            <ol id="myLists"></ol>
 
         </div>
 
@@ -386,6 +499,10 @@
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+        // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
         // 마커를 담을 배열입니다
         var markers = [];
 
@@ -393,6 +510,7 @@
         // 키워드로 장소를 검색합니다.
         $(document).ready(function () {
             searchPlaces();
+            searchMenu();
         });
 
 
@@ -417,9 +535,8 @@
                         for (let i = 0; i < drunkenVege.length; i++) {
                             var name = drunkenVege[i]['name'];
                             list.push(name);
+                            console.log(name);
                         }
-
-                        // console.log(list);
 
                         var list, r = Math.floor(Math.random() * list.length);
                         // console.log(list[r]);
@@ -433,8 +550,8 @@
                             alert('키워드를 입력해주세요!');
                             return false;
                         } else
-                            changeColor(keyword);
-                        displayPlaces(drunkenVege, keyword);
+
+                            displayPlaces(drunkenVege, keyword);
 
                     }
                 }
@@ -442,8 +559,10 @@
         }
 
 
+
         // 기본적으로 DB에 있는 모든 비건술집이 정보창과 지도에 떠있게 하는 함수입니다.
         function displayAllPlace(drunkenVege) {
+
 
             var listEl = document.getElementById('placesList'),
                 menuEl = document.getElementById('menu_wrap'),
@@ -500,29 +619,22 @@
 
                 }
 
-
                 // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
                 listEl.appendChild(fragment);
                 menuEl.scrollTop = 0;
 
                 map.setBounds(bounds);
+
             }
+
         }
 
-
-        // 검색창에 키워드를 입력하면 검색 버튼의 글씨가 바뀝니다.
-        function changeColor(keyword) {
-            if (keyword != '') {
-                document.getElementById('searchBtn').style.color = 'rgba(94, 0, 202, 0.8)';
-            } else document.getElementById('searchBtn').style.color = black;
-        }
 
 
         // 검색 결과 목록과 마커를 표출하는 함수입니다.
         function displayPlaces(drunkenVege, keyword) {
 
-            var numStr = document.getElementById('numofResults'),
-                listEl = document.getElementById('placesList'),
+            var listEl = document.getElementById('placesList'),
                 menuEl = document.getElementById('menu_wrap'),
                 fragment = document.createDocumentFragment(),
                 listStr = '';
@@ -538,6 +650,7 @@
                 // 특수문자 포함여부를 확인하기 위한 정규표현식 
                 var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
 
+
                 // DB 지역구
                 var district = drunkenVege[i]['district'];
                 var cityOnly = district.split(' ')[0];
@@ -552,6 +665,7 @@
                 var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
                 var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
 
+
                 // 입력된 키워드
                 var keyword = document.getElementById('search').value;
                 var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
@@ -562,6 +676,9 @@
                     places.push(drunkenVege[i]);
                 }
             }
+
+            // console.log(places);
+
 
 
             // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
@@ -574,12 +691,12 @@
             if (places.length != 0) {
                 for (var i = 0; i < places.length; i++) {
 
+
                     // 마커를 생성합니다
                     var placePosition = new kakao.maps.LatLng(places[i]['latitude'], places[i]['longitude']),
                         title = places[i]['name'],
                         marker = addMarker(placePosition, i, title), // 검색 결과 마커를 생성합니다
                         itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
 
                     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                     // LatLngBounds 객체에 좌표를 추가합니다
@@ -610,9 +727,10 @@
 
                 // 검색결과 항목 수를 보여줍니다
                 var numStr = i;
-                console.log(numStr);
+                // console.log(numStr);
 
                 informNumofResults(numStr);
+
 
                 // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
                 listEl.appendChild(fragment);
@@ -636,6 +754,7 @@
         }
 
 
+
         // 검색결과가 없음을 알려주는 함수입니다
         function informNoresults(drunkenVege) {
 
@@ -654,16 +773,14 @@
         }
 
 
+
         // 검색결과 항목을 Element로 반환하는 함수입니다
         function getListItem(index, places) {
 
             var instaUrl = "http://www.instagram.com/" + places.instaID + "/?hl=ko";
-            // console.log(instaUrl)
-
-            var photoUrl = "#";
 
             var el = document.createElement('li'),
-                itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+                itemStr = '<div id = "vegeRestaurant">' + '<span class="markerbg marker_' + (index + 1) + '"></span>' +
                     '<div class="info">' +
                     '   <h5>' + places.name + '</h5>';
 
@@ -671,19 +788,21 @@
 
             itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<span class="tel">' + '@' + places.instaID + '</span>' + '</a>';
 
-            itemStr += '<p style="text-align: right; margin-right: 8px" onclick="switchVisible();">' + '술집구경👀' + (index + 1) + '</p>'
+            itemStr += '<br>' + '<div id="menuBox">' + '<ol id="myList" style="display: block;">' + '</ol>' + '</div>' + '</div>';
+
+
 
             el.innerHTML = itemStr;
             el.className = 'item';
 
-
-
             return el;
+
+
         }
 
 
 
-        function switchVisible() {
+        function switchSearchOption(evt, menu) {
             if (document.getElementById('menu_wrap')) {
 
                 if (document.getElementById('menu_wrap').style.display == 'none') {
@@ -744,12 +863,235 @@
 
         function filterDay() {
             $('#filterDiv1').slideToggle();
+
         }
 
 
         function filterTime() {
             $('#filterDiv2').slideToggle();
         }
+
+
+        function filterSelection(c) {
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+                    let drunkenVege = response['drunkenVege'];
+
+                    var keyword = document.getElementById('search').value;
+
+                    var allPlaces = [];
+
+                    for (let i = 0; i < drunkenVege.length; i++) {
+                        allPlaces.push(drunkenVege[i]);
+                    }
+
+                    // console.log(allPlaces)
+
+                    var categoryMon = [],
+                        categoryTue = [],
+                        categoryWed = [],
+                        categoryThr = [],
+                        categoryFri = [],
+                        categorySat = [],
+                        categorySun = [];
+
+                    if (allPlaces.length != 0) {
+                        for (var i = 0; i < allPlaces.length; i++) {
+                            if (allPlaces[i]['runningtime'].includes('월') == true) {
+                                categoryMon.push(allPlaces[i]);
+                            }
+
+                            if (allPlaces[i]['runningtime'].includes('화') == true) {
+                                categoryTue.push(allPlaces[i]);
+                            }
+
+                            if (allPlaces[i]['runningtime'].includes('수') == true) {
+                                categoryWed.push(allPlaces[i]);
+                            }
+
+                            if (allPlaces[i]['runningtime'].includes('목') == true) {
+                                categoryThr.push(allPlaces[i]);
+                            }
+
+                            if (allPlaces[i]['runningtime'].includes('금') == true) {
+                                categoryFri.push(allPlaces[i]);
+                            }
+
+                            if (allPlaces[i]['runningtime'].includes('토') == true) {
+                                categorySat.push(allPlaces[i]);
+                            }
+
+                            if (allPlaces[i]['runningtime'].includes('일') == true) {
+                                categorySun.push(allPlaces[i]);
+                            }
+                        }
+                    }
+
+                    // 요일별 filter
+    
+                    if (c == 'sun') {
+                        displayMarkers(categorySun);
+                    }
+
+                    if (c == 'mon') {
+                        displayMarkers(categoryMon);
+                    }
+
+                    if (c == 'tue') {
+                        displayMarkers(categoryTue);
+                    }
+
+                    if (c == 'wed') {
+                        displayMarkers(categoryWed);
+                    }
+
+                    if (c == 'thr') {
+                        displayMarkers(categoryThr);
+                    }
+
+                    if (c == 'fri') {
+                        displayMarkers(categoryFri);
+                    }
+
+                    if (c == 'sat') {
+                        displayMarkers(categorySat);
+                    }
+
+
+                }
+
+
+            })
+
+
+        }
+
+
+        // 지도 위에 필터링한 결과의 마커를 찍는 함수입니다
+        function displayMarkers(list) {
+            var listEl = document.getElementById('placesList'),
+                menuEl = document.getElementById('menu_wrap'),
+                fragment = document.createDocumentFragment(),
+                listStr = '';
+
+            // 검색 결과 목록에 추가된 항목들을 제거합니다
+            removeAllChildNods(listEl);
+
+            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+            var bounds = new kakao.maps.LatLngBounds();
+
+            // 지도에 표시되고 있는 마커를 제거합니다
+            removeMarker();
+
+            if (list.length != 0) {
+                for (var i = 0; i < list.length; i++) {
+
+                    // 마커를 생성합니다
+                    var placePosition = new kakao.maps.LatLng(list[i]['latitude'], list[i]['longitude']),
+                        title = list[i]['name'],
+                        marker = addMarker(placePosition, i, title), // 검색 결과 마커를 생성합니다
+                        itemEl = getListItem(i, list[i]); // 검색 결과 항목 Element를 생성합니다
+
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    bounds.extend(placePosition);
+
+                    // 마커에 표시할 인포윈도우를 생성합니다 
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: '<div style="padding:10px; width: 250px; z-index:1;">' + list[i]['address'] + '</div>' // 인포윈도우에 표시할 내용
+                    });
+
+                    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
+                    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                    (function (marker, infowindow) {
+                        // 마커에 click 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+                        kakao.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+
+                        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+                        kakao.maps.event.addListener(marker, 'mouseout', function () {
+                            infowindow.close();
+                        });
+                    })(marker, infowindow);
+
+                    fragment.appendChild(itemEl);
+
+                }
+
+                
+                // 검색결과 항목 수를 보여줍니다
+                var numStr = i;
+                // console.log(numStr);
+
+                informNumofResults(numStr);
+
+                // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+                listEl.appendChild(fragment);
+                menuEl.scrollTop = 0;
+
+                map.setBounds(bounds);
+
+            }
+
+        }
+
+
+
+        // menu_wrap2에 나오는 검색시스템 
+
+        function searchMenu() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
+
+
+                        menuList = [];
+
+
+                        for (i = 0; i < drunkenVege.length; i++) {
+                            menuList.push(drunkenVege[i]['menu'].split('/'));
+                        }
+
+
+                        // console.log(menuList)
+
+
+                        for (i = 0; i < menuList.length; i++) {
+
+                            for (j = 0; j < menuList[i].length; j++) {
+
+                                var x = document.createElement("li");
+
+                                var menuNamePrice = '👽' + menuList[i][j].split('+')[0] + '   ' + '⚡' + menuList[i][j].split('+')[1] + '원';
+
+
+                                var t = document.createTextNode(menuNamePrice);
+                                x.appendChild(t);
+                                document.getElementById("myLists").appendChild(x);
+                                                               
+
+                            }                  
+
+                        }
+
+
+                    }
+                }
+            })
+
+        }
+
 
     </script>
 
