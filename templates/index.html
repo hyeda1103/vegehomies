@@ -526,9 +526,6 @@
                     if (response['result'] == 'success') {
                         let drunkenVege = response['drunkenVege']
 
-                        displayAllPlace(drunkenVege);
-
-
                         // DB에 있는 비건술집 이름을 랜덤으로 골라서 placeholder값으로 넣습니다. 
                         var list = [];
 
@@ -546,12 +543,7 @@
                         // 검색창에 키워드가 입력하기를 요청합니다.
                         var keyword = document.getElementById('search').value;
 
-                        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                            alert('키워드를 입력해주세요!');
-                            return false;
-                        } else
-
-                            displayPlaces(drunkenVege, keyword);
+                        displayPlaces(drunkenVege, keyword);
 
                     }
                 }
@@ -560,215 +552,88 @@
 
 
 
-        // 기본적으로 DB에 있는 모든 비건술집이 정보창과 지도에 떠있게 하는 함수입니다.
-        function displayAllPlace(drunkenVege) {
-
-
-            var listEl = document.getElementById('placesList'),
-                menuEl = document.getElementById('menu_wrap'),
-                fragment = document.createDocumentFragment(),
-                listStr = '';
-
-            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-            var bounds = new kakao.maps.LatLngBounds();
-
-            // 모든 비건술집정보를 담을 리스트를 생성합니다
-            var allPlaces = [];
-
-            for (let i = 0; i < drunkenVege.length; i++) {
-                allPlaces.push(drunkenVege[i]);
-            }
-
-            // console.log(allPlaces);
-
-
-            if (allPlaces.length != 0) {
-                for (var i = 0; i < allPlaces.length; i++) {
-
-                    // 마커를 생성합니다
-                    var placePosition = new kakao.maps.LatLng(allPlaces[i]['latitude'], allPlaces[i]['longitude']),
-                        title = allPlaces[i]['name'],
-                        marker = addMarker(placePosition, i, title), // 검색 결과 마커를 생성합니다
-                        itemEl = getListItem(i, allPlaces[i]); // 검색 결과 항목 Element를 생성합니다
-
-
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                    // LatLngBounds 객체에 좌표를 추가합니다
-                    bounds.extend(placePosition);
-
-                    // 마커에 표시할 인포윈도우를 생성합니다 
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div style="padding:10px; width: 250px; z-index:1;">' + allPlaces[i]['address'] + '</div>' // 인포윈도우에 표시할 내용
-                    });
-
-                    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
-                    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                    (function (marker, infowindow) {
-                        // 마커에 click 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
-                        kakao.maps.event.addListener(marker, 'click', function () {
-                            infowindow.open(map, marker);
-                        });
-
-                        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-                        kakao.maps.event.addListener(marker, 'mouseout', function () {
-                            infowindow.close();
-                        });
-                    })(marker, infowindow);
-
-                    fragment.appendChild(itemEl);
-
-                }
-
-                // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-                listEl.appendChild(fragment);
-                menuEl.scrollTop = 0;
-
-                map.setBounds(bounds);
-
-            }
-
-        }
-
-
-
         // 검색 결과 목록과 마커를 표출하는 함수입니다.
         function displayPlaces(drunkenVege, keyword) {
 
-            var listEl = document.getElementById('placesList'),
-                menuEl = document.getElementById('menu_wrap'),
-                fragment = document.createDocumentFragment(),
-                listStr = '';
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                // alert('검색어를 입력해주세요!');
+                displayMarkers(drunkenVege);
 
-            // 검색 결과 목록에 추가된 항목들을 제거합니다
-            removeAllChildNods(listEl);
-
-            // 검색조건에 알맞은 비건술집정보를 담을 리스트를 생성합니다
-            var places = [];
-
-            for (let i = 0; i < drunkenVege.length; i++) {
-
-                // 특수문자 포함여부를 확인하기 위한 정규표현식 
-                var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
-
-
-                // DB 지역구
-                var district = drunkenVege[i]['district'];
-                var cityOnly = district.split(' ')[0];
-                var citynameOnly = cityOnly.slice(0, -1);
-                var districtOnly = district.split(' ')[1];
-                var districtRe = district.replace(/(\s*)/g, ""); // 지역구의 모든 공백을 제거
-                var newDistrict = districtRe.replace(regExp, ""); // 모든 특수문자를 제거
-
-
-                // DB 식당이름
-                var name = drunkenVege[i]['name'];
-                var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
-                var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
-
-
-                // 입력된 키워드
-                var keyword = document.getElementById('search').value;
-                var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
-                var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
-
-
-                if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == citynameOnly || newKeyword == districtOnly) {
-                    places.push(drunkenVege[i]);
-                }
-            }
-
-            // console.log(places);
-
-
-
-            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-            var bounds = new kakao.maps.LatLngBounds();
-
-            // 지도에 표시되고 있는 마커를 제거합니다
-            removeMarker();
-
-
-            if (places.length != 0) {
-                for (var i = 0; i < places.length; i++) {
-
-
-                    // 마커를 생성합니다
-                    var placePosition = new kakao.maps.LatLng(places[i]['latitude'], places[i]['longitude']),
-                        title = places[i]['name'],
-                        marker = addMarker(placePosition, i, title), // 검색 결과 마커를 생성합니다
-                        itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                    // LatLngBounds 객체에 좌표를 추가합니다
-                    bounds.extend(placePosition);
-
-                    // 마커에 표시할 인포윈도우를 생성합니다 
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div style="padding:10px; width: 250px; z-index:1;">' + places[i]['address'] + '</div>' // 인포윈도우에 표시할 내용
-                    });
-
-                    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
-                    // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                    (function (marker, infowindow) {
-                        // 마커에 click 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
-                        kakao.maps.event.addListener(marker, 'click', function () {
-                            infowindow.open(map, marker);
-                        });
-
-                        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-                        kakao.maps.event.addListener(marker, 'mouseout', function () {
-                            infowindow.close();
-                        });
-                    })(marker, infowindow);
-
-                    fragment.appendChild(itemEl);
-
-                }
-
-                // 검색결과 항목 수를 보여줍니다
-                var numStr = i;
-                // console.log(numStr);
-
-                informNumofResults(numStr);
-
-
-                // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-                listEl.appendChild(fragment);
-                menuEl.scrollTop = 0;
-
-                map.setBounds(bounds);
 
             } else {
 
-                informNoresults(drunkenVege);
+                // 검색조건에 알맞은 비건술집정보를 담을 리스트를 생성합니다
+                var places = [];
 
-                return false;
+                for (let i = 0; i < drunkenVege.length; i++) {
+
+                    // 특수문자 포함여부를 확인하기 위한 정규표현식 
+                    var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
+
+
+                    // DB 지역구
+                    var district = drunkenVege[i]['district'];
+                    var cityOnly = district.split(' ')[0];
+                    var citynameOnly = cityOnly.slice(0, -1);
+                    var districtOnly = district.split(' ')[1];
+                    var districtRe = district.replace(/(\s*)/g, ""); // 지역구의 모든 공백을 제거
+                    var newDistrict = districtRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                    // DB 식당이름
+                    var name = drunkenVege[i]['name'];
+                    var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
+                    var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                    // 입력된 키워드
+                    var keyword = document.getElementById('search').value;
+                    var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
+                    var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                    if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == citynameOnly || newKeyword == districtOnly) {
+                        places.push(drunkenVege[i]);
+                    }
+                }
+
+                // console.log(places);
+
+                if (places.length != 0) {
+
+                    displayMarkers(places);
+
+                } else {
+
+                    // 검색 결과 목록에 추가된 항목들을 제거합니다
+                    var listEl = document.getElementById('placesList');
+                    removeAllChildNods(listEl);
+
+                    // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+                    var bounds = new kakao.maps.LatLngBounds();
+
+                    // 지도에 표시되고 있는 마커를 제거합니다
+                    removeMarker();
+
+                    // 검색결과가 존재하지 않음을 표기합니다
+                    document.getElementById("numofResults").innerHTML = '<p>' + '검색결과가 존재하지 않습니다.' + '</p>';
+
+                    // // 2초 뒤에 표기한 메시지가 사라집니다
+                    // $('#numofResults').fadeIn('slow', function () {
+                    //     $('#numofResults').delay(2000)
+
+                    // });
+
+                    // // 검색어를 리셋합니다
+                    // var keyword = '';
+
+                    // // 3초 뒤에 검색 첫 화면으로 돌아갑니다
+                    // setTimeout(() => {
+                    //     displayPlaces(drunkenVege, keyword);
+                    // }, 3000);
+
+                }
             }
-
-        }
-
-
-
-        function informNumofResults(numStr) {
-            document.getElementById("numofResults").innerHTML = '<p>' + '총 ' + numStr + '개의 검색결과가 있습니다.' + '</p>';
-        }
-
-
-
-        // 검색결과가 없음을 알려주는 함수입니다
-        function informNoresults(drunkenVege) {
-
-            document.getElementById("numofResults").innerHTML = '<p>' + '검색결과가 존재하지 않습니다.' + '</p>';
-            // 1.5초 뒤에 검색결과가 없음을 알리는 메시지가 사라집니다
-            $('#numofResults').fadeIn('slow', function () {
-                $('#numofResults').delay(1500).fadeOut();
-
-            });
-
-            // 3초 뒤에 검색 첫 화면으로 돌아갑니다
-            setTimeout(() => {
-                displayAllPlace(drunkenVege);
-            }, 3000);
 
         }
 
@@ -931,7 +796,7 @@
                     }
 
                     // 요일별 filter
-    
+
                     if (c == 'sun') {
                         displayMarkers(categorySun);
                     }
@@ -970,7 +835,7 @@
         }
 
 
-        // 지도 위에 필터링한 결과의 마커를 찍는 함수입니다
+        // 지도 위에 마커를 찍는 함수입니다
         function displayMarkers(list) {
             var listEl = document.getElementById('placesList'),
                 menuEl = document.getElementById('menu_wrap'),
@@ -1023,12 +888,12 @@
 
                 }
 
-                
+
                 // 검색결과 항목 수를 보여줍니다
                 var numStr = i;
                 // console.log(numStr);
 
-                informNumofResults(numStr);
+                document.getElementById("numofResults").innerHTML = '<p>' + '총 ' + numStr + '개의 검색결과가 있습니다.' + '</p>';
 
                 // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
                 listEl.appendChild(fragment);
@@ -1079,9 +944,9 @@
                                 var t = document.createTextNode(menuNamePrice);
                                 x.appendChild(t);
                                 document.getElementById("myLists").appendChild(x);
-                                                               
 
-                            }                  
+
+                            }
 
                         }
 
