@@ -242,7 +242,6 @@
 
 
         .dayFilter {
-            text-align: center;
             display: none;
         }
 
@@ -256,59 +255,9 @@
             border-radius: 10%;
         }
 
-        .sun {
-            color: tomato;
-        }
-
-        .mon {
-            color: teal;
-        }
-
-        .tue {
-            color: teal;
-        }
-
-        .wed {
-            color: teal;
-        }
-
-        .thr {
-            color: teal;
-        }
-
-        .fri {
-            color: teal;
-        }
-
-        .sat {
-            color: mediumblue;
-        }
-
-        .day {
-            color: peru;
-        }
-
-        .night {
-            color: slateblue;
-        }
-
-        .midnight {
-            color: midnightblue;
-        }
-
-        .filterBtn.day:hover {
-            background-color: peru;
-            color: midnightblue;
-        }
-
-        .filterBtn.night:hover {
-            background-color: slateblue;
-            color: thistle;
-        }
-
-        .filterBtn.midnight:hover {
-            background-color: midnightblue;
-            color: peru;
+        .filterChk {
+            text-align: left;
+            font-size: 6px;
         }
 
         .filterBtn:hover {
@@ -425,22 +374,22 @@
 
 
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filterDay()">요일고르기</button>
-            <button id="searchBtn" class="filterBtn" type="submit" onclick="filterTime()">시간고르기</button>
 
             <div id="filterDiv1" class="dayFilter">
-                <button id="searchBtn" class="filterBtn sun" type="submit" onclick="filterSelection('sun')">일요일</button>
-                <button id="searchBtn" class="filterBtn mon" type="submit" onclick="filterSelection('mon')">월요일</button>
-                <button id="searchBtn" class="filterBtn tue" type="submit" onclick="filterSelection('tue')">화요일</button>
-                <button id="searchBtn" class="filterBtn wed" type="submit" onclick="filterSelection('wed')">수요일</button>
-                <button id="searchBtn" class="filterBtn thr" type="submit" onclick="filterSelection('thr')">목요일</button>
-                <button id="searchBtn" class="filterBtn fri" type="submit" onclick="filterSelection('fri')">금요일</button>
-                <button id="searchBtn" class="filterBtn sat" type="submit" onclick="filterSelection('sat')">토요일</button>
-            </div>
-
-            <div id="filterDiv2" class="timeFilter">
-                <button id="searchBtn" class="filterBtn day" type="submit">낮술 (오후 3시 전)</button>
-                <button id="searchBtn" class="filterBtn night" type="submit">저녁술 (오후 6시~10시)</button>
-                <button id="searchBtn" class="filterBtn midnight" type="submit">심야술 (오후 11시 후)</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">일요일</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">월요일</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">화요일</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">수요일</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">목요일</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">금요일</button>
+                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    onclick="filterSelection()">토요일</button>
             </div>
 
             <br>
@@ -532,7 +481,7 @@
                         for (let i = 0; i < drunkenVege.length; i++) {
                             var name = drunkenVege[i]['name'];
                             list.push(name);
-                            console.log(name);
+                            // console.log(name);
                         }
 
                         var list, r = Math.floor(Math.random() * list.length);
@@ -554,6 +503,10 @@
 
         // 검색 결과 목록과 마커를 표출하는 함수입니다.
         function displayPlaces(drunkenVege, keyword) {
+
+            // 검색어를 다시 입력하는 경우 기존에 체크된 필터조건은 리셋합니다
+            $('input:checkbox').removeAttr('checked');
+
 
             if (!keyword.replace(/^\s+|\s+$/g, '')) {
                 // alert('검색어를 입력해주세요!');
@@ -618,20 +571,19 @@
                     // 검색결과가 존재하지 않음을 표기합니다
                     document.getElementById("numofResults").innerHTML = '<p>' + '검색결과가 존재하지 않습니다.' + '</p>';
 
-                    // // 2초 뒤에 표기한 메시지가 사라집니다
-                    // $('#numofResults').fadeIn('slow', function () {
-                    //     $('#numofResults').delay(2000)
+                    // 2초 뒤에 표기한 메시지가 사라집니다
+                    $('#numofResults').fadeIn('slow', function () {
+                        $('#numofResults').delay(2000)
 
-                    // });
+                    });
 
-                    // // 검색어를 리셋합니다
-                    // var keyword = '';
+                    // 검색어를 리셋합니다
+                    var keyword = '';
 
-                    // // 3초 뒤에 검색 첫 화면으로 돌아갑니다
-                    // setTimeout(() => {
-                    //     displayPlaces(drunkenVege, keyword);
-                    // }, 3000);
-
+                    // 3초 뒤에 검색 첫 화면으로 돌아갑니다
+                    setTimeout(() => {
+                        displayPlaces(drunkenVege, keyword);
+                    }, 1000);
                 }
             }
 
@@ -732,105 +684,147 @@
         }
 
 
-        function filterTime() {
-            $('#filterDiv2').slideToggle();
-        }
-
-
-        function filterSelection(c) {
+        function filterSelection() {
             $.ajax({
                 type: 'GET',
                 url: '/vegeInfo',
                 data: {},
                 success: function (response) {
                     let drunkenVege = response['drunkenVege'];
+                    let resArr = drunkenVege;
 
                     var keyword = document.getElementById('search').value;
 
-                    var allPlaces = [];
+                    var places = [];
 
                     for (let i = 0; i < drunkenVege.length; i++) {
-                        allPlaces.push(drunkenVege[i]);
-                    }
 
-                    // console.log(allPlaces)
+                        // 특수문자 포함여부를 확인하기 위한 정규표현식 
+                        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
 
-                    var categoryMon = [],
-                        categoryTue = [],
-                        categoryWed = [],
-                        categoryThr = [],
-                        categoryFri = [],
-                        categorySat = [],
-                        categorySun = [];
 
-                    if (allPlaces.length != 0) {
-                        for (var i = 0; i < allPlaces.length; i++) {
-                            if (allPlaces[i]['runningtime'].includes('월') == true) {
-                                categoryMon.push(allPlaces[i]);
-                            }
+                        // DB 지역구
+                        var district = drunkenVege[i]['district'];
+                        var cityOnly = district.split(' ')[0];
+                        var citynameOnly = cityOnly.slice(0, -1);
+                        var districtOnly = district.split(' ')[1];
+                        var districtRe = district.replace(/(\s*)/g, ""); // 지역구의 모든 공백을 제거
+                        var newDistrict = districtRe.replace(regExp, ""); // 모든 특수문자를 제거
 
-                            if (allPlaces[i]['runningtime'].includes('화') == true) {
-                                categoryTue.push(allPlaces[i]);
-                            }
 
-                            if (allPlaces[i]['runningtime'].includes('수') == true) {
-                                categoryWed.push(allPlaces[i]);
-                            }
+                        // DB 식당이름
+                        var name = drunkenVege[i]['name'];
+                        var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
+                        var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
 
-                            if (allPlaces[i]['runningtime'].includes('목') == true) {
-                                categoryThr.push(allPlaces[i]);
-                            }
 
-                            if (allPlaces[i]['runningtime'].includes('금') == true) {
-                                categoryFri.push(allPlaces[i]);
-                            }
+                        // 입력된 키워드
+                        var keyword = document.getElementById('search').value;
+                        var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
+                        var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
 
-                            if (allPlaces[i]['runningtime'].includes('토') == true) {
-                                categorySat.push(allPlaces[i]);
-                            }
 
-                            if (allPlaces[i]['runningtime'].includes('일') == true) {
-                                categorySun.push(allPlaces[i]);
-                            }
+                        if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == citynameOnly || newKeyword == districtOnly) {
+                            places.push(drunkenVege[i]);
                         }
                     }
 
-                    // 요일별 filter
+                    // console.log(places)
 
-                    if (c == 'sun') {
-                        displayMarkers(categorySun);
+                    let pesArr = places;
+
+                    let filtChk = document.querySelectorAll(".filterChk");
+
+                    // 검색어를 입력하지 않은 상태에서 필터링하는 경우
+                    if (keyword == '') {
+
+                        if (filtChk[0].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('일') == true;
+                            })
+                            displayMarkers(resArr);
+                        } if (filtChk[1].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('월') == true;
+                            })
+                            displayMarkers(resArr);
+                        } if (filtChk[2].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('화') == true;
+                            })
+                            displayMarkers(resArr);
+                        } if (filtChk[3].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('수') == true;
+                            })
+                            displayMarkers(resArr);
+                        } if (filtChk[4].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('목') == true;
+                            })
+                            displayMarkers(resArr);
+                        } if (filtChk[5].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('금') == true;
+                            })
+                            displayMarkers(resArr);
+                        } if (filtChk[6].checked == true) {
+                            resArr = resArr.filter(function (resArr) {
+                                return resArr['runningtime'].includes('토') == true;
+                            })
+                            displayMarkers(resArr);
+                        } else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                            && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false) {
+                            resArr = drunkenVege;
+                            displayMarkers(resArr);
+                        }
+                    // 검색어가 입력된 상태에서 필터링하는 경우
+                    } else {
+                        if (filtChk[0].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('일') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } if (filtChk[1].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('월') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } if (filtChk[2].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('화') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } if (filtChk[3].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('수') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } if (filtChk[4].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('목') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } if (filtChk[5].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('금') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } if (filtChk[6].checked == true) {
+                            pesArr = pesArr.filter(function (pesArr) {
+                                return pesArr['runningtime'].includes('토') == true;
+                            })
+                            displayMarkers(pesArr);
+                        } else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                            && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false) {
+                            pesArr = places;
+                            displayMarkers(pesArr);
+                        }
                     }
-
-                    if (c == 'mon') {
-                        displayMarkers(categoryMon);
-                    }
-
-                    if (c == 'tue') {
-                        displayMarkers(categoryTue);
-                    }
-
-                    if (c == 'wed') {
-                        displayMarkers(categoryWed);
-                    }
-
-                    if (c == 'thr') {
-                        displayMarkers(categoryThr);
-                    }
-
-                    if (c == 'fri') {
-                        displayMarkers(categoryFri);
-                    }
-
-                    if (c == 'sat') {
-                        displayMarkers(categorySat);
-                    }
-
 
                 }
 
-
             })
-
 
         }
 
