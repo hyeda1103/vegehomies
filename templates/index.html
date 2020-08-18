@@ -593,11 +593,11 @@
 
         // 검색결과 항목을 Element로 반환하는 함수입니다
         function getListItem(index, places) {
-
+           
             var instaUrl = "http://www.instagram.com/" + places.instaID + "/?hl=ko";
 
             var el = document.createElement('li'),
-                itemStr = '<div id = "vegeRestaurant">' + '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+                itemStr = '<div id = "vegeRestaurant" onclick="reboundMap(\'' + places.instaID + '\')">' + '<span class="markerbg marker_' + (index + 1) + '"></span>' +
                     '<div class="info">' +
                     '   <h5>' + places.name + '</h5>';
 
@@ -615,6 +615,44 @@
             return el;
 
 
+        }
+
+
+        // 목록창의 특정 item div를 클릭하면 해당하는 비건술집을 중심으로 지도 범위를 재설정하는 함수입니다
+        // ex) 포인트프레드릭 div 클릭하면 포인트프레드릭 마커가 지도 중심으로 뜬다. 
+        function reboundMap(bar) {
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+
+                    space = [];
+
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
+
+                        for (i = 0; i < drunkenVege.length; i++) {
+                            let instaID = drunkenVege[i]['instaID']
+                            // console.log(instaID);
+
+                            if (bar == instaID) {
+                                space.push(drunkenVege[i])
+                                console.log(space[0])
+
+                                var point = new kakao.maps.LatLng(space[0]['latitude'], space[0]['longitude']);
+
+                                var bounds = new kakao.maps.LatLngBounds();
+                            
+                                bounds.extend(point);
+
+                                map.setBounds(bounds);
+
+                            }
+                        }
+                    }
+                }
+            })
         }
 
 
@@ -778,7 +816,7 @@
                             resArr = drunkenVege;
                             displayMarkers(resArr);
                         }
-                    // 검색어가 입력된 상태에서 필터링하는 경우
+                        // 검색어가 입력된 상태에서 필터링하는 경우
                     } else {
                         if (filtChk[0].checked == true) {
                             pesArr = pesArr.filter(function (pesArr) {
