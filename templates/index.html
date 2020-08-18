@@ -241,7 +241,7 @@
         }
 
 
-        .dayFilter {
+        #filterDiv {
             display: none;
         }
 
@@ -352,16 +352,6 @@
         <!-- 장소와 요일 기반 검색 -->
         <div id="menu_wrap" class="bg_white">
 
-            <div>
-
-                <button id="searchBtn" onclick="switchSearchOption();" class="toggleButton" type="submit"><u> 안주와 술 기반
-                        검색🐇</u></button>
-
-            </div>
-
-            <br>
-
-
             <div class="searchContainer">
                 <form onsubmit="searchPlaces(); return false;">
                     <div>
@@ -373,25 +363,32 @@
             </div>
 
 
-            <button id="searchBtn" class="filterBtn" type="submit" onclick="filterDay()">요일고르기</button>
+            <button id="searchBtn" class="filterBtn" type="submit" onclick="filter()">필터열기</button>
+            <div id=filterDiv>
+                <div id="filterDiv1" class="dayFilter">
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">일요일</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">월요일</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">화요일</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">수요일</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">목요일</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">금요일</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">토요일</input>
+                </div>
 
-            <div id="filterDiv1" class="dayFilter">
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">일요일</button>
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">월요일</button>
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">화요일</button>
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">수요일</button>
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">목요일</button>
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">금요일</button>
-                <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
-                    onclick="filterSelection()">토요일</button>
+                <div id="filterDiv2" class="menuFilter">
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">마라탕</input>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                        onclick="filterSelection()">마른안주</input>
+                </div>
             </div>
-
             <br>
 
             <p id="numofResults" class="informResults"></p>
@@ -406,28 +403,17 @@
         <div id="menu_wrap2" class="bg_white">
 
             <div>
-                <button id="searchBtn" onclick="switchSearchOption();" class="toggleButton" type="submit"><u>장소와 요일 기반
-                        검색🐢</u></button>
+                <button id="searchBtn" onclick="switchSearchOption();" class="toggleButton"
+                    type="submit">영차영차🐢</button>
             </div>
 
             <br>
-            <div class="searchContainer">
-                <form onsubmit="searchPlaces(); return false;">
-                    <div>
-                        <input type="text" class="searchBox" placeholder=" " id="search">
-                        <button id="searchBtn" class="searchButton" type="submit">검색</button>
-                    </div>
-                </form>
-
-            </div>
-
-            <br>
-
-            <p id="numofResults" class="informResults"></p>
 
             <hr>
 
-            <ol id="myLists"></ol>
+            <br>
+
+            <ul id="menuList"></ul>
 
         </div>
 
@@ -459,7 +445,7 @@
         // 키워드로 장소를 검색합니다.
         $(document).ready(function () {
             searchPlaces();
-            searchMenu();
+
         });
 
 
@@ -593,7 +579,7 @@
 
         // 검색결과 항목을 Element로 반환하는 함수입니다
         function getListItem(index, places) {
-           
+
             var instaUrl = "http://www.instagram.com/" + places.instaID + "/?hl=ko";
 
             var el = document.createElement('li'),
@@ -605,8 +591,9 @@
 
             itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<span class="tel">' + '@' + places.instaID + '</span>' + '</a>';
 
-            itemStr += '<br>' + '<div id="menuBox">' + '<ol id="myList" style="display: block;">' + '</ol>' + '</div>' + '</div>';
+            itemStr += '<button id="searchBtn" onclick="showMenu(\'' + places.instaID + '\', \'' + index + '\');" class="toggleButton" type="submit">' + '안주구경👀' + '</button>';
 
+            itemStr += '<br>' + '<div id="menuBox">' + '</div>' + '</div>';
 
 
             el.innerHTML = itemStr;
@@ -615,6 +602,75 @@
             return el;
 
 
+        }
+
+
+
+        function showMenu(bar, num) {
+
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+
+                    if (document.getElementById('menu_wrap')) {
+
+                        if (document.getElementById('menu_wrap').style.display == 'none') {
+                            document.getElementById('menu_wrap').style.display = 'block';
+                            document.getElementById('menu_wrap2').style.display = 'none';
+                        } else {
+                            document.getElementById('menu_wrap').style.display = 'none';
+                            document.getElementById('menu_wrap2').style.display = 'block';
+                        }
+                    }
+
+                    console.log(num);
+
+                    space = [];
+
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
+
+                        for (i = 0; i < drunkenVege.length; i++) {
+                            let instaID = drunkenVege[i]['instaID']
+                            // console.log(instaID);
+
+                            if (bar == instaID) {
+                                space.push(drunkenVege[i]);
+                            }
+
+                        }
+
+                        let menuList = space[0]['menu'].split('/');
+
+                        let menuListEl = document.getElementById('menuList');
+                        removeAllChildNods(menuListEl);
+
+                        for (i = 0; i < menuList.length; i++) {
+
+                            var x = document.createElement("li");
+
+                            var menuName = '👽' + menuList[i].split('+')[0];
+
+                            var menuPrice = '⚡' + menuList[i].split('+')[1] + '원';
+
+                            var menuNamePrice = menuName + '   ' + menuPrice;
+
+
+                            var t = document.createTextNode(menuNamePrice);
+                            x.appendChild(t);
+
+                            console.log(x);
+
+                            document.getElementById("menuList").appendChild(x);
+
+
+                        }
+
+                    }
+                }
+            })
         }
 
 
@@ -637,13 +693,12 @@
                             // console.log(instaID);
 
                             if (bar == instaID) {
-                                space.push(drunkenVege[i])
-                                console.log(space[0])
+                                space.push(drunkenVege[i]);
 
                                 var point = new kakao.maps.LatLng(space[0]['latitude'], space[0]['longitude']);
 
                                 var bounds = new kakao.maps.LatLngBounds();
-                            
+
                                 bounds.extend(point);
 
                                 map.setBounds(bounds);
@@ -716,8 +771,8 @@
         }
 
 
-        function filterDay() {
-            $('#filterDiv1').slideToggle();
+        function filter() {
+            $('#filterDiv').slideToggle();
 
         }
 
@@ -771,93 +826,65 @@
 
                     let pesArr = places;
 
+                    console.log(pesArr)
+
                     let filtChk = document.querySelectorAll(".filterChk");
+
+                    let filterEl = ['일', '월', '화', '수', '목', '금', '토', '마라탕', '마른안주'];
+
 
                     // 검색어를 입력하지 않은 상태에서 필터링하는 경우
                     if (keyword == '') {
 
-                        if (filtChk[0].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('일') == true;
-                            })
-                            displayMarkers(resArr);
-                        } if (filtChk[1].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('월') == true;
-                            })
-                            displayMarkers(resArr);
-                        } if (filtChk[2].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('화') == true;
-                            })
-                            displayMarkers(resArr);
-                        } if (filtChk[3].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('수') == true;
-                            })
-                            displayMarkers(resArr);
-                        } if (filtChk[4].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('목') == true;
-                            })
-                            displayMarkers(resArr);
-                        } if (filtChk[5].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('금') == true;
-                            })
-                            displayMarkers(resArr);
-                        } if (filtChk[6].checked == true) {
-                            resArr = resArr.filter(function (resArr) {
-                                return resArr['runningtime'].includes('토') == true;
-                            })
-                            displayMarkers(resArr);
-                        } else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
-                            && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false) {
-                            resArr = drunkenVege;
-                            displayMarkers(resArr);
+
+                        for (i = 0; i < filtChk.length; i++) {
+                            if (filtChk[i].checked == true) {
+
+                                resArr = resArr.filter(function (resArr) {
+                                    return resArr['runningtime'].includes(filterEl[i]) == true
+                                        || resArr['menu'].includes(filterEl[i]) == true;
+                                })
+                                console.log(resArr);
+
+                                // console.log(ressArr);
+                                displayMarkers(resArr);
+
+                            }
+
+                            else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                && filtChk[6].checked == false && filtChk[7].checked == false && filtChk[8].checked == false) {
+
+                                displayMarkers(drunkenVege);
+                            }
+
                         }
-                        // 검색어가 입력된 상태에서 필터링하는 경우
-                    } else {
-                        if (filtChk[0].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('일') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } if (filtChk[1].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('월') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } if (filtChk[2].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('화') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } if (filtChk[3].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('수') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } if (filtChk[4].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('목') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } if (filtChk[5].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('금') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } if (filtChk[6].checked == true) {
-                            pesArr = pesArr.filter(function (pesArr) {
-                                return pesArr['runningtime'].includes('토') == true;
-                            })
-                            displayMarkers(pesArr);
-                        } else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
-                            && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false) {
-                            pesArr = places;
-                            displayMarkers(pesArr);
+
+                    }
+
+                    else {
+
+                        for (i = 0; i < filtChk.length - 2; i++) {
+                            if (filtChk[i].checked == true) {
+
+                                pesArr = pesArr.filter(function (pesArr) {
+                                    return pesArr['runningtime'].includes(filterEl[i]) == true
+                                        || pesArr['menu'].includes(filterEl[i]) == true;
+                                })
+
+                                displayMarkers(pesArr);
+
+                            }
+
+                            else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                && filtChk[6].checked == false && filtChk[7].checked == false && filtChk[8].checked == false) {
+
+                                displayMarkers(pesArr);
+                            }
+
                         }
+
                     }
 
                 }
@@ -934,58 +961,6 @@
                 map.setBounds(bounds);
 
             }
-
-        }
-
-
-
-        // menu_wrap2에 나오는 검색시스템 
-
-        function searchMenu() {
-
-            $.ajax({
-                type: 'GET',
-                url: '/vegeInfo',
-                data: {},
-                success: function (response) {
-
-                    if (response['result'] == 'success') {
-                        let drunkenVege = response['drunkenVege']
-
-
-                        menuList = [];
-
-
-                        for (i = 0; i < drunkenVege.length; i++) {
-                            menuList.push(drunkenVege[i]['menu'].split('/'));
-                        }
-
-
-                        // console.log(menuList)
-
-
-                        for (i = 0; i < menuList.length; i++) {
-
-                            for (j = 0; j < menuList[i].length; j++) {
-
-                                var x = document.createElement("li");
-
-                                var menuNamePrice = '👽' + menuList[i][j].split('+')[0] + '   ' + '⚡' + menuList[i][j].split('+')[1] + '원';
-
-
-                                var t = document.createTextNode(menuNamePrice);
-                                x.appendChild(t);
-                                document.getElementById("myLists").appendChild(x);
-
-
-                            }
-
-                        }
-
-
-                    }
-                }
-            })
 
         }
 
