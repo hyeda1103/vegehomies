@@ -50,7 +50,7 @@
         }
 
         #menu_wrap2 {
-            display: none;
+            display: block;
             background: rgba(255, 255, 255, 0.8);
         }
 
@@ -67,7 +67,24 @@
             border-radius: 10px;
         }
 
+        .bg_white2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 22%;
+            margin: 10px 10px 10px 23%;
+            padding: 20px 5px 5px 5px;
+            overflow-y: scroll;
+            z-index: 1;
+            border-radius: 10px;
+        }
+
         .bg_white::-webkit-scrollbar {
+            display: none;
+        }
+
+        .bg_white2::-webkit-scrollbar {
             display: none;
         }
 
@@ -197,7 +214,7 @@
         }
 
         #grad1 {
-            background-image: linear-gradient(rgba(0, 155, 34, 0.8), rgb(241, 241, 238), rgba(94, 0, 202, 0.8));
+            background-image: linear-gradient(rgba(0, 155, 34, 0.8), rgba(22, 87, 209, 0.9));
         }
 
         .searchContainer {
@@ -346,8 +363,8 @@
 <body>
     <div class="map_wrap" id="grad1" style="height: 100vh; padding: 10px;">
 
-        <div id="map" style="width: 77%; height:100%; position:relative;
-        overflow:hidden;margin-left: 22.8%; border-radius: 10px;"></div>
+        <div id="map" style="width: 54.5%; height:100%; position:relative;
+        overflow:hidden; margin-left: 45.45%; border-radius: 10px;"></div>
 
         <!-- 장소와 요일 기반 검색 -->
         <div id="menu_wrap" class="bg_white">
@@ -366,27 +383,29 @@
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filter()">필터열기</button>
             <div id=filterDiv>
                 <div id="filterDiv1" class="dayFilter">
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="일"
                         onclick="filterSelection()">일요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="월"
                         onclick="filterSelection()">월요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="화"
                         onclick="filterSelection()">화요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="수"
                         onclick="filterSelection()">수요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="목"
                         onclick="filterSelection()">목요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="금"
                         onclick="filterSelection()">금요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="토"
                         onclick="filterSelection()">토요일</input>
                 </div>
 
                 <div id="filterDiv2" class="menuFilter">
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk2" type="checkbox" value="마라탕"
                         onclick="filterSelection()">마라탕</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="enter"
+                    <input id="searchBtn" class="filterChk2" type="checkbox" value="마른안주"
                         onclick="filterSelection()">마른안주</input>
+                    <input id="searchBtn" class="filterChk2" type="checkbox" value="전"
+                        onclick="filterSelection()">전</input>
                 </div>
             </div>
             <br>
@@ -400,11 +419,10 @@
         </div>
 
         <!-- 안주와 술 기반 검색 -->
-        <div id="menu_wrap2" class="bg_white">
+        <div id="menu_wrap2" class="bg_white2">
 
             <div>
-                <button id="searchBtn" onclick="switchSearchOption();" class="toggleButton"
-                    type="submit">영차영차🐢</button>
+                <button id="searchBtn" class="toggleButton" type="submit" onclick="showMenu()"> 영차영차🐢</button>
             </div>
 
             <br>
@@ -445,7 +463,7 @@
         // 키워드로 장소를 검색합니다.
         $(document).ready(function () {
             searchPlaces();
-
+            showMenu();
         });
 
 
@@ -569,7 +587,7 @@
                     // 3초 뒤에 검색 첫 화면으로 돌아갑니다
                     setTimeout(() => {
                         displayPlaces(drunkenVege, keyword);
-                    }, 1000);
+                    }, 2000);
                 }
             }
 
@@ -591,7 +609,7 @@
 
             itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<span class="tel">' + '@' + places.instaID + '</span>' + '</a>';
 
-            itemStr += '<button id="searchBtn" onclick="showMenu(\'' + places.instaID + '\', \'' + index + '\');" class="toggleButton" type="submit">' + '안주구경👀' + '</button>';
+            itemStr += '<button id="searchBtn" onclick="searchMenu(\'' + places.instaID + '\', \'' + index + '\');" class="toggleButton" type="submit">' + '안주구경👀' + '</button>';
 
             itemStr += '<br>' + '<div id="menuBox">' + '</div>' + '</div>';
 
@@ -605,27 +623,76 @@
         }
 
 
-
-        function showMenu(bar, num) {
-
+        function showMenu() {
             $.ajax({
                 type: 'GET',
                 url: '/vegeInfo',
                 data: {},
                 success: function (response) {
 
-                    if (document.getElementById('menu_wrap')) {
+                    space = [];
 
-                        if (document.getElementById('menu_wrap').style.display == 'none') {
-                            document.getElementById('menu_wrap').style.display = 'block';
-                            document.getElementById('menu_wrap2').style.display = 'none';
-                        } else {
-                            document.getElementById('menu_wrap').style.display = 'none';
-                            document.getElementById('menu_wrap2').style.display = 'block';
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
+
+                        for (i = 0; i < drunkenVege.length; i++) {
+                            let instaID = drunkenVege[i]['instaID']
+                            // console.log(instaID);
+
+                            space.push(drunkenVege[i]);
+
                         }
-                    }
 
-                    console.log(num);
+                        menuList = [];
+
+                        for (j = 0; j < space.length; j++) {
+                            menuList.push(space[j]['menu'].split('/'));
+                        }
+
+                        let menuListEl = document.getElementById('menuList');
+
+                        removeAllChildNods(menuListEl);
+
+                        for (i = 0; i < menuList.length; i++) {
+
+                            for (j = 0; j < menuList[i].length; j++) {
+
+                                var x = document.createElement("li");
+
+                                var menuName = '👽' + menuList[i][j].split('+')[0];
+
+                                var menuPrice = '⚡' + menuList[i][j].split('+')[1] + '원';
+
+                                var menuNamePrice = menuName + '   ' + menuPrice;
+
+
+                                var t = document.createTextNode(menuNamePrice);
+
+                                x.appendChild(t);
+
+                                // console.log(x);
+
+                                document.getElementById("menuList").appendChild(x);
+
+                            }
+
+
+                        }
+
+                    }
+                }
+            })
+        }
+
+
+
+        function searchMenu(bar, num) {
+
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
 
                     space = [];
 
@@ -659,9 +726,8 @@
 
 
                             var t = document.createTextNode(menuNamePrice);
-                            x.appendChild(t);
 
-                            console.log(x);
+                            x.appendChild(t);
 
                             document.getElementById("menuList").appendChild(x);
 
@@ -709,22 +775,6 @@
                 }
             })
         }
-
-
-
-        function switchSearchOption(evt, menu) {
-            if (document.getElementById('menu_wrap')) {
-
-                if (document.getElementById('menu_wrap').style.display == 'none') {
-                    document.getElementById('menu_wrap').style.display = 'block';
-                    document.getElementById('menu_wrap2').style.display = 'none';
-                } else {
-                    document.getElementById('menu_wrap').style.display = 'none';
-                    document.getElementById('menu_wrap2').style.display = 'block';
-                }
-            }
-        }
-
 
 
 
@@ -826,67 +876,166 @@
 
                     let pesArr = places;
 
-                    console.log(pesArr)
-
                     let filtChk = document.querySelectorAll(".filterChk");
 
-                    let filterEl = ['일', '월', '화', '수', '목', '금', '토', '마라탕', '마른안주'];
+                    let filterEl = [];
+
+                    for (i = 0; i < filtChk.length; i++) {
+                        filterEl.push(filtChk[i]['value']);
+                    }
+
+                    let filtChk2 = document.querySelectorAll(".filterChk2");
+
+                    let filter2El = [];
+
+                    for (i = 0; i < filtChk2.length; i++) {
+                        filter2El.push(filtChk2[i]['value']);
+                    }
+
+
+                    let sun = [];
+                    let mon = [];
+                    let tue = [];
+                    let wed = [];
+                    let thr = [];
+                    let fri = [];
+                    let sat = [];
+
+                    let day = [sun, mon, tue, wed, thr, fri, sat];
+
+                    let mara = [];
+                    let dry = [];
+                    let koreaPizza = [];
+
+                    let specialMenu = [mara, dry, koreaPizza];
 
 
                     // 검색어를 입력하지 않은 상태에서 필터링하는 경우
                     if (keyword == '') {
 
-
                         for (i = 0; i < filtChk.length; i++) {
-                            if (filtChk[i].checked == true) {
+                            for (j = 0; j < filtChk2.length; j++) {
 
-                                resArr = resArr.filter(function (resArr) {
-                                    return resArr['runningtime'].includes(filterEl[i]) == true
-                                        || resArr['menu'].includes(filterEl[i]) == true;
-                                })
-                                console.log(resArr);
+                                if (filtChk[i].checked == true && filtChk2[j].checked == true) {
 
-                                // console.log(ressArr);
-                                displayMarkers(resArr);
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
 
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+                                    specialMenu[j] = resArr.filter(function (resArr) {
+                                        return resArr['menu'].includes(filter2El[j])
+                                    })
+
+                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+
+                                    let intersection = union2.filter(x => union.includes(x));
+
+                                    console.log(intersection);
+
+                                    displayMarkers(intersection);
+
+                                }
+
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[j].checked == true) {
+
+                                    specialMenu[j] = resArr.filter(function (resArr) {
+                                        return resArr['menu'].includes(filter2El[j])
+                                    })
+
+                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+
+                                    displayMarkers(union2);
+
+                                }
+
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+                                    displayMarkers(union);
+                                }
+
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+                                    displayMarkers(drunkenVege);
+                                }
                             }
 
-                            else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
-                                && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
-                                && filtChk[6].checked == false && filtChk[7].checked == false && filtChk[8].checked == false) {
-
-                                displayMarkers(drunkenVege);
-                            }
 
                         }
 
                     }
 
+                    // 검색어가 입력된 상태에서 필터링하는 경우
                     else {
+                        for (i = 0; i < filtChk.length; i++) {
+                            for (j = 0; j < filtChk2.length; j++) {
 
-                        for (i = 0; i < filtChk.length - 2; i++) {
-                            if (filtChk[i].checked == true) {
+                                if (filtChk[i].checked == true && filtChk2[j].checked == true) {
 
-                                pesArr = pesArr.filter(function (pesArr) {
-                                    return pesArr['runningtime'].includes(filterEl[i]) == true
-                                        || pesArr['menu'].includes(filterEl[i]) == true;
-                                })
+                                    day[i] = pesArr.filter(function (pesArr) {
+                                        return pesArr['runningtime'].includes(filterEl[i]);
+                                    })
 
-                                displayMarkers(pesArr);
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
+                                    specialMenu[j] = pesArr.filter(function (pesArr) {
+                                        return pesArr['menu'].includes(filter2El[j])
+                                    })
+
+                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+
+                                    let intersection = union2.filter(x => union.includes(x));
+
+                                    console.log(intersection);
+
+                                    displayMarkers(intersection);
+
+                                }
+
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[j].checked == true) {
+
+                                    specialMenu[j] = pesArr.filter(function (pesArr) {
+                                        return pesArr['menu'].includes(filter2El[j])
+                                    })
+
+                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+
+                                    displayMarkers(union2);
+
+                                }
+
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+                                    day[i] = pesArr.filter(function (pesArr) {
+                                        return pesArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+                                    displayMarkers(union);
+                                }
+
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+                                    displayMarkers(places);
+                                }
                             }
 
-                            else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
-                                && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
-                                && filtChk[6].checked == false && filtChk[7].checked == false && filtChk[8].checked == false) {
-
-                                displayMarkers(pesArr);
-                            }
 
                         }
 
                     }
-
                 }
 
             })
@@ -960,7 +1109,24 @@
 
                 map.setBounds(bounds);
 
+            } else {
+
+                // 검색 결과 목록에 추가된 항목들을 제거합니다
+                var listEl = document.getElementById('placesList');
+                removeAllChildNods(listEl);
+
+                // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+                var bounds = new kakao.maps.LatLngBounds();
+
+                // 지도에 표시되고 있는 마커를 제거합니다
+                removeMarker();
+
+                // 검색결과가 존재하지 않음을 표기합니다
+                document.getElementById("numofResults").innerHTML = '<p>' + '검색결과가 존재하지 않습니다.' + '</p>';
+
+
             }
+
 
         }
 
