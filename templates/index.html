@@ -93,14 +93,22 @@
             text-align: center;
             font-size: 14px;
             font-family: sans-serif;
-            margin-top: 30px;
+            margin-top: 3em;
         }
 
         #menu_wrap hr {
             display: block;
             height: 1px;
             border: 0;
-            border-top: 1px solid rgba(130, 7, 187, 0.774);
+            border-top: 1px solid rgba(22, 87, 209, 0.9);
+            margin: 8px 3px;
+        }
+
+        #menu_wrap2 hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid rgba(22, 87, 209, 0.9);
             margin: 8px 3px;
         }
 
@@ -108,9 +116,14 @@
             list-style: none;
         }
 
+        #placesList li:hover {
+            background-color: rgba(22, 87, 209, 0.9);
+            border-radius: 10%;
+        }
+
         #placesList .item {
             position: relative;
-            border-bottom: 1px dotted rgba(130, 7, 187, 0.774);
+            border-bottom: 1px dotted rgba(22, 87, 209, 0.9);
             overflow: hidden;
             cursor: pointer;
             min-height: 65px;
@@ -214,7 +227,7 @@
         }
 
         #grad1 {
-            background-image: linear-gradient(rgba(0, 155, 34, 0.8), rgba(22, 87, 209, 0.9));
+            background-color: rgba(22, 87, 209, 0.9);
         }
 
         .searchContainer {
@@ -257,8 +270,17 @@
             outline: 0;
         }
 
+        .toggleButton:hover {
+            background-color: chartreuse;
+            color: rgba(22, 87, 209, 0.9);
+        }
+
 
         #filterDiv {
+            display: none;
+        }
+
+        #filter2Div {
             display: none;
         }
 
@@ -278,7 +300,7 @@
         }
 
         .filterBtn:hover {
-            background: rgb(91, 15, 214);
+            background-color: rgba(22, 87, 209, 0.9);
             color: whitesmoke;
         }
 
@@ -325,13 +347,6 @@
             border-top: none;
         }
 
-        .bg_white button {
-            transition: 0.3s;
-        }
-
-        .bg_white button:hover {
-            background-color: rgba(64, 224, 208, 0.8);
-        }
 
         .make-center {
             text-align: center;
@@ -380,35 +395,34 @@
             </div>
 
 
-            <button id="searchBtn" class="filterBtn" type="submit" onclick="filter()">필터열기</button>
+            <button id="searchBtn" class="filterBtn" type="submit" onclick="filter()"
+                style="margin-bottom: 1em;">필터열기</button>
             <div id=filterDiv>
-                <div id="filterDiv1" class="dayFilter">
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="일"
-                        onclick="filterSelection()">일요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="월"
-                        onclick="filterSelection()">월요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="화"
-                        onclick="filterSelection()">화요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="수"
-                        onclick="filterSelection()">수요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="목"
-                        onclick="filterSelection()">목요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="금"
-                        onclick="filterSelection()">금요일</input>
-                    <input id="searchBtn" class="filterChk" type="checkbox" value="토"
-                        onclick="filterSelection()">토요일</input>
+                <div id="filterDiv1" class="dayFilter" style="font-size: 14px; margin: 0.5em;">
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="일" onclick="filterSelection()">
+                    일요일</input> &nbsp;
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="월" onclick="filterSelection()">
+                    월요일</input> &nbsp;
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="화" onclick="filterSelection()">
+                    화요일</input> &nbsp;
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="수" onclick="filterSelection()">
+                    수요일</input> <br>
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="목" onclick="filterSelection()">
+                    목요일</input> &nbsp;
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="금" onclick="filterSelection()">
+                    금요일</input> &nbsp;
+                    <input id="searchBtn" class="filterChk" type="checkbox" value="토" onclick="filterSelection()">
+                    토요일</input>
                 </div>
 
-                <div id="filterDiv2" class="menuFilter">
-                    <input id="searchBtn" class="filterChk2" type="checkbox" value="마라탕"
-                        onclick="filterSelection()">마라탕</input>
-                    <input id="searchBtn" class="filterChk2" type="checkbox" value="마른안주"
-                        onclick="filterSelection()">마른안주</input>
-                    <input id="searchBtn" class="filterChk2" type="checkbox" value="전"
-                        onclick="filterSelection()">전</input>
+                <div id="filterDiv2" class="menuFilter" style="font-size: 14px; margin: 0.5em;">
+                    <input id="searchBtn" class="filterChk2" type="checkbox" value="15" onclick="filterSelection()">
+                    낮(오후 2시 전에 열어요)</input> <br>
+                    <input id="searchBtn" class="filterChk2" type="checkbox" value="22" onclick="filterSelection()">
+                    심야(새벽에 문을 닫아요)</input>
                 </div>
             </div>
-            <br>
+
 
             <p id="numofResults" class="informResults"></p>
 
@@ -422,16 +436,40 @@
         <div id="menu_wrap2" class="bg_white2">
 
             <div>
-                <button id="searchBtn" class="toggleButton" type="submit" onclick="showMenu()"> 영차영차🐢</button>
+                <button id="searchBtn" class="toggleButton" type="submit" onclick="showMenu();"> 영차영차🐢</button>
             </div>
 
             <br>
+            <button id="searchBtn" class="filterBtn" type="submit" onclick="filter2();"
+                style="margin-bottom: 1em;">필터열기</button>
+
+            <div id="filter2Div" style="margin-bottom: 0.5em;">
+
+                <div id="filterDiv3" class="menuFilter" style="font-size: 14px; margin: 0.5em;">
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="마라탕" onclick="filterSelection2()">
+                    마라탕</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="마른안주" onclick="filterSelection2()">
+                    마른안주</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="전" onclick="filterSelection2()">
+                    전</input>
+                </div>
+
+                <div id="filterDiv4" class="priceFilter" style="font-size: 14px; margin: 0.5em; margin-bottom: 1em;">
+                    <input id="searchBtn" class="filterChk4" type="checkbox" value="10000" onclick="filterSelection2()">
+                    ~ 10,000원</input> &nbsp;
+                    <input id="searchBtn" class="filterChk4" type="checkbox" value="15000" onclick="filterSelection2()">
+                    ~ 15,000원</input> &nbsp;
+                    <input id="searchBtn" class="filterChk4" type="checkbox" value="20000" onclick="filterSelection2()">
+                    ~ 20,000원</input>
+                </div>
+
+            </div>
 
             <hr>
 
             <br>
 
-            <ul id="menuList"></ul>
+            <ul id="menuList" style="font-size: 14px;"></ul>
 
         </div>
 
@@ -607,9 +645,11 @@
 
             itemStr += '    <span>' + places.address + '</span>';
 
+            itemStr += '    <span>' + places.runningtime + '</span>';
+
             itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<span class="tel">' + '@' + places.instaID + '</span>' + '</a>';
 
-            itemStr += '<button id="searchBtn" onclick="searchMenu(\'' + places.instaID + '\', \'' + index + '\');" class="toggleButton" type="submit">' + '안주구경👀' + '</button>';
+            itemStr += '<button id="searchBtn" onclick="searchMenu(\'' + places.instaID + '\');" class="toggleButton" type="submit">' + '안주구경👀' + '</button>';
 
             itemStr += '<br>' + '<div id="menuBox">' + '</div>' + '</div>';
 
@@ -686,7 +726,7 @@
 
 
 
-        function searchMenu(bar, num) {
+        function searchMenu(bar) {
 
             $.ajax({
                 type: 'GET',
@@ -820,13 +860,19 @@
             }
         }
 
-
+        // 장소와 요일, 시간 기반 검색창의 필터를 열고 닫습니다
         function filter() {
             $('#filterDiv').slideToggle();
 
         }
 
+        // 안주 기반 검색창의 필터를 열고 닫습니다
+        function filter2() {
+            $('#filter2Div').slideToggle();
 
+        }
+
+        // 장소와 요일, 시간 기반 검색창의 필터링 기능을 담당하는 함수입니다
         function filterSelection() {
             $.ajax({
                 type: 'GET',
@@ -838,7 +884,27 @@
 
                     var keyword = document.getElementById('search').value;
 
+                    // 검색창의 keyword와 일치하는 술집 데이터를 담습니다
                     var places = [];
+
+                    // 새벽까지 운영하는 술집 데이터를 담습니다
+                    var placesForMidnight = [];
+
+                    // 오후 2시 이전부터 운영하는 술집 데이터를 담습니다
+                    var placesForDaytime = [];
+
+                    // 요일을 기준으로 필터링한 술집 데이터를 담습니다
+
+                    let sun = [];
+                    let mon = [];
+                    let tue = [];
+                    let wed = [];
+                    let thr = [];
+                    let fri = [];
+                    let sat = [];
+
+                    let day = [sun, mon, tue, wed, thr, fri, sat];
+
 
                     for (let i = 0; i < drunkenVege.length; i++) {
 
@@ -870,44 +936,108 @@
                         if (newKeyword == newDistrict || newKeyword == newName || newKeyword == cityOnly || newKeyword == citynameOnly || newKeyword == districtOnly) {
                             places.push(drunkenVege[i]);
                         }
+
+                        // 비건술집 요일별 운영시간을 정리해놓은 데이터를 불러옵니다
+                        let runningTimeDay = drunkenVege[i]['runningtime'];
+
+                        // 요일별 운영시간이 다른 경우, 술집 문을 여는 시간과 닫는 시간을 구합니다
+                        if (runningTimeDay.includes('/')) {
+
+                            runningTimeDay = runningTimeDay.split('/');
+                            // console.log(time);
+                            for (j = 0; j < runningTimeDay.length; j++) {
+
+                                let runningTime = runningTimeDay[j].split('(')[0];
+                                let runningDay = runningTimeDay[j].split('(')[1].split(')')[0];
+
+                                let openingTime = runningTime.split('-')[0];
+                                let closingTime = runningTime.split('-')[1];
+
+                                if (openingTime.includes(':')) {
+
+                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                }
+
+                                if (closingTime.includes(':')) {
+
+                                    closingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                }
+
+                                // console.log(name, runningDay, openingTime, closingTime)
+
+
+                                // 여는 시간이 오후 2시 이전인 술집의 정보를 placesForDaytime에 담습니다
+                                if (openingTime < 14) {
+
+                                    placesForDaytime.push(drunkenVege[i]);
+
+                                }
+                                // 닫는 시간이 새벽시간대인 술집의 정보를 placesForMidnight에 담습니다
+                                if (closingTime < 6 || closingTime == '*') {
+
+                                    placesForMidnight.push(drunkenVege[i]);
+
+                                }
+
+                            }
+                        }
+                        // 요일과 상관없이 운영시간이 동일한 경우, 술집 문을 여는 시간과 닫는 시간을 구합니다
+                        else {
+                            let runningTime = runningTimeDay.split('(')[0];
+                            let runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                            let openingTime = runningTime.split('-')[0];
+                            let closingTime = runningTime.split('-')[1];
+
+                            if (openingTime.includes(':')) {
+
+                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                            }
+
+                            if (closingTime.includes(':')) {
+
+                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                            }
+
+                            // 여는 시간이 오후 2시 이전인 술집의 정보를 placesForDaytime에 담습니다
+                            if (openingTime < 14) {
+
+                                placesForDaytime.push(drunkenVege[i]);
+
+                            }
+                            // 닫는 시간이 새벽시간대인 술집의 정보를 placesForMidnight에 담습니다
+                            if (closingTime < 6 || closingTime == '*') {
+
+                                placesForMidnight.push(drunkenVege[i]);
+
+                            }
+
+
+                        }
                     }
 
-                    // console.log(places)
+                    // 중복되는 정보를 삭제합니다
+                    placesForDaytime = [...new Set(placesForDaytime)];
+                    placesForMidnight = [...new Set(placesForMidnight)];
 
-                    let pesArr = places;
+                    // 키워드와 일치하는 술집 정보를 keywordResArr에 담습니다 
+                    let keywordResArr = places;
 
+                    // 필터링 기준이 요일인 체크박스들을 filterChk로 불러옵니다
                     let filtChk = document.querySelectorAll(".filterChk");
 
+                    // filterChk의 요일 value를 filterEl에 담습니다
                     let filterEl = [];
 
                     for (i = 0; i < filtChk.length; i++) {
                         filterEl.push(filtChk[i]['value']);
                     }
 
+                    // 필터링 기준이 시간인 체크박스들을 filterChk2로 불러옵니다
                     let filtChk2 = document.querySelectorAll(".filterChk2");
-
-                    let filter2El = [];
-
-                    for (i = 0; i < filtChk2.length; i++) {
-                        filter2El.push(filtChk2[i]['value']);
-                    }
-
-
-                    let sun = [];
-                    let mon = [];
-                    let tue = [];
-                    let wed = [];
-                    let thr = [];
-                    let fri = [];
-                    let sat = [];
-
-                    let day = [sun, mon, tue, wed, thr, fri, sat];
-
-                    let mara = [];
-                    let dry = [];
-                    let koreaPizza = [];
-
-                    let specialMenu = [mara, dry, koreaPizza];
 
 
                     // 검색어를 입력하지 않은 상태에서 필터링하는 경우
@@ -916,7 +1046,9 @@
                         for (i = 0; i < filtChk.length; i++) {
                             for (j = 0; j < filtChk2.length; j++) {
 
-                                if (filtChk[i].checked == true && filtChk2[j].checked == true) {
+                                // 요일 + 낮술
+                                if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == false) {
+
 
                                     day[i] = resArr.filter(function (resArr) {
                                         return resArr['runningtime'].includes(filterEl[i]);
@@ -924,35 +1056,262 @@
 
                                     let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
-                                    specialMenu[j] = resArr.filter(function (resArr) {
-                                        return resArr['menu'].includes(filter2El[j])
+
+                                    // 요일을 기준으로 필터링한 술집 데이터를 담습니다
+
+                                    let dayTime = [sun, mon, tue, wed, thr, fri, sat];
+
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                    dayTime[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                dayTime[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...dayTime[0], ...dayTime[1], ...dayTime[2], ...dayTime[3], ...dayTime[4], ...dayTime[5], ...dayTime[6]])];
+                                    console.log(reunion);
+
+
+                                    displayMarkers(reunion);
+
+                                    // updateMenu(reunion);
+
+                                }
+                                // 요일 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == true) {
+
+
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
                                     })
 
-                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
-                                    let intersection = union2.filter(x => union.includes(x));
 
-                                    console.log(intersection);
+                                    let midnight = [sun, mon, tue, wed, thr, fri, sat];
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+                                        // console.log(runningTimeDay)
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+                                            // console.log(runningTimeDay)
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                closingTime = runningTime.split('-')[1];
+                                                // console.log(name, openingTime, runningDay);
+
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                    midnight[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            closingTime = runningTime.split('-')[1];
+                                            // console.log(name, openingTime, runningDay);
+
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                midnight[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...midnight[0], ...midnight[1], ...midnight[2], ...midnight[3], ...midnight[4], ...midnight[5], ...midnight[6]])];
+                                    console.log(reunion);
+
+
+                                    displayMarkers(reunion);
+
+                                }
+                                // 요일 + 낮술 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == true) {
+
+
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    let placesForAnytime = [];
+
+                                    for (k = 0; k < resArr.length; k++) {
+
+                                        let runningTimeDay = resArr[k]['runningtime'];
+                                        // console.log(runningTimeDay)
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+                                            // console.log(runningTimeDay)
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+                                                closingTime = runningTime.split('-')[1];
+                                                // console.log(name, openingTime, runningDay);
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                    placesForAnytime.push(resArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+                                            closingTime = runningTime.split('-')[1];
+                                            // console.log(name, openingTime, runningDay);
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                placesForAnytime.push(resArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    placesForAnytime = [...new Set(placesForAnytime)];
+
+                                    let intersection = union.filter(x => placesForAnytime.includes(x));
+
 
                                     displayMarkers(intersection);
 
-                                }
+                                    // updateMenu(intersection);
 
+
+                                }
+                                // 요일 상관없이 낮술
                                 else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
                                     && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
-                                    && filtChk[6].checked == false && filtChk2[j].checked == true) {
+                                    && filtChk[6].checked == false && filtChk2[0].checked == true && filtChk2[1].checked == false) {
 
-                                    specialMenu[j] = resArr.filter(function (resArr) {
-                                        return resArr['menu'].includes(filter2El[j])
-                                    })
 
-                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+                                    displayMarkers(placesForDaytime);
 
-                                    displayMarkers(union2);
+                                    // updateMenu(intersection);
+
 
                                 }
+                                // 요일 상관없이 심야술 
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[0].checked == false && filtChk2[1].checked == true) {
 
+
+                                    displayMarkers(placesForMidnight);
+
+                                    // updateMenu(intersection);
+
+
+                                }
+                                // 시간 관계없이 요일만 고르는 경우
                                 else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
+
                                     day[i] = resArr.filter(function (resArr) {
                                         return resArr['runningtime'].includes(filterEl[i]);
                                     })
@@ -960,12 +1319,33 @@
                                     let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
                                     displayMarkers(union);
-                                }
+                                    // updateMenu(union);
 
+                                }
+                                // 요일은 고르지 않고 낮술 심야술 다 되는 술집 고르는 경우
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[j].checked == true) {
+
+
+                                    let intersection = placesForDaytime.filter(x => placesForMidnight.includes(x))
+
+                                    displayMarkers(intersection);
+
+                                    // updateMenu(intersection);
+
+
+
+                                }
+                                // 요일도 시간도 고르지 않은 경우 
                                 else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
                                     && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
                                     && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
                                     displayMarkers(drunkenVege);
+
+                                    // updateMenu(drunkenVege);
+
                                 }
                             }
 
@@ -979,68 +1359,532 @@
                         for (i = 0; i < filtChk.length; i++) {
                             for (j = 0; j < filtChk2.length; j++) {
 
-                                if (filtChk[i].checked == true && filtChk2[j].checked == true) {
+                                // 요일 + 낮술
+                                if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == false) {
 
-                                    day[i] = pesArr.filter(function (pesArr) {
-                                        return pesArr['runningtime'].includes(filterEl[i]);
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
                                     })
 
                                     let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
-                                    specialMenu[j] = pesArr.filter(function (pesArr) {
-                                        return pesArr['menu'].includes(filter2El[j])
+
+                                    // 요일을 기준으로 필터링한 술집 데이터를 담습니다
+
+                                    let dayTime = [sun, mon, tue, wed, thr, fri, sat];
+
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                    dayTime[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                dayTime[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...dayTime[0], ...dayTime[1], ...dayTime[2], ...dayTime[3], ...dayTime[4], ...dayTime[5], ...dayTime[6]])];
+                                    console.log(reunion);
+
+
+                                    displayMarkers(reunion);
+
+                                    // updateMenu(reunion);
+
+                                }
+                                // 요일 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == true) {
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
                                     })
 
-                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
-                                    let intersection = union2.filter(x => union.includes(x));
 
-                                    console.log(intersection);
+                                    let midnight = [sun, mon, tue, wed, thr, fri, sat];
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+                                        // console.log(runningTimeDay)
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+                                            // console.log(runningTimeDay)
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                closingTime = runningTime.split('-')[1];
+                                                // console.log(name, openingTime, runningDay);
+
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                    midnight[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            closingTime = runningTime.split('-')[1];
+                                            // console.log(name, openingTime, runningDay);
+
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                midnight[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...midnight[0], ...midnight[1], ...midnight[2], ...midnight[3], ...midnight[4], ...midnight[5], ...midnight[6]])];
+                                    console.log(reunion);
+
+
+                                    displayMarkers(reunion);
+
+                                }
+                                // 요일 + 낮술 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == true) {
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    let placesForAnytime = [];
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+                                        // console.log(runningTimeDay)
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+                                            // console.log(runningTimeDay)
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+                                                closingTime = runningTime.split('-')[1];
+                                                // console.log(name, openingTime, runningDay);
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                    placesForAnytime.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+                                            closingTime = runningTime.split('-')[1];
+                                            // console.log(name, openingTime, runningDay);
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                placesForAnytime.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    placesForAnytime = [...new Set(placesForAnytime)];
+
+                                    let intersection = union.filter(x => placesForAnytime.includes(x));
+
 
                                     displayMarkers(intersection);
 
-                                }
+                                    // updateMenu(intersection);
 
+
+                                }
+                                // 요일 상관없이 낮술
                                 else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
                                     && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
-                                    && filtChk[6].checked == false && filtChk2[j].checked == true) {
+                                    && filtChk[6].checked == false && filtChk2[0].checked == true && filtChk2[1].checked == false) {
 
-                                    specialMenu[j] = pesArr.filter(function (pesArr) {
-                                        return pesArr['menu'].includes(filter2El[j])
-                                    })
 
-                                    let union2 = [...new Set([...specialMenu[0], ...specialMenu[1], ...specialMenu[2]])];
+                                    dayTime = [];
 
-                                    displayMarkers(union2);
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (openingTime < 14) {
+                                                    dayTime.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (openingTime < 14) {
+                                                dayTime.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let union = [...new Set([...dayTime])];
+
+
+                                    displayMarkers(union);
+
+                                    // updateMenu(intersection);
+
 
                                 }
+                                // 요일 상관없이 심야술 
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[0].checked == false && filtChk2[1].checked == true) {
 
+
+                                    midnight = [];
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (closingTime < 6 || closingTime == '*') {
+                                                    midnight.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (closingTime < 6 || closingTime == '*') {
+                                                midnight.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let union = [...new Set([...midnight])];
+
+
+                                    displayMarkers(union);
+
+                                    // updateMenu(intersection);
+
+
+                                }
+                                // 시간 관계없이 요일만 고르는 경우
                                 else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == false) {
-                                    day[i] = pesArr.filter(function (pesArr) {
-                                        return pesArr['runningtime'].includes(filterEl[i]);
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
                                     })
 
                                     let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
 
                                     displayMarkers(union);
-                                }
+                                    // updateMenu(union);
 
+                                }
+                                // 요일은 고르지 않고 낮술 심야술 다 되는 술집 고르는 경우
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[j].checked == true) {
+
+                                    anyTime = [];
+
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (openingTime < 14 && (closingTime < 6 || closingTime == '*')) {
+                                                    anyTime.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (openingTime < 14 && (closingTime < 6 || closingTime == '*')) {
+                                                anyTime.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let union = [...new Set([...anyTime])];
+
+                                    displayMarkers(union);
+
+                                    // updateMenu(intersection);
+
+
+
+                                }
+                                // 요일도 시간도 고르지 않은 경우 
                                 else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
                                     && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
                                     && filtChk2[0].checked == false && filtChk2[1].checked == false) {
-                                    displayMarkers(places);
+
+                                    displayMarkers(keywordResArr);
+
+                                    // updateMenu(drunkenVege);
+
                                 }
                             }
 
 
                         }
-
                     }
+
+
                 }
 
             })
 
         }
+
+
+
+        // 장소와 요일 기반 검색의 결과에 따라 안주 정보창을 업데이트합니다.
+        function updateMenu(list) {
+
+            let menuListEl = document.getElementById('menuList');
+            // console.log(list);
+            removeAllChildNods(menuListEl);
+
+
+            for (i = 0; i < list.length; i++) {
+                let menuList = list[i]['menu'].split('/');
+                // console.log(menuList);
+
+                for (j = 0; j < menuList.length; j++) {
+
+                    var x = document.createElement("li");
+
+                    var menuName = '👽' + menuList[j].split('+')[0];
+
+                    var menuPrice = '⚡' + menuList[j].split('+')[1] + '원';
+
+                    var menuNamePrice = menuName + '   ' + menuPrice;
+
+                    // console.log(menuNamePrice);
+
+                    var t = document.createTextNode(menuNamePrice);
+
+                    x.appendChild(t);
+
+                    document.getElementById("menuList").appendChild(x);
+
+                }
+            }
+
+        }
+
 
 
         // 지도 위에 마커를 찍는 함수입니다
