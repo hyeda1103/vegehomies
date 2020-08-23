@@ -4,6 +4,7 @@
 <head>
     <!-- WebPage Title -->
     <title>술고래는 채식주의자</title>
+    <link href="static/stylesheet.css" rel="stylesheet" type="text/css">
 
     <!-- Required Meta Tags -->
     <meta charset="utf-8">
@@ -30,347 +31,6 @@
     <!-- favicon -->
     <link href="static/yeolsi.jpg" rel="shortcut icon">
 
-    <style type="text/css">
-        /* KAKAO MAP */
-
-        .map_wrap,
-        .map_wrap * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        .map_wrap {
-            position: relative;
-        }
-
-        #menu_wrap {
-            display: block;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        #menu_wrap2 {
-            display: block;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .bg_white {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 22%;
-            margin: 10px 10px 10px 10px;
-            padding: 20px 5px 5px 5px;
-            overflow-y: scroll;
-            z-index: 1;
-            border-radius: 10px;
-        }
-
-        .bg_white2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 22%;
-            margin: 10px 10px 10px 23%;
-            padding: 20px 5px 5px 5px;
-            overflow-y: scroll;
-            z-index: 1;
-            border-radius: 10px;
-        }
-
-        .bg_white::-webkit-scrollbar {
-            display: none;
-        }
-
-        .bg_white2::-webkit-scrollbar {
-            display: none;
-        }
-
-        .bg_white .informResults {
-            display: block;
-            text-align: center;
-            font-size: 14px;
-            font-family: sans-serif;
-            margin-top: 3em;
-        }
-
-        #menu_wrap hr {
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid rgba(22, 87, 209, 0.9);
-            margin: 8px 3px;
-        }
-
-        #menu_wrap2 hr {
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid rgba(22, 87, 209, 0.9);
-            margin: 8px 3px;
-        }
-
-        #placesList li {
-            list-style: none;
-        }
-
-        #placesList li:hover {
-            background-color: rgba(22, 87, 209, 0.9);
-            border-radius: 10%;
-        }
-
-        #placesList .item {
-            position: relative;
-            border-bottom: 1px dotted rgba(22, 87, 209, 0.9);
-            overflow: hidden;
-            cursor: pointer;
-            min-height: 65px;
-            margin-top: 20px;
-        }
-
-        #placesList .item span {
-            display: block;
-            margin-top: 4px;
-        }
-
-        #placesList .item h5,
-        #placesList .item .info {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 15px;
-        }
-
-
-        #placesList .item .info {
-            padding: 10px 0 10px 55px;
-            font-size: 14px;
-        }
-
-        #placesList .info .gray {
-            color: #8a8a8a;
-        }
-
-        #placesList .info .tel {
-            color: #009900;
-        }
-
-        #placesList .item .markerbg {
-            float: left;
-            position: absolute;
-            width: 36px;
-            height: 37px;
-            margin: 10px 0 0 10px;
-            background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
-        }
-
-        #placesList .item .marker_1 {
-            background-position: 0 -10px;
-        }
-
-        #placesList .item .marker_2 {
-            background-position: 0 -56px;
-        }
-
-        #placesList .item .marker_3 {
-            background-position: 0 -102px
-        }
-
-        #placesList .item .marker_4 {
-            background-position: 0 -148px;
-        }
-
-        #placesList .item .marker_5 {
-            background-position: 0 -194px;
-        }
-
-        #placesList .item .marker_6 {
-            background-position: 0 -240px;
-        }
-
-        #placesList .item .marker_7 {
-            background-position: 0 -286px;
-        }
-
-        #placesList .item .marker_8 {
-            background-position: 0 -332px;
-        }
-
-        #placesList .item .marker_9 {
-            background-position: 0 -378px;
-        }
-
-        #placesList .item .marker_10 {
-            background-position: 0 -423px;
-        }
-
-        #placesList .item .marker_11 {
-            background-position: 0 -470px;
-        }
-
-        #placesList .item .marker_12 {
-            background-position: 0 -516px;
-        }
-
-        #placesList .item .marker_13 {
-            background-position: 0 -562px;
-        }
-
-        #placesList .item .marker_14 {
-            background-position: 0 -608px;
-        }
-
-        #placesList .item .marker_15 {
-            background-position: 0 -654px;
-        }
-
-        #grad1 {
-            background-color: rgba(22, 87, 209, 0.9);
-        }
-
-        .searchContainer {
-            background-color: #FFF;
-            position: relative;
-            border-radius: 5px;
-            padding: 3px 50px 3px 10px;
-        }
-
-        .searchBox {
-            background-color: transparent;
-            outline: none;
-            height: 30px;
-            font-size: 15px;
-            border: 0;
-            width: 100%;
-        }
-
-        .searchButton {
-            position: absolute;
-            right: 14px;
-            top: 8px;
-            background-color: transparent;
-            border-radius: 40%;
-            border: 0;
-            color: black;
-            font-size: 15px;
-            outline: 0;
-        }
-
-        .toggleButton {
-            position: absolute;
-            right: 14px;
-            top: 8px;
-            background-color: transparent;
-            border-radius: 40%;
-            border: 0;
-            color: black;
-            font-size: 13px;
-            outline: 0;
-        }
-
-        .toggleButton:hover {
-            background-color: chartreuse;
-            color: rgba(22, 87, 209, 0.9);
-        }
-
-
-        #filterDiv {
-            display: none;
-        }
-
-        #filter2Div {
-            display: none;
-        }
-
-        .filterBtn {
-            text-align: left;
-            padding: 3px 10px;
-            margin-top: 8px;
-            font-size: 12px;
-            border: 0;
-            background-color: white;
-            border-radius: 10%;
-        }
-
-        .filterChk {
-            text-align: left;
-            font-size: 6px;
-        }
-
-        .filterBtn:hover {
-            background-color: rgba(22, 87, 209, 0.9);
-            color: whitesmoke;
-        }
-
-        .timeFilter {
-            /* margin-bottom: 9px; */
-            text-align: center;
-            display: none;
-        }
-
-        /* Style the tab */
-        .tab {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-        }
-
-        /* Style the buttons inside the tab */
-        .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-        }
-
-        /* Change background color of buttons on hover */
-        .tab button:hover {
-            background-color: #ddd;
-        }
-
-        /* Create an active/current tablink class */
-        .tab button.active {
-            background-color: #ccc;
-        }
-
-        /* Style the tab content */
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
-
-
-        .make-center {
-            text-align: center;
-        }
-
-
-        /* menu_wrap2에 나오는 메뉴 리스트  */
-        .star-list {
-            width: 500px;
-            margin: 20px auto 0 auto;
-        }
-
-        .star-name {
-            display: inline-block;
-        }
-
-        .star-name:hover {
-            text-decoration: underline;
-        }
-
-        .card {
-            margin-bottom: 15px;
-        }
-    </style>
 
 </head>
 
@@ -396,7 +56,7 @@
 
 
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filter()"
-                style="margin-bottom: 1em;">필터열기</button>
+                style="margin-bottom: 1em;">필터추가</button>
             <div id=filterDiv>
                 <div id="filterDiv1" class="dayFilter" style="font-size: 14px; margin: 0.5em;">
                     <input id="searchBtn" class="filterChk" type="checkbox" value="일" onclick="filterSelection()">
@@ -441,17 +101,27 @@
 
             <br>
             <button id="searchBtn" class="filterBtn" type="submit" onclick="filter2();"
-                style="margin-bottom: 1em;">필터열기</button>
+                style="margin-bottom: 1em;">필터추가</button>
 
             <div id="filter2Div" style="margin-bottom: 0.5em;">
 
                 <div id="filterDiv3" class="menuFilter" style="font-size: 14px; margin: 0.5em;">
-                    <input id="searchBtn" class="filterChk3" type="checkbox" value="마라탕" onclick="filterSelection2()">
-                    마라탕</input> &nbsp;
                     <input id="searchBtn" class="filterChk3" type="checkbox" value="마른안주" onclick="filterSelection2()">
                     마른안주</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="탕" onclick="filterSelection2()">
+                    탕</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="볶음" onclick="filterSelection2()">
+                    볶음</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="구이" onclick="filterSelection2()">
+                    구이</input> <br>
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="면" onclick="filterSelection2()">
+                    면</input> &nbsp;   
                     <input id="searchBtn" class="filterChk3" type="checkbox" value="전" onclick="filterSelection2()">
-                    전</input>
+                    전</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="튀김" onclick="filterSelection2()">
+                    튀김</input> &nbsp;
+                    <input id="searchBtn" class="filterChk3" type="checkbox" value="샐러드" onclick="filterSelection2()">
+                    샐러드</input> &nbsp;
                 </div>
 
                 <div id="filterDiv4" class="priceFilter" style="font-size: 14px; margin: 0.5em; margin-bottom: 1em;">
@@ -523,11 +193,11 @@
                         for (let i = 0; i < drunkenVege.length; i++) {
                             var name = drunkenVege[i]['name'];
                             list.push(name);
-                            // console.log(name);
+                            
                         }
 
                         var list, r = Math.floor(Math.random() * list.length);
-                        // console.log(list[r]);
+                    
 
                         document.getElementById('search').placeholder = list[r];
 
@@ -592,7 +262,7 @@
                     }
                 }
 
-                // console.log(places);
+                
 
                 if (places.length != 0) {
 
@@ -677,8 +347,7 @@
 
                         for (i = 0; i < drunkenVege.length; i++) {
                             let instaID = drunkenVege[i]['instaID']
-                            // console.log(instaID);
-
+                            
                             space.push(drunkenVege[i]);
 
                         }
@@ -710,8 +379,6 @@
 
                                 x.appendChild(t);
 
-                                // console.log(x);
-
                                 document.getElementById("menuList").appendChild(x);
 
                             }
@@ -741,8 +408,7 @@
 
                         for (i = 0; i < drunkenVege.length; i++) {
                             let instaID = drunkenVege[i]['instaID']
-                            // console.log(instaID);
-
+                            
                             if (bar == instaID) {
                                 space.push(drunkenVege[i]);
                             }
@@ -796,7 +462,7 @@
 
                         for (i = 0; i < drunkenVege.length; i++) {
                             let instaID = drunkenVege[i]['instaID']
-                            // console.log(instaID);
+                            
 
                             if (bar == instaID) {
                                 space.push(drunkenVege[i]);
@@ -944,7 +610,7 @@
                         if (runningTimeDay.includes('/')) {
 
                             runningTimeDay = runningTimeDay.split('/');
-                            // console.log(time);
+                            
                             for (j = 0; j < runningTimeDay.length; j++) {
 
                                 let runningTime = runningTimeDay[j].split('(')[0];
@@ -965,9 +631,7 @@
 
                                 }
 
-                                // console.log(name, runningDay, openingTime, closingTime)
-
-
+                                
                                 // 여는 시간이 오후 2시 이전인 술집의 정보를 placesForDaytime에 담습니다
                                 if (openingTime < 14) {
 
@@ -1114,8 +778,7 @@
 
 
                                     let reunion = [...new Set([...dayTime[0], ...dayTime[1], ...dayTime[2], ...dayTime[3], ...dayTime[4], ...dayTime[5], ...dayTime[6]])];
-                                    console.log(reunion);
-
+                                    
 
                                     displayMarkers(reunion);
 
@@ -1139,18 +802,16 @@
                                     for (k = 0; k < union.length; k++) {
 
                                         let runningTimeDay = union[k]['runningtime'];
-                                        // console.log(runningTimeDay)
+                                        
                                         if (runningTimeDay.includes('/')) {
                                             runningTimeDay = runningTimeDay.split('/');
 
-                                            // console.log(runningTimeDay)
-
+                                            
                                             for (l = 0; l < runningTimeDay.length; l++) {
                                                 runningTime = runningTimeDay[l].split('(')[0];
                                                 runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
                                                 closingTime = runningTime.split('-')[1];
-                                                // console.log(name, openingTime, runningDay);
-
+                                                
 
                                                 if (closingTime.includes(':')) {
 
@@ -1170,8 +831,7 @@
                                             runningTime = runningTimeDay.split('(')[0];
                                             runningDay = runningTimeDay.split('(')[1].split(')')[0];
                                             closingTime = runningTime.split('-')[1];
-                                            // console.log(name, openingTime, runningDay);
-
+                                            
 
                                             if (closingTime.includes(':')) {
 
@@ -1190,9 +850,7 @@
 
 
                                     let reunion = [...new Set([...midnight[0], ...midnight[1], ...midnight[2], ...midnight[3], ...midnight[4], ...midnight[5], ...midnight[6]])];
-                                    console.log(reunion);
-
-
+                            
                                     displayMarkers(reunion);
 
                                 }
@@ -1212,18 +870,17 @@
                                     for (k = 0; k < resArr.length; k++) {
 
                                         let runningTimeDay = resArr[k]['runningtime'];
-                                        // console.log(runningTimeDay)
+                                        
                                         if (runningTimeDay.includes('/')) {
                                             runningTimeDay = runningTimeDay.split('/');
 
-                                            // console.log(runningTimeDay)
 
                                             for (l = 0; l < runningTimeDay.length; l++) {
                                                 runningTime = runningTimeDay[l].split('(')[0];
                                                 runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
                                                 openingTime = runningTime.split('-')[0];
                                                 closingTime = runningTime.split('-')[1];
-                                                // console.log(name, openingTime, runningDay);
+                                                
 
                                                 if (openingTime.includes(':')) {
 
@@ -1249,7 +906,7 @@
                                             runningDay = runningTimeDay.split('(')[1].split(')')[0];
                                             openingTime = runningTime.split('-')[0];
                                             closingTime = runningTime.split('-')[1];
-                                            // console.log(name, openingTime, runningDay);
+                                            
 
                                             if (openingTime.includes(':')) {
 
@@ -1427,8 +1084,7 @@
 
 
                                     let reunion = [...new Set([...dayTime[0], ...dayTime[1], ...dayTime[2], ...dayTime[3], ...dayTime[4], ...dayTime[5], ...dayTime[6]])];
-                                    console.log(reunion);
-
+                                    
 
                                     displayMarkers(reunion);
 
@@ -1452,18 +1108,16 @@
                                     for (k = 0; k < union.length; k++) {
 
                                         let runningTimeDay = union[k]['runningtime'];
-                                        // console.log(runningTimeDay)
+                                        
                                         if (runningTimeDay.includes('/')) {
                                             runningTimeDay = runningTimeDay.split('/');
 
-                                            // console.log(runningTimeDay)
-
+                                        
                                             for (l = 0; l < runningTimeDay.length; l++) {
                                                 runningTime = runningTimeDay[l].split('(')[0];
                                                 runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
                                                 closingTime = runningTime.split('-')[1];
-                                                // console.log(name, openingTime, runningDay);
-
+                                                
 
                                                 if (closingTime.includes(':')) {
 
@@ -1483,8 +1137,7 @@
                                             runningTime = runningTimeDay.split('(')[0];
                                             runningDay = runningTimeDay.split('(')[1].split(')')[0];
                                             closingTime = runningTime.split('-')[1];
-                                            // console.log(name, openingTime, runningDay);
-
+                                            
 
                                             if (closingTime.includes(':')) {
 
@@ -1503,8 +1156,7 @@
 
 
                                     let reunion = [...new Set([...midnight[0], ...midnight[1], ...midnight[2], ...midnight[3], ...midnight[4], ...midnight[5], ...midnight[6]])];
-                                    console.log(reunion);
-
+                                    
 
                                     displayMarkers(reunion);
 
@@ -1525,18 +1177,17 @@
                                     for (k = 0; k < keywordResArr.length; k++) {
 
                                         let runningTimeDay = keywordResArr[k]['runningtime'];
-                                        // console.log(runningTimeDay)
+                                    
                                         if (runningTimeDay.includes('/')) {
                                             runningTimeDay = runningTimeDay.split('/');
 
-                                            // console.log(runningTimeDay)
-
+                                            
                                             for (l = 0; l < runningTimeDay.length; l++) {
                                                 runningTime = runningTimeDay[l].split('(')[0];
                                                 runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
                                                 openingTime = runningTime.split('-')[0];
                                                 closingTime = runningTime.split('-')[1];
-                                                // console.log(name, openingTime, runningDay);
+                                                
 
                                                 if (openingTime.includes(':')) {
 
@@ -1562,7 +1213,7 @@
                                             runningDay = runningTimeDay.split('(')[1].split(')')[0];
                                             openingTime = runningTime.split('-')[0];
                                             closingTime = runningTime.split('-')[1];
-                                            // console.log(name, openingTime, runningDay);
+                                            
 
                                             if (openingTime.includes(':')) {
 
@@ -1593,9 +1244,7 @@
 
                                     displayMarkers(intersection);
 
-                                    // updateMenu(intersection);
-
-
+                        
                                 }
                                 // 요일 상관없이 낮술
                                 else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
@@ -1854,13 +1503,13 @@
         function updateMenu(list) {
 
             let menuListEl = document.getElementById('menuList');
-            // console.log(list);
+            
             removeAllChildNods(menuListEl);
 
 
             for (i = 0; i < list.length; i++) {
                 let menuList = list[i]['menu'].split('/');
-                // console.log(menuList);
+                
 
                 for (j = 0; j < menuList.length; j++) {
 
@@ -1871,8 +1520,6 @@
                     var menuPrice = '⚡' + menuList[j].split('+')[1] + '원';
 
                     var menuNamePrice = menuName + '   ' + menuPrice;
-
-                    // console.log(menuNamePrice);
 
                     var t = document.createTextNode(menuNamePrice);
 
@@ -1943,7 +1590,6 @@
 
                 // 검색결과 항목 수를 보여줍니다
                 var numStr = i;
-                // console.log(numStr);
 
                 document.getElementById("numofResults").innerHTML = '<p>' + '총 ' + numStr + '개의 검색결과가 있습니다.' + '</p>';
 
