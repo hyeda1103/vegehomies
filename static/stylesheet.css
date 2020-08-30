@@ -1,339 +1,492 @@
-        /* KAKAO MAP */
+/* KAKAO MAP */
 
-        .map_wrap,
-        .map_wrap * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
+.map_wrap, .map_wrap * {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
 
-        .map_wrap {
-            position: relative;
-        }
+.map_wrap {
+    position: relative;
+    height: 100vh;
+    /* padding: 7px; */
+}
 
-        #menu_wrap {
-            display: block;
-            background: rgba(255, 255, 255, 0.8);
-        }
+#search_wrap {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+    color: rgb(31, 69, 252);
+}
 
-        #menu_wrap2 {
-            display: block;
-            background: rgba(255, 255, 255, 0.8);
-        }
+#menu_wrap {
+    display: none;
+    background: rgba(255, 255, 255, 0.8);
+}
 
-        .bg_white {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 22%;
-            margin: 10px 10px 10px 10px;
-            padding: 20px 5px 5px 5px;
-            overflow-y: scroll;
-            z-index: 1;
-            border-radius: 10px;
-        }
+#navi_wrap {
+    display: block;
+    background-color: transparent;
+}
 
-        .bg_white2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 22%;
-            margin: 10px 10px 10px 23%;
-            padding: 20px 5px 5px 5px;
-            overflow-y: scroll;
-            z-index: 1;
-            border-radius: 10px;
-        }
+.bg_white {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 22%;
+    margin: 7px;
+    padding: 20px 6px 2px 6px;
+    z-index: 1;
+    border-radius: 0 10px;
+}
 
-        .bg_white::-webkit-scrollbar {
-            display: none;
-        }
+.bg_white3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 11%;
+    margin: 7px 7px 7px 88.75%;
+    padding: 12px 0;
+    text-align: center;
+    color: rgb(31, 69, 252);
+    z-index: 2;
+    border-radius: 0 10px;
+}
 
-        .bg_white2::-webkit-scrollbar {
-            display: none;
-        }
+#menuList::-webkit-scrollbar {
+    width: 5px;
+}
 
-        .bg_white .informResults {
-            display: block;
-            text-align: center;
-            font-size: 14px;
-            font-family: sans-serif;
-            margin-top: 3em;
-        }
+#menuList::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
 
-        #menu_wrap hr {
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid rgba(22, 87, 209, 0.9);
-            margin: 8px 3px;
-        }
+#menuList::-webkit-scrollbar-thumb {
+    background: rgb(31, 69, 252);
+    border-radius: 10px;
+}
 
-        #menu_wrap2 hr {
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid rgba(22, 87, 209, 0.9);
-            margin: 8px 3px;
-        }
+#placesList::-webkit-scrollbar {
+    width: 5px;
+}
 
-        #placesList li {
-            list-style: none;
-        }
+#placesList::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
 
-        #placesList li:hover {
-            background-color: rgba(22, 87, 209, 0.9);
-            border-radius: 10%;
-        }
+#placesList::-webkit-scrollbar-thumb {
+    background: rgb(31, 69, 252);
+    border-radius: 10px;
+}
 
-        #placesList .item {
-            position: relative;
-            border-bottom: 1px dotted rgba(22, 87, 209, 0.9);
-            overflow: hidden;
-            cursor: pointer;
-            min-height: 65px;
-            margin-top: 20px;
-        }
+#placesList {
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 741px;
+    width: 100%;
+    padding: 1px;
+    z-index: 1;
+    overflow-y: scroll;
+    margin: 2px;
+    background-color: transparent;
+}
 
-        #placesList .item span {
-            display: block;
-            margin-top: 4px;
-        }
+.informResults {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-family: sans-serif;
+    margin-top: 6em;
+}
 
-        #placesList .item h5,
-        #placesList .item .info {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 15px;
-        }
+#search_wrap hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(31, 69, 252);
+    margin-top: 8px;
+}
 
+#menu_wrap hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(31, 69, 252);
+    margin-top: 8px;
+}
 
-        #placesList .item .info {
-            padding: 10px 0 10px 55px;
-            font-size: 14px;
-        }
+#placesList li {
+    list-style: none;
+}
 
-        #placesList .info .gray {
-            color: #8a8a8a;
-        }
+#menuList li {
+    list-style: none;
+}
 
-        #placesList .info .tel {
-            color: #009900;
-        }
+#placesList li:hover {
+    background-color: #00ea90;
+    border-radius: 0 0 5% 5%;
+}
 
-        #placesList .item .markerbg {
-            float: left;
-            position: absolute;
-            width: 36px;
-            height: 37px;
-            margin: 10px 0 0 10px;
-            background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
-        }
+#menuList li:hover {
+    background-color: #00ea90;
+    border-radius: 0 5%;
+}
 
-        #placesList .item .marker_1 {
-            background-position: 0 -10px;
-        }
+#placesList .item {
+    position: relative;
+    border-bottom: 2px dotted rgb(31, 69, 252);
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 60px;
+    padding: 7px 5px;
+}
 
-        #placesList .item .marker_2 {
-            background-position: 0 -56px;
-        }
+#menuList {
+    padding: 1px;
+    overflow-y: scroll;
+    height: 705px;
+}
 
-        #placesList .item .marker_3 {
-            background-position: 0 -102px
-        }
+#menuList li {
+    position: relative;
+    border-bottom: 2px dotted rgb(31, 69, 252);
+    overflow: hidden;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 7px;
+}
 
-        #placesList .item .marker_4 {
-            background-position: 0 -148px;
-        }
+#placesList .item span {
+    display: block;
+    margin-top: 4px;
+}
 
-        #placesList .item .marker_5 {
-            background-position: 0 -194px;
-        }
+#placesList .item h5, #placesList .item .info {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 15px;
+    /* font-weight: bold; */
+}
 
-        #placesList .item .marker_6 {
-            background-position: 0 -240px;
-        }
+#placesList .item .info {
+    padding: 10px 0 10px 55px;
+    font-size: 14px;
+    margin-left: 58px;
+}
 
-        #placesList .item .marker_7 {
-            background-position: 0 -286px;
-        }
+#placesList .info .tel {
+    color: #009900;
+}
 
-        #placesList .item .marker_8 {
-            background-position: 0 -332px;
-        }
+#placesList .item .placebg {
+    float: left;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    margin: 5px 0px 10px 0px;
+    /* background: url("static/bigMarker.svg") no-repeat; */
+}
 
-        #placesList .item .marker_9 {
-            background-position: 0 -378px;
-        }
+.customoverlay {
+    position: relative;
+    bottom: 79px;
+    left: 5px;
+    border-radius: 5px;
+    background: rgb(31, 69, 252);
+    float: left;
+    z-index: 2;
+}
 
-        #placesList .item .marker_10 {
-            background-position: 0 -423px;
-        }
+.customoverlay:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+}
 
-        #placesList .item .marker_11 {
-            background-position: 0 -470px;
-        }
+.customoverlay .title {
+    display: block;
+    text-align: center;
+    background: rgba(255, 255, 255);
+    color: rgb(31, 69, 252);
+    margin-right: 25px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 3;
+}
 
-        #placesList .item .marker_12 {
-            background-position: 0 -516px;
-        }
+.customoverlay a {
+    display: block;
+    text-align: center;
+    padding-right: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    overflow: hidden;
+    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+}
 
-        #placesList .item .marker_13 {
-            background-position: 0 -562px;
-        }
+#grad1 {
+    background-color: rgb(31, 69, 252);
+}
 
-        #placesList .item .marker_14 {
-            background-position: 0 -608px;
-        }
+.searchContainer {
+    background-color: rgb(31, 69, 252);
+    color: white;
+    position: relative;
+    border-radius: 0 6px 0 6px;
+    padding: 3px 50px 3px 10px;
+}
 
-        #placesList .item .marker_15 {
-            background-position: 0 -654px;
-        }
+.searchBox {
+    background-color: transparent;
+    outline: none;
+    color: #00ea90;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    width: 100%;
+}
 
-        #grad1 {
-            background-color: rgba(22, 87, 209, 0.9);
-        }
+.searchBox::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+}
 
-        .searchContainer {
-            background-color: #FFF;
-            position: relative;
-            border-radius: 5px;
-            padding: 3px 50px 3px 10px;
-        }
+.searchButton {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    background-color: transparent;
+    border-radius: 40%;
+    border: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    outline: none;
+    border: 0;
+}
 
-        .searchBox {
-            background-color: transparent;
-            outline: none;
-            height: 30px;
-            font-size: 15px;
-            border: 0;
-            width: 100%;
-        }
+.searchButton:active {
+    color: #00ea90;
+}
 
-        .searchButton {
-            position: absolute;
-            right: 14px;
-            top: 8px;
-            background-color: transparent;
-            border-radius: 40%;
-            border: 0;
-            color: black;
-            font-size: 15px;
-            outline: 0;
-        }
+.toggleButton {
+    position: absolute;
+    right: 14px;
+    top: 8px;
+    background-color: transparent;
+    border-radius: 40%;
+    border: 0;
+    color: rgb(31, 69, 252);
+    font-size: 13px;
+    outline: 0;
+}
 
-        .toggleButton {
-            position: absolute;
-            right: 14px;
-            top: 8px;
-            background-color: transparent;
-            border-radius: 40%;
-            border: 0;
-            color: black;
-            font-size: 13px;
-            outline: 0;
-        }
+.toggleButton:hover {
+    background-color: #00ea90;
+    border-radius: 0 3%;
+}
 
-        .toggleButton:hover {
-            background-color: chartreuse;
-            color: rgba(22, 87, 209, 0.9);
-        }
+.distance {
+    position: absolute;
+    right: 14px;
+    top: 8px;
+    background-color: transparent;
+    border-radius: 40%;
+    border: 0;
+    color: rgb(31, 69, 252);
+    font-size: 13px;
+    outline: 0;
+}
 
+#filterDiv {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 
-        #filterDiv {
-            display: none;
-        }
+a:hover svg, a:focus svg {
+    transform: scale(1.1, 1.1);
+}
 
-        #filter2Div {
-            display: none;
-        }
+a:focus {
+    outline: none;
+}
 
-        .filterBtn {
-            text-align: left;
-            padding: 3px 10px;
-            margin-top: 8px;
-            font-size: 12px;
-            border: 0;
-            background-color: white;
-            border-radius: 10%;
-        }
+#map {
+    position: relative;
+    /* width: 66.15%; */
+    height: 100%;
+    overflow: hidden;
+    /* margin-left: 22.5%; */
+    /* border-radius: 0 10px 0 10px; */
+}
 
-        .filterChk {
-            text-align: left;
-            font-size: 6px;
-        }
+/* Styling Checkbox Starts */
 
-        .filterBtn:hover {
-            background-color: rgba(22, 87, 209, 0.9);
-            color: whitesmoke;
-        }
+.checkbox-container {
+    font-weight: 600;
+    margin-left: 16px;
+    margin-bottom: 4px;
+    color: rgb(31, 69, 252);
+    float: left;
+    width: 15.2%;
+    text-align: center;
+    box-sizing: border-box;
+    padding-bottom: 18px;
+}
 
-        .timeFilter {
-            /* margin-bottom: 9px; */
-            text-align: center;
-            display: none;
-        }
+.input-title {
+    clear: both;
+    font-size: 12px;
+    color: rgb(31, 69, 252);
+    font-weight: 600;
+}
 
-        /* Style the tab */
-        .tab {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-        }
+.checkbox-label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    margin: auto;
+    font-size: 14px;
+    line-height: 24px;
+    height: 10px;
+    width: 24px;
+    clear: both;
+}
 
-        /* Style the buttons inside the tab */
-        .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-        }
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
 
-        /* Change background color of buttons on hover */
-        .tab button:hover {
-            background-color: #ddd;
-        }
+.checkbox-label .checkbox-custom {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border-radius: 0 5px;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    border: 2px solid rgb(31, 69, 252);
+}
 
-        /* Create an active/current tablink class */
-        .tab button.active {
-            background-color: #ccc;
-        }
+.checkbox-label input:checked~.checkbox-custom {
+    background-color: rgb(31, 69, 252);
+    border-radius: 0 5px;
+    -webkit-transform: rotate(0deg) scale(1);
+    -ms-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+    border: 2px solid rgb(31, 69, 252);
+}
 
-        /* Style the tab content */
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
+.checkbox-label .checkbox-custom::after {
+    position: absolute;
+    content: "";
+    left: 12px;
+    top: 12px;
+    height: 0px;
+    width: 0px;
+    border-radius: 5px;
+    border: solid rgb(31, 69, 252);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(0deg) scale(0);
+    -ms-transform: rotate(0deg) scale(0);
+    transform: rotate(0deg) scale(0);
+    opacity: 1;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
 
+.checkbox-label input:checked~.checkbox-custom::after {
+    -webkit-transform: rotate(45deg) scale(1);
+    -ms-transform: rotate(45deg) scale(1);
+    transform: rotate(45deg) scale(1);
+    opacity: 1;
+    left: 8px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid #00ea90;
+    border-width: 0 2px 2px 0;
+    background-color: transparent;
+    border-radius: 0;
+}
 
-        .make-center {
-            text-align: center;
-        }
+/* For Ripple Effect */
 
+.checkbox-label .checkbox-custom::before {
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 10px;
+    width: 0px;
+    height: 0px;
+    border-radius: 5px;
+    border: 2px solid #00ea90;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+}
 
-        /* menu_wrap2에 나오는 메뉴 리스트  */
-        .star-list {
-            width: 500px;
-            margin: 20px auto 0 auto;
-        }
+.checkbox-label input:checked~.checkbox-custom::before {
+    left: -3px;
+    top: -3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    -webkit-transform: scale(3);
+    -ms-transform: scale(3);
+    transform: scale(3);
+    opacity: 0;
+    z-index: 999;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
 
-        .star-name {
-            display: inline-block;
-        }
+/* Style for Circular Checkbox */
 
-        .star-name:hover {
-            text-decoration: underline;
-        }
+.checkbox-label .checkbox-custom.circular {
+    border-radius: 50%;
+    border: 2px solid rgb(31, 69, 252);
+}
 
-        .card {
-            margin-bottom: 15px;
-        }
+.checkbox-label input:checked~.checkbox-custom.circular {
+    background-color: rgb(31, 69, 252);
+    border-radius: 50%;
+    border: 2px solid rgb(31, 69, 252);
+}
+
+.checkbox-label input:checked~.checkbox-custom.circular::after {
+    border: solid #00ea90;
+    border-width: 0 2px 2px 0;
+}
+
+.checkbox-label .checkbox-custom.circular::after {
+    border-radius: 50%;
+}
+
+.checkbox-label .checkbox-custom.circular::before {
+    border-radius: 50%;
+    border: 2px solid #00ea90;
+}
+
+.checkbox-label input:checked~.checkbox-custom.circular::before {
+    border-radius: 50%;
+}
