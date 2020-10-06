@@ -1,5 +1,5 @@
 # 술고래는 채식주의자🥗
-> 채식하는 친구와 술을 먹으러 간다.
+> 비건 안주를 제공하는 대한민국 술집에 대한 정보를 제공하는 지도기반 검색 서비스입니다.
 
 [![author-hyeda1103](https://img.shields.io/badge/author-hyeda1103-blue.svg)](https://github.com/hyeda1103/)
 [![5min-tutorial-github](https://img.shields.io/badge/5min--tutorial-github-red.svg)](https://github.com/topics/5min-tutorial)
