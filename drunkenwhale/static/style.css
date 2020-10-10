@@ -1,0 +1,657 @@
+* {
+    box-sizing: border-box;
+}
+
+/* KAKAO MAP */
+
+.map_wrap, .map_wrap * {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.map_wrap {
+    position: relative;
+    height: 100vh;
+    
+}
+
+#search_wrap {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+    color: rgb(31, 69, 252);
+}
+
+#menu_wrap {
+    display: none;
+    background: rgba(255, 255, 255, 0.8);
+    color: rgb(31, 69, 252);
+}
+
+#navi_wrap {
+    display: block;
+    background-color: transparent;
+}
+
+.bg_white {
+    position: absolute;
+    top: 6%;
+    left: 0;
+    bottom: 0;
+    width: 24%;
+    margin: 7px;
+    padding: 20px 6px 2px 6px;
+    z-index: 1;
+    border-radius: 0 10px;
+}
+
+.bg_white2 {
+    position: absolute;
+    top: 6%;
+    left: 0;
+    bottom: 0;
+    width: 10%;
+    margin: 670px 7px 7px 90%;
+    padding: 20px 6px 2px 6px;
+    z-index: 1;
+    border-radius: 40%;
+}
+
+#menuList::-webkit-scrollbar {
+    width: 5px;
+}
+
+#menuList::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+#menuList::-webkit-scrollbar-thumb {
+    background: rgb(31, 69, 252);
+    border-radius: 10px;
+}
+
+#placesList::-webkit-scrollbar {
+    width: 5px;
+}
+
+#placesList::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+#placesList::-webkit-scrollbar-thumb {
+    background: rgb(31, 69, 252);
+    border-radius: 10px;
+}
+
+#placesList {
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 675px;
+    width: 100%;
+    padding: 1px;
+    z-index: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 2px;
+    background-color: transparent;
+}
+
+.informResults {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-family: sans-serif;
+    margin-top: 6em;
+}
+
+#search_wrap hr {
+    display: block;
+    margin-top: 8px;
+    background: url(hr-waveFormBlue.svg);
+    background-repeat: repeat-x;
+}
+
+#menu_wrap hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(31, 69, 252);
+    margin-top: 8px;
+}
+
+#placesList li {
+    list-style: none;
+}
+
+#menuList li {
+    list-style: none;
+}
+
+#placesList li:hover {
+    box-shadow: 0 0 15px #00ea90;
+    transform: scale(1.01);
+}
+
+#menuList li:hover {
+    box-shadow: 0 0 8px #00ea90;
+    transform: scale(1.01);
+}
+
+#placesList .item {
+    position: relative;
+    border-bottom: 2px dotted rgb(31, 69, 252);
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 60px;
+    padding: 7px 5px;
+}
+
+#menuList {
+    padding: 1px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 705px;
+}
+
+#menuList li {
+    position: relative;
+    border-bottom: 2px dotted rgb(31, 69, 252);
+    overflow: hidden;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 7px;
+}
+
+#placesList .item span {
+    display: block;
+    margin-top: 3px;
+}
+
+#placesList .item h5, #placesList .item .info {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 15px;
+    /* font-weight: bold; */
+}
+
+#placesList .item .info {
+    padding: 10px 0 10px 55px;
+    font-size: 14px;
+    margin-left: 58px;
+}
+
+#placesList .item .placebg {
+    float: left;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    margin: 5px 0px 10px 0px;
+}
+
+
+.searchIcon {
+    background: url(search-WhiteBtn.svg);
+    width: 18px;
+    height: 18px;
+    margin: 3.5px 0;
+    background-repeat: no-repeat;
+    outline: none;
+}
+
+
+
+.customoverlay {
+    position: relative;
+    bottom: 79px;
+    left: 5px;
+    border-radius: 5px;
+    background: white;
+    float: left;
+    z-index: 2;
+}
+
+.customoverlay:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0px 1px 2px rgba(31, 69, 252, 0.8);
+}
+
+.customoverlay .title {
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: rgb(31, 69, 252);
+    margin-right: 25px;
+    padding: 12px 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.customoverlay a {
+    display: block;
+    text-align: center;
+    padding-right: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    overflow: hidden;
+    background: url(blueLineFeet.svg) no-repeat right 8px center;
+}
+
+.customoverlayUser {
+    position: relative;
+    bottom: 79px;
+    left: 5px;
+    border-radius: 5px;
+    background: white;
+    float: left;
+    z-index: 2;
+}
+
+.customoverlayUser:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0px 1px 2px rgba(31, 69, 252, 0.8);
+}
+
+.customoverlayUser .title {
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: rgb(31, 69, 252);
+    margin-right: 20px;
+    padding: 12px 2px 12px 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.customoverlayUser a {
+    display: block;
+    text-align: center;
+    padding-right: 18px;
+    border-radius: 5px;
+    font-weight: bold;
+    overflow: hidden;
+    background: url(nowHereWave.svg) no-repeat right 6px center;
+    background-size: 30px 30px;
+}
+
+.searchContainer {
+    background-color: rgb(31, 69, 252);
+    color: white;
+    position: relative;
+    border-radius: 0 6px 0 6px;
+    padding: 3px 50px 3px 10px;
+    outline: none;
+}
+
+.searchBox {
+    background-color: transparent;
+    outline: none;
+    color: #00ea90;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    width: 100%;
+}
+
+.searchBox::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.searchButton {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    outline: none;
+    border: none;
+}
+
+.searchButton:active {
+    color: #00ea90;
+}
+
+.toggleButton {
+    position: absolute;
+    right: 14px;
+    top: 8px;
+    background-color: transparent;
+    border-radius: 40%;
+    border: 0;
+    color: rgb(31, 69, 252);
+    font-size: 13px;
+    outline: 0;
+}
+
+.toggleButton:hover {
+    background-color: #00ea90;
+    border-radius: 0 3%;
+}
+
+.distance {
+    position: absolute;
+    right: 14px;
+    top: 8px;
+    background-color: transparent;
+    border-radius: 40%;
+    border: 0;
+    color: rgb(31, 69, 252);
+    font-size: 13px;
+    outline: 0;
+}
+
+#filterDiv {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+a .blueLineFeet {
+    -webkit-animation: updown 2s infinite alternate;
+    animation: updown 2s infinite alternate;
+}
+
+@-webkit-keyframes updown {
+    to {
+        -webkit-transform: translateY(20px);
+        transform: translateY(20px);
+    }
+}
+
+@keyframes updown {
+    to {
+        -webkit-transform: translateY(20px);
+        transform: translateY(20px);
+    }
+}
+
+
+/* Styles for header */
+
+.logoHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    height: 6%;
+    width: 100%;
+    padding: 6px 10px;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+    background-color: rgb(31, 69, 252);
+    z-index: 2;
+}
+
+.header-left {
+    align-items: center;
+    padding: 6px 10px;
+}
+
+.logoHeader .a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 6px 10px;
+}
+
+.logoHeader .header-right {
+    padding: 6px 10px;
+    float: right;
+}
+
+.logoHeader .header-right .a span {
+    padding-bottom: 6px;
+    font-size: 15px;
+    font-weight: 400;
+    float: right;
+    color: rgba(0, 234, 144);
+    background: url(waveEmerald.svg);
+    background-repeat: repeat;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto auto;
+    background-repeat: repeat-x;
+    background-size: 15px 5px;
+    background-position: 2px 22px;
+    animation: move 15s linear infinite;
+    -webkit-animation: move 15s linear infinite;
+    animation-play-state: paused;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+
+.logoHeader .header-right .a span:hover {
+    animation-play-state: running;
+    cursor: pointer;
+}
+
+@-webkit-keyframes move {
+    from {
+        background-position: 2px 19px;
+    }
+    to {
+        background-position: 500px 19px;
+    }
+}
+
+@keyframes move {
+    from {
+        background-position: 2px 19px;
+    }
+    to {
+        background-position: 500px 19px;
+    }
+}
+
+.logoHeader .a .logoTitle {
+    font-size: 20px;
+    margin-left: 2px;
+    font-weight: 500;
+    font-weight: 500;
+}
+
+.logoHeader .a .logoTitle:hover {
+    color: rgba(0, 234, 144);
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 500px) {
+    .logoHeader .a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
+}
+
+
+#map {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Styling Checkbox Starts */
+
+.checkbox-container {
+    font-weight: 600;
+    margin-left: 16px;
+    margin-bottom: 4px;
+    color: rgb(31, 69, 252);
+    float: left;
+    width: 15.2%;
+    text-align: center;
+    box-sizing: border-box;
+    padding-bottom: 18px;
+}
+
+.input-title {
+    clear: both;
+    font-size: 12px;
+    color: rgb(31, 69, 252);
+    font-weight: 600;
+}
+
+.checkbox-label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    margin: auto;
+    font-size: 14px;
+    line-height: 24px;
+    height: 10px;
+    width: 24px;
+    clear: both;
+}
+
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkbox-label .checkbox-custom {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border-radius: 0 5px;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    border: 2px solid rgb(31, 69, 252);
+}
+
+.checkbox-label .checkbox-custom:hover {
+    background-color: rgba(0, 234, 144, 0.6);
+}
+
+.checkbox-label input:checked~.checkbox-custom {
+    background-color: rgb(31, 69, 252);
+    border-radius: 0 5px;
+    -webkit-transform: rotate(0deg) scale(1);
+    -ms-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+    border: 2px solid rgb(31, 69, 252);
+}
+
+.checkbox-label .checkbox-custom::after {
+    position: absolute;
+    content: "";
+    left: 12px;
+    top: 12px;
+    height: 0px;
+    width: 0px;
+    border-radius: 5px;
+    border: solid rgb(31, 69, 252);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(0deg) scale(0);
+    -ms-transform: rotate(0deg) scale(0);
+    transform: rotate(0deg) scale(0);
+    opacity: 1;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+
+.checkbox-label input:checked~.checkbox-custom::after {
+    -webkit-transform: rotate(45deg) scale(1);
+    -ms-transform: rotate(45deg) scale(1);
+    transform: rotate(45deg) scale(1);
+    opacity: 1;
+    left: 8px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid #00ea90;
+    border-width: 0 2px 2px 0;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+/* For Ripple Effect */
+
+.checkbox-label .checkbox-custom::before {
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 10px;
+    width: 0px;
+    height: 0px;
+    border-radius: 5px;
+    border: 2px solid #00ea90;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+}
+
+.checkbox-label input:checked~.checkbox-custom::before {
+    left: -3px;
+    top: -3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    -webkit-transform: scale(3);
+    -ms-transform: scale(3);
+    transform: scale(3);
+    opacity: 0;
+    z-index: 999;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+
+/* Style for Circular Checkbox */
+
+.checkbox-label .checkbox-custom.circular {
+    border-radius: 50%;
+    border: 2px solid rgb(31, 69, 252);
+}
+
+.checkbox-label .checkbox-custom.circular:hover {
+    background-color: rgba(0, 234, 144, 0.6);
+}
+
+.checkbox-label input:checked~.checkbox-custom.circular {
+    background-color: rgb(31, 69, 252);
+    border-radius: 50%;
+    border: 2px solid rgb(31, 69, 252);
+}
+
+.checkbox-label input:checked~.checkbox-custom.circular::after {
+    border: solid #00ea90;
+    border-width: 0 2px 2px 0;
+}
+
+.checkbox-label .checkbox-custom.circular::after {
+    border-radius: 50%;
+}
+
+.checkbox-label .checkbox-custom.circular::before {
+    border-radius: 50%;
+    border: 2px solid #00ea90;
+}
+
+.checkbox-label input:checked~.checkbox-custom.circular::before {
+    border-radius: 50%;
+}
+

@@ -1,0 +1,110 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+body {
+    padding-top: 50px;
+}
+
+/* Styles for header */
+
+.logoHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    height: 6%;
+    width: 100%;
+    padding: 6px 10px;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+    background-color: rgb(31, 69, 252);
+    z-index: 2;
+}
+
+.header-left {
+    align-items: center;
+    padding: 6px 10px;
+}
+
+.logoHeader .a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 6px 10px;
+}
+
+.logoHeader .header-right {
+    padding: 6px 10px;
+    float: right;
+}
+
+.logoHeader .header-right .a span {
+    padding-bottom: 6px;
+    font-size: 15px;
+    font-weight: 400;
+    float: right;
+    color: rgba(0, 234, 144);
+    background: url(waveEmerald.svg);
+    background-repeat: repeat;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto auto;
+    background-repeat: repeat-x;
+    background-size: 15px 5px;
+    background-position: 2px 22px;
+    animation: move 15s linear infinite;
+    -webkit-animation: move 15s linear infinite;
+    animation-play-state: paused;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+
+.logoHeader .header-right .a span:hover {
+    animation-play-state: running;
+}
+
+@-webkit-keyframes move {
+    from {
+        background-position: 2px 19px;
+    }
+    to {
+        background-position: 500px 19px;
+    }
+}
+
+@keyframes move {
+    from {
+        background-position: 2px 19px;
+    }
+    to {
+        background-position: 500px 19px;
+    }
+}
+
+.logoHeader .a .logoTitle {
+    font-size: 20px;
+    margin-left: 2px;
+    font-weight: 500;
+    font-weight: 500;
+}
+
+.logoHeader .a .logoTitle:hover {
+    color: rgba(0, 234, 144);
+}
+
+@media screen and (max-width: 500px) {
+    .logoHeader .a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
+}
