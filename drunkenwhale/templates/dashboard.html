@@ -1,0 +1,1944 @@
+{% include 'layout.html' %}
+
+{% block body %}
+
+<div class="map_wrap">
+
+    <div id="map"></div>
+
+    <!-- 장소와 요일 기반 검색 -->
+    <div id="search_wrap" class="bg_white">
+
+        <div id="searchBox">
+
+            <div class="searchContainer">
+                <form onsubmit="searchPlaces(); return false;">
+                    <div>
+                        <input type="text" class="searchBox" placeholder=" " id="search">
+                        <button id="cbxSearch" class="searchButton" type="submit">
+                            <div class="searchIcon"></div>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+
+            <div id=filterDiv>
+
+                <div id="filterDiv1" class="dayFilter">
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxSun" class="filterChk" type="checkbox" value="일" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">일</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxMon" class="filterChk" type="checkbox" value="월" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">월</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxTue" class="filterChk" type="checkbox" value="화" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">화</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxWed" class="filterChk" type="checkbox" value="수" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">수</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxThr" class="filterChk" type="checkbox" value="목" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">목</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxFri" class="filterChk" type="checkbox" value="금" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">금</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxSat" class="filterChk" type="checkbox" value="토" onclick="filterSelection()">
+                            <span class="checkbox-custom circular"></span>
+                            <div class="input-title">토</div>
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <div id="filterDiv2" class="menuFilter">
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxDaytime" class="filterChk2" type="checkbox" onclick="filterSelection()">
+                            <span class="checkbox-custom"></span>
+                            <div class="input-title">낮</div>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-container circular-container">
+                        <label class="checkbox-label">
+                            <input id="cbxMidnight" class="filterChk2" type="checkbox" onclick="filterSelection()">
+                            <span class="checkbox-custom"></span>
+                            <div class="input-title">밤</div>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div id="filterDiv3" class="checkbox-container circular-container">
+                    <label class="checkbox-label circular-container">
+                        <input id="cbxNowHere" class="filterChk3" type="checkbox" onclick="curStatus()">
+                        <span class="checkbox-custom circular"></span>
+                        <div class="input-title"><img src="static/nowHereBtn.svg"
+                                style="width: 22px; height: 22px; margin-bottom: 4px;">
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+
+
+            <br>
+
+            <p id="numofResults" class="informResults"></p>
+
+            <img src="static/hr-waveFormBlue.svg">
+
+        </div>
+
+        <ul id="placesList"></ul>
+
+
+    </div>
+
+    <!-- 술집과 관련한 첫번째 애니메이션이 들어갑니다 -->
+    <div id="navi_wrap" class="bg_white2">
+        <a href="">
+            <svg id="nowHereMarker" class="blueLineFeet" xmlns="http://www.w3.org/2000/svg" width="150" height="150"
+                viewBox="0 0 64.23 49.1">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill: #00ea90;
+                        }
+
+                        .cls-2,
+                        .cls-3 {
+                            fill: #1f45fc;
+                        }
+
+                        .cls-2,
+                        .cls-5,
+                        .cls-6 {
+                            stroke: #1f45fc;
+                            stroke-miterlimit: 10;
+                        }
+
+                        .cls-2,
+                        .cls-5 {
+                            stroke-linecap: round;
+                        }
+
+                        .cls-2 {
+                            stroke-width: 0.15px;
+                        }
+
+                        .cls-4 {
+                            fill: #1f3efc;
+                        }
+
+                        .cls-5,
+                        .cls-6 {
+                            fill: none;
+                        }
+
+                        .cls-5 {
+                            stroke-width: 0.5px;
+                        }
+
+                        .cls-6 {
+                            stroke-width: 0.4px;
+                        }
+                    </style>
+                </defs>
+                <title>blueLineFeet</title>
+                <g id="nowHereMarker-2" data-name="nowHereMarker">
+                    <path id="left-foot-color" class="cls-1"
+                        d="M29.63,11.09c-.24-.2-.78-.24-1.85-.31s-1.08,0-2-.1c-.2,0-.48,0-.89,0a8.37,8.37,0,0,0-1,0,7.14,7.14,0,0,0-1.3.13,3.41,3.41,0,0,0-1.67.74A4.53,4.53,0,0,0,20,12.94a9.82,9.82,0,0,0-.56,1.34,10.67,10.67,0,0,0-.41,1.6c-.19,1.06-.05,1.14-.24,2a10.6,10.6,0,0,1-.48,1.62c-.18.52-.23.56-.62,1.58-.34.86-.51,1.29-.56,1.48-.12.55-.11.93-.32,1.9a2.67,2.67,0,0,1-.2.62,2.75,2.75,0,0,1-.56.78,5.6,5.6,0,0,1-1.3.92c-.89.54-.93.53-1.32.81a11.33,11.33,0,0,0-1,.77c-.36.31-.38.35-.94.85a6.53,6.53,0,0,1-1.21,1,3.59,3.59,0,0,1-.88.35,3.15,3.15,0,0,1-1,.07c-.76-.05-.8-.26-1.44-.31a6.14,6.14,0,0,0-1.48.18c-1.1.19-.94.24-1.27.26-1.13.06-1.55-.51-2.41-.29a1.89,1.89,0,0,0-.81.44,2.44,2.44,0,0,0-.62.91,1.11,1.11,0,0,0-.12.89c.15.31.58.41,1,.49.61.14,1.07,0,1.11.19s-.23.16-.3.42a.62.62,0,0,0,.2.63c.17.12.3,0,.56.12s.19.21.41.35a1.5,1.5,0,0,0,1.11.1c.19-.06.31-.14.35-.1s-.17.23-.29.52a1.19,1.19,0,0,0,0,.94,1.48,1.48,0,0,0,1,.7c.36.09.54,0,.71.19s.06.35.22.61a1.35,1.35,0,0,0,.93.47c.4.06.57-.15.74,0s.09.35.2.61c.24.59,1.22.71,1.7.77a2.9,2.9,0,0,0,1.53-.1c.61-.25.93-.71,1.5-1.54.68-1,.64-1.32,1.24-1.86a3.6,3.6,0,0,1,1.1-.68,5.76,5.76,0,0,1,1.78-.24A5.25,5.25,0,0,0,19.72,34a4.44,4.44,0,0,0,1.82-2.06,3,3,0,0,1,.6-1.24,2.56,2.56,0,0,1,.79-.58,2.38,2.38,0,0,1,.92-.22c.51,0,1.43-.4,3.21-1.77a4.47,4.47,0,0,0,1-1.26,4.72,4.72,0,0,0,.53-1.89,3.27,3.27,0,0,0-.07-1.32c-.21-.74-.59-.84-.58-1.35s.26-.39.58-1.18a5.35,5.35,0,0,0,.3-1.15,9.1,9.1,0,0,0,0-1.16A5.76,5.76,0,0,1,29.4,17a20.7,20.7,0,0,0,.69-2,6.55,6.55,0,0,0,.17-2.12C30.17,12.11,30.1,11.47,29.63,11.09Z" />
+                    <path id="right-foot-color" class="cls-1"
+                        d="M42.65,26.81c-.32-.12-.4,0-1.37.06a9.36,9.36,0,0,1-1.89-.05,3.83,3.83,0,0,1-1.16-.29,3.56,3.56,0,0,1-.72-.43,8.9,8.9,0,0,1-.95-.86,4.94,4.94,0,0,0-1.4-1.09,3.11,3.11,0,0,0-1.08-.28,3.61,3.61,0,0,0-1.82.39,5.38,5.38,0,0,0-1.47.91,5.75,5.75,0,0,0-.88,1A7.8,7.8,0,0,0,29,27.87c-.32.79-.27.87-.62,1.83-.23.65-.42,1.1-.76,1.89-.17.37-.45,1-1,2.16a6.2,6.2,0,0,1-1,1.73,5.28,5.28,0,0,1-.72.64,7.43,7.43,0,0,1-1.31.68A6.87,6.87,0,0,0,22,38a7.77,7.77,0,0,0-1.14,1.22A8.13,8.13,0,0,0,20,40.68c-.13.27-.14.3-.64,1.52a13.5,13.5,0,0,1-.66,1.52A7.81,7.81,0,0,1,17.89,45a4.2,4.2,0,0,1-1,.79,1.85,1.85,0,0,0-.61.41A1.14,1.14,0,0,0,16,47.21a1.12,1.12,0,0,0,.62.68,1.09,1.09,0,0,0,.58.06,1.14,1.14,0,0,0,.4-.17c.19-.15.24-.32.29-.31s-.1.33,0,.65a1.05,1.05,0,0,0,.52.57,1.07,1.07,0,0,0,.73.16c.06,0,.51,0,.56-.32a1.71,1.71,0,0,1,.26-.65c.12.06.42.44.89.36a1.2,1.2,0,0,0,.75-.38c.18-.21.19-.42.31-.43s.15.14.3.33a1.52,1.52,0,0,0,.61.47,1.05,1.05,0,0,0,.94-.11c.28-.21.32-.38.49-.84,0-.1.33-.19.5-.11a2.73,2.73,0,0,0,1.06.3,2.37,2.37,0,0,0,1.42-.41,2.11,2.11,0,0,0,.76-.79,3,3,0,0,0,.22-1.67c0-.82-.14-.88-.13-1.67a4,4,0,0,1,.17-1.28,3.71,3.71,0,0,1,.56-1A5.67,5.67,0,0,1,30,39.58a8.58,8.58,0,0,0,2-1.82,10.06,10.06,0,0,0,.51-1,6.24,6.24,0,0,1,2-2.65,3.13,3.13,0,0,1,1.64-.55,3.86,3.86,0,0,1,.91.12,12.1,12.1,0,0,0,2.34.21A4.21,4.21,0,0,0,42,33.23a4.28,4.28,0,0,0,1.43-1.86,5.23,5.23,0,0,0,.51-1.8,3.15,3.15,0,0,0-.14-1.44A2.18,2.18,0,0,0,42.65,26.81Z" />
+                    <path id="water-color" class="cls-2"
+                        d="M24.89,11.31a.79.79,0,0,1-.44.46c-.48.15-1-.41-1.19-.25s.11.48-.06.75-1.25.2-1.25.24,1.18,0,1.37.5c.13.31-.2.68-.12.74s.76-1,1.44-.93,1,1.16,1.31,1.06.06-.71.44-1,1.32.11,1.37,0-1.27-.72-1.2-1.05S28,11.58,28,11.52A22.58,22.58,0,0,0,24.89,11.31Z" />
+                    <path id="leaf-color-blue1" class="cls-3"
+                        d="M25.35,11.83s0-.13-.29-.81a5.49,5.49,0,0,0-.36-.88,6.92,6.92,0,0,0-.64-.76c-.23-.25-.34-.38-.47-.5a7.44,7.44,0,0,0-.76-.62l-.46-.33c-.13-.1-.39-.29-.71-.55l-.54-.45a4.53,4.53,0,0,0-.41-.3A1.67,1.67,0,0,0,20,6.39a1.69,1.69,0,0,0-.62.13,3.44,3.44,0,0,0-1.45,1.16,2,2,0,0,0-.31.53c-.07.18-.12.31-.06.4s.16.05.49.09l.34.07L19,8.9l1.05.19,1.09.11a6.22,6.22,0,0,1,1.12.21,4.54,4.54,0,0,1,1.13.45,4.67,4.67,0,0,1,1.05.84C25,11.3,25.3,11.86,25.35,11.83Z" />
+                    <path id="leaf-color-emerald2" class="cls-3"
+                        d="M25.76,11.41A7.51,7.51,0,0,0,26,10.18v0c.13-.71.18-1.38.2-1.61a12,12,0,0,0,.05-1.67A10.21,10.21,0,0,0,26,5a10.3,10.3,0,0,0-.68-1.79,13.41,13.41,0,0,0-1-1.68A6.8,6.8,0,0,0,23.28.2a4.76,4.76,0,0,0,.33.71,4.93,4.93,0,0,1,.36.9,2.59,2.59,0,0,1,0,1A5.84,5.84,0,0,0,24.25,5,8.72,8.72,0,0,0,25,6.73,7.61,7.61,0,0,1,25.53,8a4.16,4.16,0,0,1,.24.87,3.88,3.88,0,0,1,0,.82C25.79,10.78,25.72,11.41,25.76,11.41Z" />
+                    <path id="leaf-color-emerald3" class="cls-3"
+                        d="M26.12,11.53c-.05,0,.18-.26.43-.7a5.11,5.11,0,0,0,.52-1.25c.1-.37.05-.35.19-1.08a12.23,12.23,0,0,1,.34-1.45,5.89,5.89,0,0,1,.5-1.27A5.79,5.79,0,0,1,28.63,5c.36-.45.6-.67.8-.9a5.72,5.72,0,0,0,1-1.56c.23-.5.42-1.07.48-1.23.19-.58.27-.95.35-.95s.13.55.13.65A5.49,5.49,0,0,1,31,3.29a9.58,9.58,0,0,1-.63,1.37c-.16.32-.37.7-.8,1.44-.3.55-.45.79-.64,1.21-.09.19-.2.43-.32.76s-.14.46-.28.83a6.48,6.48,0,0,1-.32.71,5.29,5.29,0,0,1-.47.72,3.82,3.82,0,0,1-.66.74C26.57,11.33,26.17,11.59,26.12,11.53Z" />
+                    <path id="leaf-color-emerald4" class="cls-3"
+                        d="M26.39,12.3a6.36,6.36,0,0,1,.68-1.09c.06-.09.27-.38.58-.75s.55-.62.92-1,.54-.46.91-.84c.06-.06.25-.26.75-.88.67-.83.65-.88,1.07-1.37a9.72,9.72,0,0,1,1.07-1.11c.17-.16.47-.38,1.09-.84a16,16,0,0,1,1.35-.92c.2-.17.45-.41.69-.35a.43.43,0,0,1,.26.21.5.5,0,0,1,0,.29,5.88,5.88,0,0,1-.43,1.44,3.36,3.36,0,0,1-.67,1,4.42,4.42,0,0,1-.39.34A7.58,7.58,0,0,1,33.5,7c-.39.27-.36.21-.64.41s-.34.33-.77.68a3.41,3.41,0,0,1-.67.48c-.21.1-.23.08-.7.25a5.59,5.59,0,0,0-.82.35l-.66.43-.6.4c-.28.23-.32.31-.69.62-.2.18-.31.26-.42.35A5.77,5.77,0,0,0,26.39,12.3Z" />
+                    <path id="bottle-color" class="cls-3"
+                        d="M43.89,29.05c.12-.1.34.05.76.2a5.81,5.81,0,0,0,1.44.24,3.3,3.3,0,0,0,1.44,0,3.35,3.35,0,0,0,.92-.61c.25-.2.47-.4.85-.73a2.25,2.25,0,0,1,.89-.6,1.58,1.58,0,0,1,.42-.06,4.21,4.21,0,0,1,1.76.42c.15.07,1.2.28,3.31.68a43.77,43.77,0,0,0,5,.87s.65.1,2.48.31a.87.87,0,0,1,.41.22A1.56,1.56,0,0,1,64,31.1a7.58,7.58,0,0,1-.5,3.08,3.41,3.41,0,0,1-.89,1.56,3.09,3.09,0,0,1-.7.45,3.24,3.24,0,0,1-1.13.25,9.56,9.56,0,0,1-1.67,0c-.28,0-1.57,0-4.15-.07-1,0-2-.11-3.05-.09A2.55,2.55,0,0,1,50,36a3,3,0,0,1-.7-1.06c-.15-.34-.14-.46-.32-.87a3.39,3.39,0,0,0-.52-.83,2.39,2.39,0,0,0-1.24-.62c-1-.3-2-.52-2.29-.57s-.66-.16-1-.22-.57-.06-.63-.19.13-.31.37-.88a2.42,2.42,0,0,0,.23-.67C44,29.47,43.74,29.18,43.89,29.05Z" />
+                    <path id="shadow1" class="cls-3"
+                        d="M21.05,32.67a3.76,3.76,0,0,1,.56-2.07c.3-.58.48-.94.9-1.16a4.21,4.21,0,0,1,1.55-.21c.66,0,.7,0,1-.05a3.33,3.33,0,0,0,1.45-.67,11.28,11.28,0,0,1-2,1.19c-.17.08-.53,0-1,.17a5.58,5.58,0,0,0-.78.25,1.76,1.76,0,0,0-.55.43c-.29.36-.25.65-.47,1.2S21.15,32.71,21.05,32.67Z" />
+                    <path id="shadow2" class="cls-3"
+                        d="M13.41,37.36A2,2,0,0,1,13.86,36,2.67,2.67,0,0,1,15,35.14a3.91,3.91,0,0,1,.7-.14H16c.17,0,1.08.19,1.06.29s-.11,0-.9.06a1.91,1.91,0,0,0-.75.09,5.64,5.64,0,0,0-.57.34,4.7,4.7,0,0,1-.43.21C13.75,36.33,13.48,37.39,13.41,37.36Z" />
+                    <path id="shadow3" class="cls-3"
+                        d="M18.91,43.28c.19-.27.85.13.86.3a6.67,6.67,0,0,0,1.89-.43,6.59,6.59,0,0,0,2.05-1.29,3.29,3.29,0,0,0,.94-.17,3.25,3.25,0,0,0,.51-.22c.86-.43.94-.6,1.29-.72.66-.21,1.37,0,1.38.17a21.73,21.73,0,0,1-2.32.81,2.08,2.08,0,0,0-.62.35c-.42.35-.38.63-.77,1a1.75,1.75,0,0,1-.86.48c-.61.11-.83-.26-1.26-.09s-.31.56-.73.73-.74-.23-1.33-.05c-.3.1-.29.24-.62.33s-1.15.12-1-.15C18.63,43.82,18.64,43.67,18.91,43.28Z" />
+                    <path id="shadow4" class="cls-3"
+                        d="M27,33.12c.36-.07.51.91,1.18,1.16s1.87-.62,2.95-1.54,1.32-1.35,1.41-1.29A3.35,3.35,0,0,1,31,33.89a6.2,6.2,0,0,0-1.25,1,4.57,4.57,0,0,0-.6.77,5.26,5.26,0,0,0-.55,1.63,11.57,11.57,0,0,1-.6,1.88,3.11,3.11,0,0,0,.17-2,2.06,2.06,0,0,0-.56-.9,1.93,1.93,0,0,0-.77-.43c-.89-.24-1.7.29-1.75.18s.6-.3,1-1c.18-.31.14-.44.47-1.24C26.8,33.19,26.88,33.14,27,33.12Z" />
+                    <path id="shadow5" class="cls-4"
+                        d="M24.1,21.51s.28.24.77.39a2.39,2.39,0,0,0,.81.09,2.92,2.92,0,0,0,.75-.12,2.21,2.21,0,0,0,.8-.37c.33-.28.42-.61.47-.59s0,.38-.2.69a1.6,1.6,0,0,1-.49.51,2.24,2.24,0,0,1-.64.33,1.93,1.93,0,0,1-.94.1,1.72,1.72,0,0,1-.78-.36C24.3,21.91,24.06,21.56,24.1,21.51Z" />
+                    <path id="shadow6" class="cls-4"
+                        d="M39.55,28.29c0-.08-.5,0-.89.24A1.61,1.61,0,0,0,38,30.36a1.48,1.48,0,0,0,.64.64c.13.07.33.19.39.13s-.28-.43-.38-1A1.94,1.94,0,0,1,39,28.84C39.23,28.46,39.58,28.35,39.55,28.29Z" />
+                    <path id="leaf-color-emerald4-2" data-name="leaf-color-emerald4" class="cls-1"
+                        d="M30.37,8.49s.44-.45,1.1-1.26.67-1,1.07-1.31c.55-.42.75-.27,1.33-.71s1.35-1.34,1.41-1.3a5.41,5.41,0,0,1-1.07,1.47c-.45.46-.71.34-1.39.84A11.66,11.66,0,0,0,31.7,7.33,8.29,8.29,0,0,1,30.37,8.49Z" />
+                    <path id="leaf-color-emarald3" class="cls-1"
+                        d="M30.82,2.25a5.6,5.6,0,0,1-.48,1.31,11.35,11.35,0,0,1-1.15,1.61,6.31,6.31,0,0,0-.65.87,5.67,5.67,0,0,0-.45,1.22c-.23.79-.22,1-.45,1.64-.11.31-.22.55-.29.7a2.78,2.78,0,0,0,.56-.79,7.92,7.92,0,0,0,.41-1.43,4.77,4.77,0,0,1,.45-1.29A10.66,10.66,0,0,1,29.62,5l.56-.69A3.39,3.39,0,0,0,30.82,2.25Z" />
+                    <path id="leaf-color-emerald2-2" data-name="leaf-color-emerald2" class="cls-1"
+                        d="M24.42,2.41a16,16,0,0,0,1.24,3c.26.36.12,1,.17,2,0,.49,0,.62,0,.62a10.28,10.28,0,0,1-.32-1.44,5.72,5.72,0,0,0-.32-1.35c-.17-.4-.24-.35-.41-.77a5.54,5.54,0,0,1-.3-1.26C24.41,2.74,24.36,2.42,24.42,2.41Z" />
+                    <path id="leaf-color-emerald1" class="cls-1"
+                        d="M23.39,9.26s-.39-.19-1-.58-.59-.49-1.05-.81a3.22,3.22,0,0,0-1.2-.64A2.36,2.36,0,0,0,18,8.08a4.55,4.55,0,0,1,1.41-.27,3.89,3.89,0,0,1,1.24.3,7.52,7.52,0,0,1,1,.47A10.41,10.41,0,0,0,23.39,9.26Z" />
+                    <path id="liquor-color" class="cls-1"
+                        d="M58.61,29.15c-.4.33.27,1.17,0,2.09A3.07,3.07,0,0,1,55.76,33C54.14,33,54,31.61,52,31.15a15.07,15.07,0,0,0-4,.66,4.68,4.68,0,0,1-3.65-.66c-.56-.29-1.56.25-1.09.44a9,9,0,0,0,2.17.53,10.28,10.28,0,0,1,2.84.93,6.6,6.6,0,0,1,.9,1.52l.71,1.3a1.15,1.15,0,0,0,.53.29,17,17,0,0,0,3.53.2c1.6-.2,1.38.15,6.47.1A3.11,3.11,0,0,0,62.17,36a3.69,3.69,0,0,0,1.29-1.85,6.62,6.62,0,0,0,.51-3,1.59,1.59,0,0,0-.27-1,1,1,0,0,0-.58-.42c-1.33-.16-1.73-.11-3-.36C59.15,29.22,58.85,28.94,58.61,29.15Z" />
+                    <path id="right-foot-sketch" class="cls-5"
+                        d="M30.11,12.09a5.78,5.78,0,0,1,.07,2.48,8.57,8.57,0,0,1-.34,1.33c-.26.77-.45,1-.73,1.89a6,6,0,0,0-.26,1c-.13.89.11,1.05-.08,1.72a7,7,0,0,1-.48,1.1c-.25.48-.31.5-.33.67-.05.5.37.63.58,1.35a3.6,3.6,0,0,1,.07,1.32,5.7,5.7,0,0,1-.2,1.09,4.71,4.71,0,0,1-1.35,2.06,7.59,7.59,0,0,1-3.21,1.77,2.89,2.89,0,0,0-1.48.54,3.36,3.36,0,0,0-.74,1.32,5.81,5.81,0,0,1-1.79,2.15,5.33,5.33,0,0,1-2.9,1.45,4.59,4.59,0,0,0-1.63.22,3.3,3.3,0,0,0-1.1.68,5.5,5.5,0,0,0-.8,1.15l-.77,1.23a2.89,2.89,0,0,1-1.54,1.15,2.88,2.88,0,0,1-1.32-.06c-.62-.12-1.31-.25-1.54-.74-.13-.28,0-.48-.2-.61s-.45.09-.93,0a1.26,1.26,0,0,1-.74-.45c-.19-.29-.06-.48-.22-.61s-1.08-.07-1.58-.64a1.4,1.4,0,0,1-.16-1.19c.08-.22.19-.34.13-.42s-.26,0-.71,0-.94-.2-1-.48M25.76,10.68a7.23,7.23,0,0,0-.89,0m1.08,0,.67,0m.79,0-.24,0m-2.81-.1c-1.16,0-2.91.08-3.71,1.16a2.5,2.5,0,0,0-.38,2.31c.6,1.46,2.87,1.61,4.2,1.69a5.88,5.88,0,0,0,4.19-.94,3.28,3.28,0,0,0,1.38-2,2,2,0,0,0-.19-1.56c-.27-.37-.65-.44-2.07-.52M.33,32.15c-.07.29-.14.54,0,.75a.69.69,0,0,0,.49.25A1.16,1.16,0,0,0,1.47,33c.26-.12.39-.18.47-.3a1,1,0,0,0,0-.83.88.88,0,0,0-.26-.45.84.84,0,0,0-.86-.14C.53,31.39.44,31.72.33,32.15Zm10.54,3.7a2.16,2.16,0,0,0-1.51.2,2.27,2.27,0,0,0-.87,1,2.19,2.19,0,0,0-.31,1.44c.09.47,1,.85,1.89.84.37,0,1-1.1,1.06-1.32a1.29,1.29,0,0,0-.1-1.13,1.18,1.18,0,0,0-.45-.25c-.33-.15-.93-.72-1.55-.37m-.78-.7a2,2,0,0,0-1.61.48,1.61,1.61,0,0,0-.37.76c-.08.27-.11.41,0,.55s.55.32.76.31a1.08,1.08,0,0,0,.86-.55.75.75,0,0,0,.09-.61,1.45,1.45,0,0,0-1.1-.62M6.58,34a2,2,0,0,0-.72.22A4.44,4.44,0,0,0,4.61,35a.94.94,0,0,0,.26,1.3.91.91,0,0,0,1.06-.22,1,1,0,0,0,.34-.92,1.3,1.3,0,0,0-.94-.69m-.59-1.32c-.17,0-.3-.11-.5-.15A3.14,3.14,0,0,0,3.58,33a2.15,2.15,0,0,0-1.23.45.75.75,0,0,0-.28.39.64.64,0,0,0,.2.63c.34.28.89,0,1.1-.1a.94.94,0,0,0,.47-.4c.17-.38-.42-.84-.51-1m-1,.42c0-.06-.15,0-.5-.09l-.25,0C.9,33.15.54,33.09.41,33c-.29-.31-.06-1,0-1.13a2,2,0,0,1,1.64-1.38c.35,0,.36.14,1.07.25a5.43,5.43,0,0,0,1.13.07,14.94,14.94,0,0,0,1.56-.32A5.31,5.31,0,0,1,7,30.33c.69,0,.84.25,1.44.31A3.19,3.19,0,0,0,10,30.39,8,8,0,0,0,11.88,29a12.26,12.26,0,0,1,1.57-1.31l.81-.5a14.84,14.84,0,0,0,1.38-.88,3.33,3.33,0,0,0,.69-.63,2.63,2.63,0,0,0,.5-1.12,8.43,8.43,0,0,1,.25-1.63,11,11,0,0,1,.63-1.75c.52-1.31.78-2,.87-2.26A13.57,13.57,0,0,0,19,16.05a10.74,10.74,0,0,1,1.39-3.84" />
+                    <path id="plant-sketch" class="cls-6"
+                        d="M28.57,9.48c.46-.45.59-.49,1-1,.66-.7.68-.9,1.48-1.86a10.84,10.84,0,0,1,1.48-1.54,10,10,0,0,1,1-.71c1.29-.9,1.94-1.35,2.12-1.22.36.24,0,1.87-1,2.89-.32.33-.43.31-1.74,1.35-.79.63-.72.61-1,.83-1.11.8-1.44.6-2.57,1.29a9.81,9.81,0,0,0-2.06,1.74c-.6.62-.88,1-.9,1A10.84,10.84,0,0,1,28.57,9.48ZM28.3,8.9a11.67,11.67,0,0,1,.6-1.59c.18-.4.34-.66.55-1,.38-.66,1-1.73,1.16-2.1.88-1.72.84-3.71.62-3.77s-.32,2.09-2,4a6.36,6.36,0,0,0-1.31,1.75,8.85,8.85,0,0,0-.53,1.76c-.29,1.21-.19,1.34-.43,2a12.75,12.75,0,0,1-.88,1.72A5.12,5.12,0,0,0,28.3,8.9Zm-2.62,2.65a8.1,8.1,0,0,0,.52-2.5,11.23,11.23,0,0,0,0-3A9.91,9.91,0,0,0,25,2.54,8.88,8.88,0,0,0,23.28.2s.28.42.52,1.07c.38,1.06,0,1.4.23,2.72a10,10,0,0,0,.82,2.59c.37.9.45.85.64,1.38A7.41,7.41,0,0,1,25.68,11.55Zm-.34.37a4.76,4.76,0,0,0-.92-2.06,8.4,8.4,0,0,0-2.31-2.13c-1-.79-1.5-1.35-2.12-1.34-1.31,0-2.66,1.73-2.43,2.29.07.16.38,0,.8.09a15.29,15.29,0,0,0,2.72.41,5.86,5.86,0,0,1,2.59.87A7.63,7.63,0,0,1,25.34,11.92Z" />
+                    <path id="right-foot-sketch-2" data-name="right-foot-sketch" class="cls-5"
+                        d="M43.89,29.05a4.5,4.5,0,0,1-.51,2.32,4,4,0,0,1-2,2.18,4.87,4.87,0,0,1-1.15.22,8,8,0,0,1-2.4,0c-.77-.13-.78-.3-1.33-.3a3.29,3.29,0,0,0-1.67.47,5,5,0,0,0-1.72,1.84c-.82,1.25-.59,1.45-1.24,2.23A18.71,18.71,0,0,1,30,39.64a5.09,5.09,0,0,0-1.59,1.71A4.08,4.08,0,0,0,28,42.59a10.4,10.4,0,0,0,.13,2,3,3,0,0,1-.3,1.93,2.52,2.52,0,0,1-2.7.86c-.23-.1-.41-.24-.64-.17-.4.11-.32.65-.77.94a1.2,1.2,0,0,1-1.29,0c-.33-.25-.32-.63-.51-.64s-.24.52-.69.73a1.17,1.17,0,0,1-.73,0c-.34-.08-.44-.27-.6-.21s-.09.44-.34.68a1.06,1.06,0,0,1-1,.09,1.15,1.15,0,0,1-.68-.64c-.08-.29,0-.51-.05-.56s-.29.29-.64.39a1.07,1.07,0,0,1-1.11-.52,1.27,1.27,0,0,1,.17-1.28c.29-.38.57-.3,1.11-.69a3.48,3.48,0,0,0,.94-1.11,8.35,8.35,0,0,0,.86-1.72,17.14,17.14,0,0,1,1.37-3,8.79,8.79,0,0,1,2.4-2.4c1.34-1,1.58-.7,2.4-1.46a10.61,10.61,0,0,0,1.89-3.26c.4-.86.77-1.67,1.19-2.82a14,14,0,0,1,1.29-3.26,5.56,5.56,0,0,1,1.54-1.63c.39-.26,2.14-1.37,3.69-.77a7.06,7.06,0,0,1,1.62,1.2c.84.71.91.93,1.46,1.2a4.71,4.71,0,0,0,1.8.43,13.71,13.71,0,0,0,1.46,0c1.32,0,1.39-.11,1.62,0C43.76,27.27,43.86,28.7,43.89,29.05ZM25.36,42A4.4,4.4,0,0,0,24,43.83a3.39,3.39,0,0,0-.21,2,2.27,2.27,0,0,0,.95,1.32m-1.57-3.28a3,3,0,0,0-.63.5,2.72,2.72,0,0,0-.79,1.23,3.32,3.32,0,0,0,.32,1.9m-1-3c-.32.25-.67.29-1,.74a2.33,2.33,0,0,0-.39,1.57A1.67,1.67,0,0,0,20.08,48m-.69-2.73c-.18.21-.61.25-.95.63A1.84,1.84,0,0,0,17.91,47a5.56,5.56,0,0,0,0,.67m25.39-16c.33.2,2.92.61,3.92,1a3,3,0,0,1,1.28.77c.62.64.54.93,1,1.8s.51,1.11,2.1,1.15c3.12.09,4,.15,8.48.18a3.63,3.63,0,0,0,2.57-.73,3.4,3.4,0,0,0,.73-1.16c.7-1.62,1.07-4.12.08-4.71a.88.88,0,0,0-.43-.13,103.9,103.9,0,0,1-12.16-2.23,1.13,1.13,0,0,0-1,.26c-.53.29-1.72,1.56-2.27,1.71a6,6,0,0,1-1.67,0,11.49,11.49,0,0,1-2-.43" />
+                </g>
+            </svg>
+        </a>
+    </div>
+
+
+    <!-- 안주와 술 기반 검색 -->
+    <div id="menu_wrap" class="bg_white">
+
+        <img id="arrow" alt="" src="static/goBackIcon.svg" onclick="goBacktoSearchPage();" onmouseover="onHover();"
+            onmouseout="offHover();" width="22" height="22">
+
+        <img src="static/hr-waveFormBlue.svg">
+
+        <ul id="menuList"></ul>
+
+    </div>
+
+
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a3b30143ac575087758f5d636d25c4c&libraries=services"></script>
+
+
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+            mapOption = {
+                center: new kakao.maps.LatLng(37.5638, 126.9084), // 지도의 중심좌표
+                level: 6 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+        // var zoomControl = new kakao.maps.ZoomControl();
+        // map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOM);
+
+        // 마커를 담을 배열입니다
+        var markers = [];
+
+        // 커스텀 오버레이를 담을 배열입니다
+        var overlays = [];
+
+        $(document).ready(function () {
+            // 장소와 요일, 운영시간을 기반으로 술집을 검색합니다 
+            searchPlaces();
+
+        });
+
+
+
+        // 키워드 검색을 요청하는 함수입니다.
+        function searchPlaces() {
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
+
+                        // DB에 있는 비건술집 이름을 랜덤으로 골라서 placeholder값으로 넣습니다. 
+                        var list = [];
+
+                        for (let i = 0; i < drunkenVege.length; i++) {
+                            var name = drunkenVege[i]['name'];
+                            list.push(name);
+
+                        }
+
+                        var list, r = Math.floor(Math.random() * list.length);
+
+
+                        document.getElementById('search').placeholder = list[r];
+
+                        // 검색창에 키워드가 입력하기를 요청합니다.
+                        var keyword = document.getElementById('search').value;
+
+                        displayPlaces(drunkenVege, keyword);
+
+                    }
+                }
+            })
+        }
+
+
+
+        // 검색 결과 목록과 마커를 표출하는 함수입니다.
+        function displayPlaces(drunkenVege, keyword) {
+
+            // 검색어를 다시 입력하는 경우 기존에 체크된 필터조건은 리셋합니다
+            $('input:checkbox').removeAttr('checked');
+
+
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                // alert('검색어를 입력해주세요!');
+                displayMarkers(drunkenVege);
+
+
+            } else {
+
+                // 검색조건에 알맞은 비건술집정보를 담을 리스트를 생성합니다
+                var places = [];
+
+                for (let i = 0; i < drunkenVege.length; i++) {
+
+                    // 특수문자 포함여부를 확인하기 위한 정규표현식 
+                    var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
+
+
+                    // DB 지역구
+                    var district = drunkenVege[i]['address'].split(' ');
+                    var cityName = district[0];
+                    var cityNameOnly = cityName.slice(0, -1);
+                    var districtName = district[1];
+                    var districtNameOnly = districtName.slice(0, -1);
+
+                    // DB 식당이름
+                    var name = drunkenVege[i]['name'];
+                    var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
+                    var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                    // 입력된 키워드
+                    var keyword = document.getElementById('search').value;
+                    var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
+                    var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                    if (newKeyword == districtName || newKeyword == newName || newKeyword == cityName || newKeyword == cityNameOnly || newKeyword == districtNameOnly) {
+                        places.push(drunkenVege[i]);
+                    }
+                }
+
+
+
+                if (places.length != 0) {
+
+                    displayMarkers(places);
+
+                } else {
+
+                    // 검색 결과 목록에 추가된 항목들을 제거합니다
+                    var listEl = document.getElementById('placesList');
+                    removeAllChildNods(listEl);
+
+                    // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+                    var bounds = new kakao.maps.LatLngBounds();
+
+                    // 지도에 표시되고 있는 마커를 제거합니다
+                    removeMarker();
+
+                    // 지도에 표시되고 있는 커스텀 오버레이를 닫습니다
+                    closeOverlay();
+
+
+
+                    // 검색결과가 존재하지 않음을 표기합니다
+                    document.getElementById("numofResults").innerHTML = '<p>' + '술고래는 다른 날에 다른 곳으로 다시 유영할 수 있습니다' + '</p>';
+
+                    // 검색어를 리셋합니다
+                    var keyword = '';
+
+                }
+            }
+
+        }
+
+
+
+        // 검색결과 항목을 Element로 반환하는 함수입니다
+        function getListItem(index, places) {
+
+            var instaUrl = "http://www.instagram.com/" + places.instaID + "/?hl=ko";
+
+            var el = document.createElement('li'),
+                itemStr = '<div id = "vegeRestaurant" onclick="reboundMap(\'' + places.instaID + '\')">'
+                    + '<img src="static/photoOfPlaces/' + '@' + places.instaID + '.jpg' + '" alt="" style="width:100px;height:100px;border-radius:0 10px;" class="placebg">'
+                    + '<div class="info">' +
+                    '   <h5>' + '    <img src="static/plateIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.name + '</h5>';
+
+            itemStr += '<span>' + '    <img src="static/signageIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.address + '</span>';
+
+            itemStr += '    <span>' + '    <img src="static/runningTimeIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.runningtime + '</span>';
+
+            itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<img src="static/snsIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.instaID + '</a>' + '</div>';
+
+
+            el.innerHTML = itemStr;
+            el.className = 'item';
+
+            return el;
+
+
+        }
+
+
+        // 뒤로 가는 버튼 위에 마우스를 올리면 이미지가 변경됩니다
+        function onHover() {
+            $("#arrow").attr('src', 'static/goBackHoverIcon.svg');
+        }
+
+
+        // 뒤로 가는 버튼 위에 마우스를 올리지 않았을 때 기본적으로 보이는 이미지를 설정합니다
+        function offHover() {
+            $("#arrow").attr('src', 'static/goBackIcon.svg');
+        }
+
+
+        // 뒤로 가는 버튼을 클릭했을 때 안주를 보여주는 창에서 검색 화면으로 돌아갑니다
+        function goBacktoSearchPage() {
+            var x = document.getElementById('search_wrap');
+            var y = document.getElementById('menu_wrap');
+            if (y.style.display === 'none') {
+                y.style.display = 'block';
+                x.style.display = 'none';
+            } else {
+                y.style.display = 'none';
+                x.style.display = 'block';
+            }
+        }
+
+
+        // 목록창의 특정 item div를 클릭하면 해당하는 비건술집을 중심으로 지도 범위를 재설정하고,
+        // 해당 술집의 안주 목록을 보여줍니다 
+        function reboundMap(bar) {
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+
+                    space = [];
+
+                    if (response['result'] == 'success') {
+                        let drunkenVege = response['drunkenVege']
+
+                        for (i = 0; i < drunkenVege.length; i++) {
+                            let instaID = drunkenVege[i]['instaID']
+
+
+                            if (bar == instaID) {
+                                space.push(drunkenVege[i]);
+
+                                var point = new kakao.maps.LatLng(space[0]['latitude'], space[0]['longitude']);
+
+                                var bounds = new kakao.maps.LatLngBounds();
+
+                                bounds.extend(point);
+
+                                map.setBounds(bounds);
+
+                            }
+                        }
+
+                        let menuList = space[0]['menu'].split('/');
+
+                        let menuListEl = document.getElementById('menuList');
+                        removeAllChildNods(menuListEl);
+
+                        for (i = 0; i < menuList.length; i++) {
+
+                            var menuEl = document.createElement("li"),
+                                itemStr = '<div>' + '<img src="static/plateIcon.svg" style="width: 18px; height: 18px">' + ' '
+                                    + menuList[i].split('+')[0] + '   ' + '<img src="static/moneyIcon.svg" style="width: 18px; height: 18px">'
+                                    + ' ' + menuList[i].split('+')[1] + '원' + '</div>';
+
+                            menuEl.innerHTML = itemStr;
+                            menuEl.className = 'item'
+
+                            document.getElementById("menuList").appendChild(menuEl);
+
+                        }
+
+                        var x = document.getElementById('search_wrap');
+                        var y = document.getElementById('menu_wrap');
+                        if (x.style.display === 'none') {
+                            x.style.display = 'block';
+                            y.style.display = 'none';
+                        } else {
+                            x.style.display = 'none';
+                            y.style.display = 'block';
+                        }
+                    }
+                }
+            })
+        }
+
+
+
+        // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+        function addMarker(placePosition, i, title) {
+            var imageSrc = 'static/splashMarkerBlue.svg', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+                imageSize = new kakao.maps.Size(113.8, 128.149), // 마커 이미지의 크기
+                imgOptions = { offset: new kakao.maps.Point(27, 92.149) }, // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+                markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+                marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: placePosition, // 마커를 표시할 위치
+                    title: title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image: markerImage // 마커 이미지
+                });
+
+            marker.setMap(map); // 지도 위에 마커를 표출합니다
+            markers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+            return marker;
+        }
+
+
+        // 지금, 여기 기능에서 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+        function addAvailableMarker(placePosition, i, title, userLat, userLng, placeLat, placeLng) {
+            var imageSrc = 'static/splashMarkerBlue.svg', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+                imageSize = new kakao.maps.Size(113.8, 128.149), // 마커 이미지의 크기
+                imgOptions = { offset: new kakao.maps.Point(27, 92.149) }, // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+                markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+                marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: placePosition, // 마커를 표시할 위치
+                    title: title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image: markerImage // 마커 이미지
+                });
+
+
+            // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var content = '<div class="customoverlay">' +
+                '<a href="https://map.kakao.com/link/from/술고래는 지금 여기,' + userLat + ',' + userLng + '/to/' + title + ',' + placeLat + ',' + placeLng + '" target="_blank">' +
+                '    <span class="title">' + title +
+                '</span>' +
+                '   </a>' +
+                '</div>';
+
+            //커스텀 오버레이가 표시될 위치입니다  
+            var position = placePosition;
+
+            // 커스텀 오버레이를 생성합니다
+            var overlay = new kakao.maps.CustomOverlay({
+                map: map,
+                position: position,
+                content: content,
+                yAnchor: 1.2
+            })
+
+            overlays.push(overlay);
+
+            marker.setMap(map); // 지도 위에 마커를 표출합니다
+            markers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+            return marker;
+        }
+
+
+
+        // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+        function removeMarker() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+
+
+        // 지도 위에 표시되고 있는 커스텀 오버레이를 모두 제거합니다
+        function closeOverlay() {
+            for (var i = 0; i < overlays.length; i++) {
+                overlays[i].setMap(null);
+            }
+            overlays = [];
+        }
+
+
+        // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+        function removeAllChildNods(el) {
+            while (el.hasChildNodes()) {
+                el.removeChild(el.lastChild);
+            }
+        }
+
+        // 장소와 요일, 시간 기반 검색창의 필터를 열고 닫습니다
+        function filter() {
+            $('#filterDiv').slideToggle();
+
+        }
+
+        // 장소와 요일, 시간에 따라 비건 술집을 필터링합니다
+        function filterSelection() {
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+                    let drunkenVege = response['drunkenVege'];
+                    let resArr = drunkenVege;
+
+                    var keyword = document.getElementById('search').value;
+
+                    // 검색창의 keyword와 일치하는 술집 데이터를 담습니다
+                    var places = [];
+
+                    // 새벽까지 운영하는 술집 데이터를 담습니다
+                    var placesForMidnight = [];
+
+                    // 오후 2시 이전부터 운영하는 술집 데이터를 담습니다
+                    var placesForDaytime = [];
+
+                    // 요일을 기준으로 필터링한 술집 데이터를 담습니다
+                    let sun = [];
+                    let mon = [];
+                    let tue = [];
+                    let wed = [];
+                    let thr = [];
+                    let fri = [];
+                    let sat = [];
+
+                    let day = [sun, mon, tue, wed, thr, fri, sat];
+
+
+                    for (let i = 0; i < drunkenVege.length; i++) {
+
+                        // 특수문자 포함여부를 확인하기 위한 정규표현식 
+                        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
+
+
+                        // DB 지역구
+                        var district = drunkenVege[i]['address'].split(' ');
+                        var cityName = district[0];
+                        var cityNameOnly = cityName.slice(0, -1);
+                        var districtName = district[1];
+                        var districtNameOnly = districtName.slice(0, -1);
+
+                        // DB 식당이름
+                        var name = drunkenVege[i]['name'];
+                        var nameRe = name.replace(/(\s*)/g, ""); // 이름의 모든 공백을 제거
+                        var newName = nameRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                        // 입력된 키워드
+                        var keyword = document.getElementById('search').value;
+                        var keywordRe = keyword.replace(/(\s*)/g, ""); // 키워드의 모든 공백을 제거
+                        var newKeyword = keywordRe.replace(regExp, ""); // 모든 특수문자를 제거
+
+
+                        if (newKeyword == districtName || newKeyword == newName || newKeyword == cityName || newKeyword == cityNameOnly || newKeyword == districtNameOnly) {
+                            places.push(drunkenVege[i]);
+                        }
+
+                        // 비건술집 요일별 운영시간을 정리해놓은 데이터를 불러옵니다
+                        let runningTimeDay = drunkenVege[i]['runningtime'];
+
+                        // 요일별 운영시간이 다른 경우, 술집 문을 여는 시간과 닫는 시간을 구합니다
+                        if (runningTimeDay.includes('/')) {
+
+                            runningTimeDay = runningTimeDay.split('/');
+
+                            for (j = 0; j < runningTimeDay.length; j++) {
+
+                                let runningTime = runningTimeDay[j].split('(')[0];
+                                let runningDay = runningTimeDay[j].split('(')[1].split(')')[0];
+
+                                let openingTime = runningTime.split('-')[0];
+                                let closingTime = runningTime.split('-')[1];
+
+                                if (openingTime.includes(':')) {
+
+                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                }
+
+                                if (closingTime.includes(':')) {
+
+                                    closingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                }
+
+
+                                // 여는 시간이 오후 2시 이전인 술집의 정보를 placesForDaytime에 담습니다
+                                if (openingTime < 14) {
+
+                                    placesForDaytime.push(drunkenVege[i]);
+
+                                }
+                                // 닫는 시간이 새벽시간대인 술집의 정보를 placesForMidnight에 담습니다
+                                if (closingTime < 6 || closingTime == '*') {
+
+                                    placesForMidnight.push(drunkenVege[i]);
+
+                                }
+
+                            }
+                        }
+                        // 요일과 상관없이 운영시간이 동일한 경우, 술집 문을 여는 시간과 닫는 시간을 구합니다
+                        else {
+                            let runningTime = runningTimeDay.split('(')[0];
+                            let runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                            let openingTime = runningTime.split('-')[0];
+                            let closingTime = runningTime.split('-')[1];
+
+                            if (openingTime.includes(':')) {
+
+                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                            }
+
+                            if (closingTime.includes(':')) {
+
+                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                            }
+
+                            // 여는 시간이 오후 2시 이전인 술집의 정보를 placesForDaytime에 담습니다
+                            if (openingTime < 14) {
+
+                                placesForDaytime.push(drunkenVege[i]);
+
+                            }
+                            // 닫는 시간이 새벽시간대인 술집의 정보를 placesForMidnight에 담습니다
+                            if (closingTime < 6 || closingTime == '*') {
+
+                                placesForMidnight.push(drunkenVege[i]);
+
+                            }
+
+
+                        }
+                    }
+
+                    // 중복되는 정보를 삭제합니다
+                    placesForDaytime = [...new Set(placesForDaytime)];
+                    placesForMidnight = [...new Set(placesForMidnight)];
+
+                    // 키워드와 일치하는 술집 정보를 keywordResArr에 담습니다 
+                    let keywordResArr = places;
+
+                    // 필터링 기준이 요일인 체크박스들을 filtChk로 불러옵니다
+                    let filtChk = document.querySelectorAll(".filterChk");
+
+                    // filterChk의 요일 value를 filterEl에 담습니다
+                    let filterEl = [];
+
+                    for (i = 0; i < filtChk.length; i++) {
+                        filterEl.push(filtChk[i]['value']);
+                    }
+
+                    // 필터링 기준이 시간인 체크박스들을 filtChk2로 불러옵니다
+                    let filtChk2 = document.querySelectorAll(".filterChk2");
+
+                    // 지금, 여기 버튼을 unchecked로 전환합니다
+                    $("#cbxNowHere").removeAttr("checked");
+
+                    // 검색어를 입력하지 않은 상태에서 필터링하는 경우
+                    if (keyword == '') {
+
+                        for (i = 0; i < filtChk.length; i++) {
+                            for (j = 0; j < filtChk2.length; j++) {
+
+
+                                // 요일 + 낮술
+                                if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == false) {
+
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    // 요일을 기준으로 필터링한 술집 데이터를 담습니다
+
+                                    let dayTime = [sun, mon, tue, wed, thr, fri, sat];
+
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                    dayTime[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                dayTime[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...dayTime[0], ...dayTime[1], ...dayTime[2], ...dayTime[3], ...dayTime[4], ...dayTime[5], ...dayTime[6]])];
+
+                                    displayMarkers(reunion);
+
+                                }
+                                // 요일 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == true) {
+
+
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    let midnight = [sun, mon, tue, wed, thr, fri, sat];
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                    midnight[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                midnight[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...midnight[0], ...midnight[1], ...midnight[2], ...midnight[3], ...midnight[4], ...midnight[5], ...midnight[6]])];
+
+                                    displayMarkers(reunion);
+
+                                }
+                                // 요일 + 낮술 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == true) {
+
+
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    let placesForAnytime = [];
+
+                                    for (k = 0; k < resArr.length; k++) {
+
+                                        let runningTimeDay = resArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                    placesForAnytime.push(resArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                placesForAnytime.push(resArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    placesForAnytime = [...new Set(placesForAnytime)];
+
+                                    let intersection = union.filter(x => placesForAnytime.includes(x));
+
+                                    displayMarkers(intersection);
+
+                                }
+                                // 요일 상관없이 낮술
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[0].checked == true && filtChk2[1].checked == false) {
+
+
+                                    displayMarkers(placesForDaytime);
+
+                                }
+                                // 요일 상관없이 심야술 
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[0].checked == false && filtChk2[1].checked == true) {
+
+
+                                    displayMarkers(placesForMidnight);
+
+                                }
+                                // 시간 관계없이 요일만 고르는 경우
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
+
+                                    day[i] = resArr.filter(function (resArr) {
+                                        return resArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+                                    displayMarkers(union);
+
+                                }
+                                // 요일은 고르지 않고 낮술 심야술 다 되는 술집 고르는 경우
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[j].checked == true) {
+
+
+                                    let intersection = placesForDaytime.filter(x => placesForMidnight.includes(x))
+
+                                    displayMarkers(intersection);
+
+                                }
+                                // 요일도 시간도 고르지 않은 경우 
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
+                                    displayMarkers(drunkenVege);
+
+                                }
+                            }
+
+
+                        }
+
+                    }
+
+                    // 검색어가 입력된 상태에서 필터링하는 경우
+                    else {
+                        for (i = 0; i < filtChk.length; i++) {
+                            for (j = 0; j < filtChk2.length; j++) {
+
+                                // 요일 + 낮술
+                                if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == false) {
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    // 요일을 기준으로 필터링한 술집 데이터를 담습니다
+
+                                    let dayTime = [sun, mon, tue, wed, thr, fri, sat];
+
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                    dayTime[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (runningDay.includes(filterEl[i]) && openingTime < 14) {
+                                                dayTime[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...dayTime[0], ...dayTime[1], ...dayTime[2], ...dayTime[3], ...dayTime[4], ...dayTime[5], ...dayTime[6]])];
+
+
+                                    displayMarkers(reunion);
+
+
+                                }
+                                // 요일 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == true) {
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    let midnight = [sun, mon, tue, wed, thr, fri, sat];
+
+
+                                    for (k = 0; k < union.length; k++) {
+
+                                        let runningTimeDay = union[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                    midnight[i].push(union[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && (closingTime < 6 || closingTime == '*')) {
+                                                midnight[i].push(union[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let reunion = [...new Set([...midnight[0], ...midnight[1], ...midnight[2], ...midnight[3], ...midnight[4], ...midnight[5], ...midnight[6]])];
+
+
+                                    displayMarkers(reunion);
+
+
+                                }
+                                // 요일 + 낮술 + 심야술
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == true && filtChk2[1].checked == true) {
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+
+                                    let placesForAnytime = [];
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                    placesForAnytime.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (runningDay.includes(filterEl[i]) && closingTime < 6 && openingTime < 14) {
+                                                placesForAnytime.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    placesForAnytime = [...new Set(placesForAnytime)];
+
+                                    let intersection = union.filter(x => placesForAnytime.includes(x));
+
+
+                                    displayMarkers(intersection);
+
+
+                                }
+                                // 요일 상관없이 낮술
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[0].checked == true && filtChk2[1].checked == false) {
+
+
+                                    dayTime = [];
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (openingTime < 14) {
+                                                    dayTime.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (openingTime < 14) {
+                                                dayTime.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let union = [...new Set([...dayTime])];
+
+                                    displayMarkers(union);
+
+
+                                }
+                                // 요일 상관없이 심야술 
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false
+                                    && filtChk[6].checked == false && filtChk2[0].checked == false && filtChk2[1].checked == true) {
+
+
+                                    midnight = [];
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (closingTime < 6 || closingTime == '*') {
+                                                    midnight.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (closingTime < 6 || closingTime == '*') {
+                                                midnight.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let union = [...new Set([...midnight])];
+
+
+                                    displayMarkers(union);
+
+
+                                }
+                                // 시간 관계없이 요일만 고르는 경우
+                                else if (filtChk[i].checked == true && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
+
+                                    day[i] = keywordResArr.filter(function (keywordResArr) {
+                                        return keywordResArr['runningtime'].includes(filterEl[i]);
+                                    })
+
+                                    let union = [...new Set([...day[0], ...day[1], ...day[2], ...day[3], ...day[4], ...day[5], ...day[6]])];
+
+                                    displayMarkers(union);
+
+
+                                }
+                                // 요일은 고르지 않고 낮술 심야술 다 되는 술집 고르는 경우
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[j].checked == true) {
+
+                                    anyTime = [];
+
+
+                                    for (k = 0; k < keywordResArr.length; k++) {
+
+                                        let runningTimeDay = keywordResArr[k]['runningtime'];
+
+                                        if (runningTimeDay.includes('/')) {
+                                            runningTimeDay = runningTimeDay.split('/');
+
+
+                                            for (l = 0; l < runningTimeDay.length; l++) {
+                                                runningTime = runningTimeDay[l].split('(')[0];
+                                                runningDay = runningTimeDay[l].split('(')[1].split(')')[0];
+                                                openingTime = runningTime.split('-')[0];
+                                                closingTime = runningTime.split('-')[1];
+
+                                                if (openingTime.includes(':')) {
+
+                                                    openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                                }
+
+                                                if (closingTime.includes(':')) {
+
+                                                    closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                                }
+
+
+                                                if (openingTime < 14 && (closingTime < 6 || closingTime == '*')) {
+                                                    anyTime.push(keywordResArr[k]);
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            runningTime = runningTimeDay.split('(')[0];
+                                            runningDay = runningTimeDay.split('(')[1].split(')')[0];
+                                            openingTime = runningTime.split('-')[0];
+                                            closingTime = runningTime.split('-')[1];
+
+                                            if (openingTime.includes(':')) {
+
+                                                openingTime = Number(openingTime.split(':')[0]) + 1;
+
+                                            }
+
+
+                                            if (closingTime.includes(':')) {
+
+                                                closingTime = Number(closingTime.split(':')[0]) + 1;
+
+                                            }
+
+                                            if (openingTime < 14 && (closingTime < 6 || closingTime == '*')) {
+                                                anyTime.push(keywordResArr[k]);
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                    let union = [...new Set([...anyTime])];
+
+                                    displayMarkers(union);
+
+
+                                }
+                                // 요일도 시간도 고르지 않은 경우 
+                                else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                                    && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                                    && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
+                                    displayMarkers(keywordResArr);
+
+
+                                }
+                            }
+
+
+                        }
+                    }
+
+
+                }
+
+            })
+
+        }
+
+
+        // 사용자의 현재 위치를 호출합니다
+        function curStatus() {
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(nowHere);
+            }
+            else {
+                alert("Geolocation is not supported by this browser.");
+            }
+
+
+            // 지금 여기 기능을 쓸 때는 다른 옵션은 모두 unchecked되게 합니다
+            $("#cbxSun").removeAttr("checked");
+            $("#cbxMon").removeAttr("checked");
+            $("#cbxTue").removeAttr("checked");
+            $("#cbxWed").removeAttr("checked");
+            $("#cbxThr").removeAttr("checked");
+            $("#cbxFri").removeAttr("checked");
+            $("#cbxSat").removeAttr("checked");
+            $("#cbxDaytime").removeAttr("checked");
+            $("#cbxMidnight").removeAttr("checked");
+
+
+        }
+
+
+        // 검색일시 및 사용자 위치 기반 검색결과를 보여줍니다
+        function nowHere(position) {
+
+            // 현재 위치(위도, 경도) 불러오기
+            var userLat = position.coords.latitude;
+            var userLng = position.coords.longitude;
+
+            // 현재 요일과 시간 불러오기
+            var weekday = ['일', '월', '화', '수', '목', '금', '토'];
+            var curDay = weekday[new Date().getDay()];
+
+            $.ajax({
+                type: 'GET',
+                url: '/vegeInfo',
+                data: {},
+                success: function (response) {
+                    let drunkenVege = response['drunkenVege'];
+
+                    var runningPlacesNearBy = [];
+
+                    for (i = 0; i < drunkenVege.length; i++) {
+
+                        distFromUser = [];
+
+                        var placeName = drunkenVege[i]['name'];
+                        var placeLat = drunkenVege[i]['latitude'];
+                        var placeLng = drunkenVege[i]['longitude'];
+                        var runningTimeDay = drunkenVege[i]['runningtime'];
+
+
+                        var userLat2Rad = Math.PI * userLat / 180;
+                        var placeLat2Rad = Math.PI * placeLat / 180;
+
+                        var theta = userLng - placeLng;
+                        var radTheta = Math.PI * theta / 180;
+
+                        var dist = Math.sin(userLat2Rad) * Math.sin(placeLat2Rad) + Math.cos(userLat2Rad) * Math.cos(placeLat2Rad) * Math.cos(radTheta);
+
+                        dist = Math.acos(dist);
+                        dist = dist * 180 / Math.PI;
+                        dist = dist * 60 * 1.1515;
+                        dist = dist * 1.609344;  // km 단위로 변환 
+
+
+                        // 필터링 기준이 요일인 체크박스들을 filtChk로 불러옵니다
+                        let filtChk = document.querySelectorAll(".filterChk");
+
+                        // 필터링 기준이 시간인 체크박스들을 filtChk2로 불러옵니다
+                        let filtChk2 = document.querySelectorAll(".filterChk2");
+
+                        // 필터링 기준이 사용자의 현재 위치 및 요일 기반인 체크박스를 filtChk3로 불러옵니다
+                        let filtChk3 = document.querySelectorAll(".filterChk3");
+
+                        if (filtChk3[0].checked == true) {
+
+                            // 검색창에 키워드가 입력하기를 요청합니다.
+                            var keyword = document.getElementById('search').value;
+
+                            keyword = '';
+
+                            // 사용자 현재 위치로부터 반경 15km 이내에 위치하면서 사용자가 검색한 요일에 운영하는 술집을 runningPlacesNearBy에 넣습니다
+                            if (dist < 15 && runningTimeDay.includes(curDay)) {
+
+                                runningPlacesNearBy.push(drunkenVege[i]);
+
+                            }
+
+                            // runningPlacesNearBy에 포함된 술집이 있는 경우, 마커를 표시합니다
+                            if (runningPlacesNearBy != '') {
+                                displayNowHere(runningPlacesNearBy, userLat, userLng);
+
+                            } else {
+                                // 검색 결과 목록에 추가된 항목들을 제거합니다
+                                var listEl = document.getElementById('placesList');
+                                removeAllChildNods(listEl);
+
+                                // 지도에 표시되고 있는 마커를 제거합니다
+                                removeMarker();
+
+                                // 지도에 표시되고 있는 커스텀 오버레이를 닫습니다
+                                closeOverlay();
+
+
+                                // 사용자 위치를 표시합니다
+                                var userPosition = new kakao.maps.LatLng(userLat, userLng);
+
+                                addUserMarker(userPosition, userLat, userLng);
+
+                                var bounds = new kakao.maps.LatLngBounds();
+
+                                bounds.extend(userPosition);
+
+                                map.setBounds(bounds);
+
+
+                                // 검색결과가 존재하지 않음을 표기합니다
+                                document.getElementById("numofResults").innerHTML = '<p>' + '술고래는 다른 날에 다른 곳으로 다시 유영할 수 있습니다' + '</p>';
+
+                            }
+
+                        }
+
+                        else if (filtChk[0].checked == false && filtChk[1].checked == false && filtChk[2].checked == false
+                            && filtChk[3].checked == false && filtChk[4].checked == false && filtChk[5].checked == false && filtChk[6].checked == false
+                            && filtChk2[0].checked == false && filtChk2[1].checked == false) {
+
+                            displayMarkers(drunkenVege);
+
+                        }
+
+
+                    }
+
+
+
+                }
+
+            })
+        }
+
+
+        function displayNowHere(availablePlaces, userLat, userLng) {
+
+            var listEl = document.getElementById('placesList'),
+                menuEl = document.getElementById('search_wrap'),
+                fragment = document.createDocumentFragment(),
+                listStr = '';
+
+            // 검색 결과 목록에 추가된 항목들을 제거합니다
+            removeAllChildNods(listEl);
+
+            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+            var bounds = new kakao.maps.LatLngBounds();
+
+            // 지도에 표시되고 있는 마커를 제거합니다
+            removeMarker();
+
+            // 지도에 표시되고 있는 커스텀 오버레이를 닫습니다
+            closeOverlay();
+
+            if (availablePlaces.length != 0) {
+                for (var i = 0; i < availablePlaces.length; i++) {
+
+                    distFromUser = [];
+
+                    var placeName = availablePlaces[i]['name'];
+                    var placeLat = availablePlaces[i]['latitude'];
+                    var placeLng = availablePlaces[i]['longitude'];
+                    var runningTimeDay = availablePlaces[i]['runningtime'];
+
+
+                    var userLat2Rad = Math.PI * userLat / 180;
+                    var placeLat2Rad = Math.PI * placeLat / 180;
+
+                    var theta = userLng - placeLng;
+                    var radTheta = Math.PI * theta / 180;
+
+                    var dist = Math.sin(userLat2Rad) * Math.sin(placeLat2Rad) + Math.cos(userLat2Rad) * Math.cos(placeLat2Rad) * Math.cos(radTheta);
+
+                    dist = Math.acos(dist);
+                    dist = dist * 180 / Math.PI;
+                    dist = dist * 60 * 1.1515;
+                    dist = dist * 1.609344;  // km 단위로 변환
+
+                    // 마커를 생성합니다
+                    var placePosition = new kakao.maps.LatLng(availablePlaces[i]['latitude'], availablePlaces[i]['longitude']),
+                        title = availablePlaces[i]['name'],
+                        marker = addAvailableMarker(placePosition, i, title, userLat, userLng, placeLat, placeLng), // 검색 결과 마커를 생성합니다
+                        itemEl = getListItemWithDist(i, availablePlaces[i], dist); // 검색 결과 항목 Element를 생성합니다
+
+                    var userPosition = new kakao.maps.LatLng(userLat, userLng),
+                        userMarker = addUserMarker(userPosition, userLat, userLng);
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    bounds.extend(placePosition);
+                    bounds.extend(userPosition);
+
+                    fragment.appendChild(itemEl);
+                    // overlays.push(overlay);
+
+                }
+
+
+                // 검색결과 항목 수를 보여줍니다
+                var numStr = i;
+
+                document.getElementById("numofResults").innerHTML = '<p>' + '지금 여기로부터 반경 15km 내 ' + '총 ' + numStr + '개의 장소가 존재합니다.' + '</p>';
+
+                // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+                listEl.appendChild(fragment);
+                menuEl.scrollTop = 0;
+
+                map.setBounds(bounds);
+
+            }
+        }
+
+
+        // 지금 여기 기능에서 지도상에 사용자 마커와 커스텀 오버레이를 표시합니다 
+        function addUserMarker(userPosition, userLat, userLng) {
+            var imageSrc = 'static/blueLineFeet.svg',
+                imageSize = new kakao.maps.Size(63.843 * 2, 56.066 * 2),
+                imageOption = { offset: new kakao.maps.Point(18.787 * 2, 56.066 * 2) },
+                markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+            var userMarker = new kakao.maps.Marker({
+                map: map,
+                position: userPosition,
+                image: markerImage // 마커이미지 설정
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            userMarker.setMap(map);
+
+            // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var content = '<div class="customoverlayUser">' +
+                '    <a href="https://map.kakao.com/link/from/술고래는 지금 여기,' + userLat + ',' + userLng + '" target="_blank">' +
+                '    <span class="title">술고래는 지금 여기</span>' +
+                '    </a>' +
+                '</div>';
+
+            //커스텀 오버레이가 표시될 위치입니다  
+            var position = userPosition;
+
+            // 커스텀 오버레이를 생성합니다
+            var overlay = new kakao.maps.CustomOverlay({
+                map: map,
+                position: position,
+                content: content,
+                yAnchor: 1.8
+            })
+
+            markers.push(userMarker);
+            overlays.push(overlay);
+
+            return userMarker;
+        }
+
+
+
+        function getListItemWithDist(index, places, dist) {
+
+            var instaUrl = "http://www.instagram.com/" + places.instaID + "/?hl=ko";
+
+            var el = document.createElement('li'),
+                itemStr = '<div id = "vegeRestaurant" onclick="reboundMap(\'' + places.instaID + '\')">'
+                    + '<img src="static/photoOfPlaces/' + '@' + places.instaID + '.jpg' + '" alt="" style="width:100px;height:100px;border-radius:0 10px;" class="placebg">'
+                    + '<div class="info">' +
+                    '   <h5>' + '    <img src="static/plateIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.name + '</h5>';
+
+            itemStr += '<span>' + '    <img src="static/signageIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.address + '</span>';
+
+            itemStr += '    <span>' + '    <img src="static/runningTimeIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.runningtime + '</span>';
+
+            itemStr += '<a href="' + instaUrl + '" target="_blank">' + '<img src="static/snsIcon.svg" style="width: 18px; height: 18px">' + ' ' + places.instaID + '</a>' + '</div>';
+
+            itemStr += '<p class="distance">' + '≈ ' + dist.toFixed(2) + 'km' + '</p>';
+
+
+
+            el.innerHTML = itemStr;
+            el.className = 'item';
+
+            return el;
+        }
+
+
+
+        // 지도 위에 마커를 찍는 함수입니다
+        function displayMarkers(list) {
+
+            var listEl = document.getElementById('placesList'),
+                menuEl = document.getElementById('search_wrap'),
+                fragment = document.createDocumentFragment(),
+                listStr = '';
+
+            // 검색 결과 목록에 추가된 항목들을 제거합니다
+            removeAllChildNods(listEl);
+
+            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+            var bounds = new kakao.maps.LatLngBounds();
+
+            // 지도에 표시되고 있는 마커를 제거합니다
+            removeMarker();
+
+            // 지도에 표시되고 있는 커스텀 오버레이를 제거합니다
+            closeOverlay();
+
+            if (list.length != 0) {
+                for (var i = 0; i < list.length; i++) {
+
+                    var placeLat = list[i]['latitude'];
+                    var placeLng = list[i]['longitude'];
+
+                    // 마커를 생성합니다
+                    var placePosition = new kakao.maps.LatLng(placeLat, placeLng),
+                        title = list[i]['name'],
+                        marker = addMarker(placePosition, i, title), // 검색 결과 마커를 생성합니다
+                        itemEl = getListItem(i, list[i]); // 검색 결과 항목 Element를 생성합니다
+
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    bounds.extend(placePosition);
+
+                    // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                    var content = '<div class="customoverlay">' +
+                        '<a href="https://map.kakao.com/link/to/' + title + ',' + placeLat + ',' + placeLng + '" target="_blank">' +
+                        '    <span class="title">' + list[i]['name'] + '</span>' +
+                        '    </a>' +
+                        '</div>'; // 인포윈도우에 표시할 내용
+
+                    // 커스텀 오버레이가 표시될 위치입니다
+                    var position = placePosition;
+
+                    // 커스텀 오버레이를 생성합니다
+                    var overlay = new kakao.maps.CustomOverlay({
+                        map: map,
+                        position: position,
+                        content: content,
+                        yAnchor: 1.2
+                    })
+
+                    fragment.appendChild(itemEl);
+                    overlays.push(overlay);
+
+                }
+
+
+                // 검색결과 항목 수를 보여줍니다
+                var numStr = i;
+
+                document.getElementById("numofResults").innerHTML = '<p>' + '술고래는 ' + '총 ' + numStr + '개의 장소로 천천히 유영할 수 있습니다.' + '</p>';
+
+                // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+                listEl.appendChild(fragment);
+                menuEl.scrollTop = 0;
+
+                map.setBounds(bounds);
+
+            } else {
+
+                // 검색 결과 목록에 추가된 항목들을 제거합니다
+                var listEl = document.getElementById('placesList');
+                removeAllChildNods(listEl);
+
+                // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+                var bounds = new kakao.maps.LatLngBounds();
+
+                // 지도에 표시되고 있는 마커를 제거합니다
+                removeMarker();
+
+                // 지도에 표시되고 있는 커스텀 오버레이를 닫습니다
+                closeOverlay();
+
+
+
+                // 검색결과가 존재하지 않음을 표기합니다
+                document.getElementById("numofResults").innerHTML = '<p>' + '술고래는 다른 날에 다른 곳으로 다시 유영할 수 있습니다' + '</p>';
+
+
+            }
+
+
+        }
+
+
+    </script>
+
+</div>
+
+{% endblock %}

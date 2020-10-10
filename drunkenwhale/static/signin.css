@@ -1,0 +1,254 @@
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: normal;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');
+}
+
+.container {
+    margin-top: 23em;
+}
+
+.form-signin {
+    max-width: 430px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.aLoginHeader {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+    display: flex;
+    align-items: baseline;
+}
+
+.aLoginHeader .aTitle {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: .75em;
+    margin-right: 4px;
+}
+
+.aLoginHeader .aContent {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+}
+
+.aContentButtonSignup {
+    font-size: 16px;
+    background-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: rgb(31, 69, 252) underline;
+}
+
+.form-signin .checkbox {
+    margin-bottom: 15px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.control-label {
+    display: none;
+}
+
+/* BUTTONS */
+
+.btn {
+    font-size: 1.8rem;
+    padding: 1rem 0;
+    width: 100%;
+    text-align: center;
+    border: 0.1rem solid rgb(31, 69, 252);
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: white;
+    background-color: rgb(31, 69, 252);
+    margin-bottom: 15px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.4rem 0 rgb(0, 235, 145);
+    transform: translateY(-0.1rem);
+    transition: transform 150ms;
+    color: white;
+    background-color: rgb(31, 69, 252);
+}
+
+.btn[disabled]:hover {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* FIELDS */
+
+.formField {
+    font-size: 1.6rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    border: 0.1rem solid rgb(31, 69, 252);
+    text-decoration: none;
+    color: rgb(31, 69, 252);
+    background-color: white;
+}
+
+.formField::placeholder {
+    color: rgb(31, 69, 252);
+}
+
+.formField:focus {
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.4rem 0 rgb(0, 235, 145);
+    transform: translateY(-0.1rem);
+    transition: transform 150ms;
+    color: rgb(31, 69, 252);
+    border: 0.1rem solid rgb(31, 69, 252);
+    font-weight: 600;
+    outline: none;
+}
+
+.formField[disabled]:hover {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* CHECKBOX */
+
+.checkBox {
+    border: 0.1rem solid rgb(103, 201, 203);
+    color: rgb(103, 201, 203);
+    background-color: rgb(103, 201, 203);
+}
+
+.checkBox:hover {
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.4rem 0 rgb(9, 196, 199, 0.5);
+    color: rgb(103, 201, 203);
+}
+
+.checkBox[disabled]:hover {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.error {
+    color: rgb(255, 0, 64);
+    font-size: 1.6rem;
+    width: 100%;
+    text-align: center;
+    border: transparent;
+    text-decoration: none;
+    margin: auto;
+    
+}
+
+.msg {
+    color: rgb(31, 69, 252);
+    font-size: 1.6rem;
+    width: 100%;
+    text-align: center;
+    border: transparent;
+    text-decoration: none;
+    margin: auto;
+}
+
+/* 아이디 저장하기 체크박스 */
+
+input[type="checkbox"] {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    color: rgb(31, 69, 252);
+    border: 1px solid rgb(31, 69, 252);
+    border-radius: 2px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    -webkit-transition: 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+    transition: 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+    align-items: center;
+}
+
+input[type="checkbox"]::before {
+    position: absolute;
+    content: '';
+    outline: none;
+    display: block;
+    top: 0px;
+    left: 4px;
+    width: 5px;
+    height: 10px;
+    border-style: solid;
+    border-color: rgb(0, 235, 145);
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    opacity: 0;
+}
+
+input[type="checkbox"]:checked {
+    background: rgb(31, 69, 252);
+    outline: none;
+}
+
+input[type="checkbox"]:checked::before {
+    opacity: 1;
+    outline: none;
+}
+
+input[type="checkbox"]:checked~label::before {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    outline: none;
+}
+
+label {
+    position: relative;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 0 0.5em 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: rgb(31, 69, 252);
+    outline: none;
+}
