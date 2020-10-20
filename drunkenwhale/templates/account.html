@@ -1,58 +1,78 @@
-{% extends "layout_ext.html" %}
-
-{% block content %}
-<div class="content-section">
+<!DOCTYPE html>
+{% include 'layout_ext.html' %}
+{% block body %}
+<div class="accountLoginContainer">
     <div class="media">
-        <img class="rounded-circle account-img" src="{{ image_file }}">
+        <img class="rounded-circle-img" src="{{ image_file }}">
         <div class="media-body">
             <h2 class="account-heading">{{ current_user.username }}</h2>
             <p class="text-secondary">{{ current_user.email }}</p>
         </div>
     </div>
+    <img src="static/hr-waveFormBlue.svg">
+    <br>
+    <br>
     <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Account Info</legend>
-            <div class="form-group">
-                {{ form.username.label(class="form-control-label") }}
 
-                {% if form.username.errors %}
-                {{ form.username(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.username.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.username(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
-                {% if form.email.errors %}
-                {{ form.email(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.email.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.email(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.picture.label() }}
-                {{ form.picture(class="form-control-file") }}
-                {% if form.picture.errors %}
-                    {% for error in form.picture.errors %}
-                        <span class="text-danger">{{ error }}</span></br>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </fieldset>
+        <legend>회원정보</legend>
         <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+            <label for="username">술고래 이름</label>
+            {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.username(class="formField") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.email(class="formField") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="picture">프로필 사진</label><br>
+            
+            <!-- actual upload which is hidden -->
+            <input type="file" id="actual-btn" name="picture" hidden />
+
+            <!-- our custom upload button -->
+            <label for="actual-btn">파일선택</label>
+
+            <!-- name of file chosen -->
+            <span id="file-chosen">선택된 파일 없음</span>
+
+            {% if form.picture.errors %}
+            {% for error in form.picture.errors %}
+            <span class="text-danger">프로필 사진으로는 jpg, png 파일만 사용 가능합니다.</span><br>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <input class="submitBtn" id="submit" name="submit" type="submit" value="업데이트">
         </div>
     </form>
 </div>
-{% endblock content %}
+
+<script>
+    const actualBtn = document.getElementById('actual-btn');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function () {
+        fileChosen.textContent = this.files[0].name
+    })
+</script>
+{% endblock%}
