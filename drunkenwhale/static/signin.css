@@ -1,23 +1,18 @@
-@font-face {
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: normal;
-    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');
-}
-
-.container {
-    margin-top: 23em;
-}
-
-.form-signin {
-    max-width: 430px;
-    padding: 15px;
-    margin: 0 auto;
-}
-
-.aLoginHeader {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+.accountLoginContainer {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
     -webkit-font-smoothing: antialiased;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+    max-width: 600px;
+    margin: 11em auto;
+    padding: 24px 48px 36px;
+}
+
+.accountLoginContainer .aLoginHeader {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
     font-size: 16px;
     color: rgb(31, 69, 252);
     word-break: break-all;
@@ -25,58 +20,102 @@
     align-items: baseline;
 }
 
-.aLoginHeader .aTitle {
-    font-size: 25px;
-    font-weight: 500;
-    margin-bottom: .75em;
+.accountLoginContainer .aLoginContent {
+    margin-top: 1em;
+}
+
+.accountLoginContainer .aLoginHeader .aTitle {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+    font-size: 24px;
+    /* margin-bottom: .75em; */
     margin-right: 4px;
 }
 
-.aLoginHeader .aContent {
-    font-size: 1.6rem;
-    margin-bottom: 24px;
+.accountLoginContainer .aLoginHeader .aContent {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
+    font-size: 16px;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+    /* margin-bottom: 24px; */
 }
 
-.aContentButtonSignup {
+.accountLoginContainer .aLoginHeader .aContent .aContentNonmember {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
     font-size: 16px;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+}
+
+.accountLoginContainer .aLoginHeader .aContent .aContentButtonSignup {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
+    font-size: 16px;
+    word-break: break-all;
     background-color: transparent;
     cursor: pointer;
     user-select: none;
-    text-decoration: rgb(31, 69, 252) underline;
+    color: rgb(31, 69, 252);
+    text-decoration: underline;
 }
 
-.form-signin .checkbox {
-    margin-bottom: 15px;
+.accountLoginContainer .aLoginHeader .aContent .aContentButtonSignup:hover {
+    color: rgb(0, 235, 145);
 }
 
-.form-signin .checkbox {
-    font-weight: normal;
-}
-
-.form-signin .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 10px;
+.accountLoginContainer .aLoginFooter {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
     font-size: 16px;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+    display: flex;
+    align-items: baseline;
 }
 
-.form-signin .form-control:focus {
-    z-index: 2;
+.accountLoginContainer .aLoginFooter .aContent {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
+    font-size: 16px;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
+    margin-bottom: 24px;
 }
 
-.form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+.accountLoginContainer .aLoginFooter .aContent .aContentForgotPW {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
+    font-size: 16px;
+    color: rgb(31, 69, 252);
+    word-break: break-all;
 }
 
-.form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+.accountLoginContainer .aLoginFooter .aContent .aContentButtonResetPW {
+    -webkit-tap-highlight-color: rgb(31, 69, 252);
+    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans KR', sans-serif";
+    font-size: 16px;
+    word-break: break-all;
+    background-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    color: rgb(31, 69, 252);
+    text-decoration: underline;
+}
+
+.accountLoginContainer .aLoginFooter .aContent .aContentButtonResetPW:hover {
+    color: rgb(0, 235, 145);
 }
 
 .control-label {
@@ -85,9 +124,9 @@
 
 /* BUTTONS */
 
-.btn {
-    font-size: 1.8rem;
-    padding: 1rem 0;
+.submitBtn {
+    font-size: 20px;
+    padding: 0.75rem 0;
     width: 100%;
     text-align: center;
     border: 0.1rem solid rgb(31, 69, 252);
@@ -95,10 +134,11 @@
     text-decoration: none;
     color: white;
     background-color: rgb(31, 69, 252);
-    margin-bottom: 15px;
+    margin-top: .5em;
+    margin-bottom: .5em;
 }
 
-.btn:hover {
+.submitBtn:hover {
     cursor: pointer;
     box-shadow: 0 0.4rem 1.4rem 0 rgb(0, 235, 145);
     transform: translateY(-0.1rem);
@@ -107,7 +147,7 @@
     background-color: rgb(31, 69, 252);
 }
 
-.btn[disabled]:hover {
+.submitBtn[disabled]:hover {
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
@@ -116,8 +156,8 @@
 /* FIELDS */
 
 .formField {
-    font-size: 1.6rem;
-    padding: 1rem;
+    font-size: 16px;
+    padding: .75rem;
     width: 100%;
     text-align: left;
     border: 0.1rem solid rgb(31, 69, 252);
@@ -147,6 +187,11 @@
     transform: none;
 }
 
+.form-check2 {
+    position: relative;
+    display: block;
+}
+
 /* CHECKBOX */
 
 .checkBox {
@@ -169,18 +214,17 @@
 
 .error {
     color: rgb(255, 0, 64);
-    font-size: 1.6rem;
+    font-size: 16px;
     width: 100%;
     text-align: center;
     border: transparent;
     text-decoration: none;
     margin: auto;
-    
 }
 
 .msg {
     color: rgb(31, 69, 252);
-    font-size: 1.6rem;
+    font-size: 16px;
     width: 100%;
     text-align: center;
     border: transparent;
@@ -212,7 +256,7 @@ input[type="checkbox"]::before {
     content: '';
     outline: none;
     display: block;
-    top: 0px;
+    top: 1px;
     left: 4px;
     width: 5px;
     height: 10px;
@@ -243,6 +287,7 @@ input[type="checkbox"]:checked~label::before {
 label {
     position: relative;
     cursor: pointer;
+    font-family: "Noto Sans KR', sans-serif";
     font-size: 15px;
     padding: 0 0.5em 0;
     -webkit-user-select: none;
@@ -251,4 +296,33 @@ label {
     user-select: none;
     color: rgb(31, 69, 252);
     outline: none;
+}
+
+.rounded-circle-img {
+    border-radius: 50% !important;
+    width: 75px;
+    height: 75px;
+    margin: 0 1rem 0 0;
+    vertical-align: middle;
+    color: rgb(31, 69, 252);
+}
+
+.file_upload input[type="file"] {
+    position: absolute;
+    top: -2px;
+    left: -80px;
+    margin-left: 100%;
+    color: rgb(31, 69, 252);
+    outline: none;
+}
+
+label[for="actual-btn"] {
+    background-color: rgb(31, 69, 252);
+    color: white;
+    padding: 0.75rem;
+    cursor: pointer;
+}
+
+#file-chosen {
+    margin-left: 0.5rem;
 }
