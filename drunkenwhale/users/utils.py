@@ -22,12 +22,12 @@ def save_picture(form_picture):
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = Message('Password Reset Request', 
+    msg = Message('비밀번호 재설정 요청', 
                 sender='drunkenwhale00@gmail.com', 
                 recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link:
+    msg.body = f'''비밀번호 재설정을 원하신다면, 다음의 링크를 클릭하시기 바랍니다:
 {url_for('users.reset_token', token=token, _external=True)}
 
-If you did not maken this request then simply ignore this email and no changes will be made.
+비밀번호 재설정을 요청하지 않았다면 본 메일을 무시하셔도 좋습니다. 귀하의 계정에 어떤 변화도 일어나지 않을 것입니다.
 '''
     mail.send(msg)

@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 {% include 'layout.html' %}
-
 {% block body %}
 
 <div class="map_wrap">
@@ -24,7 +24,7 @@
             </div>
 
 
-            <div id=filterDiv>
+            <div id="filterDiv">
 
                 <div id="filterDiv1" class="dayFilter">
 
@@ -137,7 +137,7 @@
     <div id="navi_wrap" class="bg_white2">
         <a href="">
             <svg id="nowHereMarker" class="blueLineFeet" xmlns="http://www.w3.org/2000/svg" width="150" height="150"
-                viewBox="0 0 64.23 49.1">
+                viewbox="0 0 64.23 49.1">
                 <defs>
                     <style>
                         .cls-1 {
@@ -1543,7 +1543,7 @@
         }
 
 
-        // 사용자의 현재 위치를 호출합니다
+        // 술고래의 현재 위치를 호출합니다
         function curStatus() {
 
             if (navigator.geolocation) {
@@ -1569,7 +1569,7 @@
         }
 
 
-        // 검색일시 및 사용자 위치 기반 검색결과를 보여줍니다
+        // 검색일시 및 술고래 위치 기반 검색결과를 보여줍니다
         function nowHere(position) {
 
             // 현재 위치(위도, 경도) 불러오기
@@ -1619,7 +1619,7 @@
                         // 필터링 기준이 시간인 체크박스들을 filtChk2로 불러옵니다
                         let filtChk2 = document.querySelectorAll(".filterChk2");
 
-                        // 필터링 기준이 사용자의 현재 위치 및 요일 기반인 체크박스를 filtChk3로 불러옵니다
+                        // 필터링 기준이 술고래의 현재 위치 및 요일 기반인 체크박스를 filtChk3로 불러옵니다
                         let filtChk3 = document.querySelectorAll(".filterChk3");
 
                         if (filtChk3[0].checked == true) {
@@ -1629,7 +1629,7 @@
 
                             keyword = '';
 
-                            // 사용자 현재 위치로부터 반경 15km 이내에 위치하면서 사용자가 검색한 요일에 운영하는 술집을 runningPlacesNearBy에 넣습니다
+                            // 술고래 현재 위치로부터 반경 15km 이내에 위치하면서 술고래가 검색한 요일에 운영하는 술집을 runningPlacesNearBy에 넣습니다
                             if (dist < 15 && runningTimeDay.includes(curDay)) {
 
                                 runningPlacesNearBy.push(drunkenVege[i]);
@@ -1652,7 +1652,7 @@
                                 closeOverlay();
 
 
-                                // 사용자 위치를 표시합니다
+                                // 술고래 위치를 표시합니다
                                 var userPosition = new kakao.maps.LatLng(userLat, userLng);
 
                                 addUserMarker(userPosition, userLat, userLng);
@@ -1768,7 +1768,7 @@
         }
 
 
-        // 지금 여기 기능에서 지도상에 사용자 마커와 커스텀 오버레이를 표시합니다 
+        // 지금 여기 기능에서 지도상에 술고래 마커와 커스텀 오버레이를 표시합니다 
         function addUserMarker(userPosition, userLat, userLng) {
             var imageSrc = 'static/blueLineFeet.svg',
                 imageSize = new kakao.maps.Size(63.843 * 2, 56.066 * 2),

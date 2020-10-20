@@ -1,13 +1,16 @@
-{% extends "layout_ext.html" %}
-
-{% block content %}
-<div class="content-section">
+{% include 'layout_ext.html' %}
+{% block body %}
+<div class="accountLoginContainer">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Reset Password</legend>
+        <div class="aLoginHeader">
+            <div class="aTitle">
+                비밀번호 재설정
+            </div>
+        </div>
+        <div class="aLoginContent">
             <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
+                <label for="password">비밀번호</label>
                 {% if form.password.errors %}
                 {{ form.password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -16,11 +19,11 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.password(class="form-control form-control-lg") }}
+                {{ form.password(class="formField") }}
                 {% endif %}
-            </div>  
+            </div>
             <div class="form-group">
-                {{ form.confirm_password.label(class="form-control-label") }}
+                <label for="password">비밀번호 확인</label>
                 {% if form.confirm_password.errors %}
                 {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -29,13 +32,14 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.confirm_password(class="form-control form-control-lg") }}
+                {{ form.confirm_password(class="formField") }}
                 {% endif %}
-            </div>   
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="submitBtn") }}
+            </div>
         </div>
     </form>
 </div>
-{% endblock content %}
+{% endblock %}

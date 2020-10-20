@@ -1,6 +1,5 @@
-{% extends "layout_ext.html" %}
-
-{% block content %}
+{% include 'layout_ext.html' %}
+{% block body %}
 <article class="media content-section">
     <img class="rounded-circle article-img"
         src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
@@ -40,4 +39,4 @@
         </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock %}

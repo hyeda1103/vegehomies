@@ -19,7 +19,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
+        flash('회원가입이 성공적으로 완료되었습니다. 이제 로그인하실 수 있습니다.', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', title='회원가입', form=form)
 
@@ -36,7 +36,7 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            flash('Login Unsuccessful. Please check email and password.', 'danger')
+            flash('이메일과 비밀번호가 일치하지 않습니다.', 'danger')
     return render_template('login.html', title='로그인', form=form)
 
 
@@ -58,7 +58,7 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated!', 'success')
+        flash('회원정보가 성공적으로 업데이트되었습니다!', 'success')
         return redirect(url_for('users.account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
@@ -86,7 +86,7 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
-        flash('An email has been sent with instructions to reset your password.', 'info')
+        flash('입력하신 이메일 주소로 비밀번호 재설정을 위한 링크가 발신되었습니다.', 'info')
         return redirect(url_for('users.login'))
     return render_template('reset_request.html', title='비밀번호 재설정', form=form)
 
@@ -97,13 +97,13 @@ def reset_token(token):
         return redirect(url_for('main.home'))
     user = User.verify_reset_token(token)
     if user is None:
-        flash('That is an invalid or expired token', 'warning')
+        flash('유효하지 않거나 만료된 토큰입니다.', 'warning')
         return redirect(url_for('users.reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user.password = hashed_password
         db.session.commit()
-        flash('Your password has been updated! You are now able to log in.', 'success')
+        flash('비밀번호가 성공적으로 업데이트되었습니다.', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='비밀번호 재설정', form=form)

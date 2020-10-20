@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signin.css') }}">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
     <!-- favicon -->
     <link href="static/icon_pics/favicon.png" type="image/png" rel="shortcut icon">
-
+    
 
     {% if title %}
     <title> {{ title }} </title>
@@ -46,7 +47,7 @@
             </div>
             <div class="a">
                 <a href="{{ url_for('users.logout') }}">
-                    <span class="headerMenu" >로그아웃</span>
+                    <span class="headerMenu">로그아웃</span>
                 </a>
             </div>
             {% else %}
@@ -57,12 +58,12 @@
             </div>
             <div class="a">
                 <a href="{{ url_for('users.login') }}">
-                    <span class="headerMenu" >로그인</span>
+                    <span class="headerMenu">로그인</span>
                 </a>
             </div>
             <div class="a">
                 <a href="{{ url_for('users.register') }}">
-                    <span class="headerMenu" >회원가입</span>
+                    <span class="headerMenu">회원가입</span>
                 </a>
             </div>
             {% endif %}

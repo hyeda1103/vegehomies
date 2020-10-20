@@ -1,14 +1,23 @@
-{% extends 'layout_ext.html' %}
-
-{% block content %}
-<div class="content-section">
+<!DOCTYPE html>
+{% include 'layout_ext.html' %}
+{% block body %}
+<div class="accountLoginContainer">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Join Today</legend>
+        <div class="aLoginHeader">
+            <div class="aTitle">
+                회원가입
+            </div>
+            <div class="aContent">
+                <span class="aContentNonmember">
+                    이미 술고래예요?
+                </span>
+                <a class="aContentButtonSignup" href="{{ url_for('users.login') }}">로그인하기</a>
+            </div>
+        </div>
+        <div class="aLoginContent">
             <div class="form-group">
-                {{ form.username.label(class="form-control-label") }}
-
+                <label for="username">술고래 이름*</label>
                 {% if form.username.errors %}
                 {{ form.username(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -17,11 +26,11 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.username(class="form-control form-control-lg") }}
+                {{ form.username(class="formField") }}
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
+                <label for="email">이메일*</label>
                 {% if form.email.errors %}
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -30,11 +39,11 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.email(class="form-control form-control-lg") }}
+                {{ form.email(class="formField") }}
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
+                <label for="password">비밀번호*</label>
                 {% if form.password.errors %}
                 {{ form.password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -43,31 +52,26 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.password(class="form-control form-control-lg") }}
+                {{ form.password(class="formField") }}
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.confirm_password.label(class="form-control-label") }}
+                <label for="confirm_password">비밀번호 확인*</label>
                 {% if form.confirm_password.errors %}
                 {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.confirm_password.errors %}
-                    <span>{{ error }}</span>
+                    <span>비밀번호와 일치해야 합니다.</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.confirm_password(class="form-control form-control-lg") }}
+                {{ form.confirm_password(class="formField") }}
                 {% endif %}
             </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+            <div class="form-group">
+                <input class="submitBtn" id="submit" name="submit" type="submit" value="회원가입">
+            </div>
         </div>
     </form>
 </div>
-<div class="border-top pt-3">
-    <small class="text-muted">
-        Already Have An Account? <a class="ml-2" href="{{ url_for('users.login') }}">Sign In</a>
-    </small>
-</div>
-{% endblock content %}
+{% endblock %}

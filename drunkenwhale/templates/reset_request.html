@@ -1,13 +1,17 @@
-{% extends "layout_ext.html" %}
-
-{% block content %}
-<div class="content-section">
+<!DOCTYPE html>
+{% include 'layout_ext.html' %}
+{% block body %}
+<div class="accountLoginContainer">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Reset Password</legend>
+        <div class="aLoginHeader">
+            <div class="aTitle">
+                비밀번호 재설정
+            </div>
+        </div>
+        <div class="aLoginContent">
             <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
+                <label for="email">이메일</label>
                 {% if form.email.errors %}
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -16,13 +20,17 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.email(class="form-control form-control-lg") }}
+                {{ form.email(class="formField") }}
                 {% endif %}
-            </div>    
-        </fieldset>
-        <div class="form-group">
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
+        </div> -->
+        <div class="form-group">
+            <input class="submitBtn" id="submit" name="submit" type="submit" value="비밀번호 재설정">
         </div>
     </form>
 </div>
-{% endblock content %}
+{% endblock%}

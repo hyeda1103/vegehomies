@@ -1,53 +1,74 @@
-{% extends 'layout_ext.html' %}
-
-{% block content %}
-<div class="content-section">
-    <form method="POST" action="">
+<!DOCTYPE html>
+{% include 'layout_ext.html' %}
+{% block body %}
+<div class="accountLoginContainer">
+    <form method="POST" action="" class="">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Log In</legend>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="aLoginHeader">
+            <div class="aTitle">
+                로그인
+            </div>
+            <div class="aContent">
+                <span class="aContentNonmember">
+                    아직 술고래가 아니예요?
+                </span>
+                <a class="aContentButtonSignup" href="{{ url_for('users.register') }}">회원가입하기</a>
+            </div>
+        </div>
+        <div class="aLoginContent">
             <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
+                <label for="email">이메일*</label>
                 {% if form.email.errors %}
-                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                {{ form.email(class="formField") }}
                 <div class="invalid-feedback">
                     {% for error in form.email.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.email(class="form-control form-control-lg") }}
+                {{ form.email(class="formField") }}
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
+                <label for="password">비밀번호*</label>
                 {% if form.password.errors %}
-                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                {{ form.password(class="formField") }}
                 <div class="invalid-feedback">
                     {% for error in form.password.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.password(class="form-control form-control-lg") }}
+                {{ form.password(class="formField") }}
                 {% endif %}
             </div>
-            <div class="form-check">
-                {{ form.remember(class="form-check-input") }}
-                {{ form.remember.label(class="form-check-label") }}
+            <div class="form-check2">
+                <input id="remember" name="remember" type="checkbox" value="y">
+                <label for="remember">기억하기</label>
             </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
-            <small class="text-muted ml-2">
-                <a href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
-            </small>
+            <div class="form-group">
+                <input class="submitBtn" id="submit" name="submit" type="submit" value="로그인">
+            </div>
+
+            <div class="aLoginFooter">
+                <div class="aContent">
+                    <span class="aContentForgotPW">
+                        비밀번호를 잊으셨나요?
+                    </span>
+                    <a class="aContentButtonResetPW" href="{{ url_for('users.reset_request') }}">재설정하기</a>
+                </div>
+            </div>
         </div>
+
     </form>
 </div>
-<div class="border-top pt-3">
-    <small class="text-muted">
-        Need An Account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a>
-    </small>
-</div>
-{% endblock content %}
+{% endblock %}

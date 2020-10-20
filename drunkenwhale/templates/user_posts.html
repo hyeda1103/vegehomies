@@ -1,6 +1,5 @@
-{% extends "layout_ext.html" %}
-
-{% block content %}
+{% include 'layout_ext.html' %}
+{% block body %}
     <h1 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h1>
     {% for post in posts.items %}
         <article class="media content-section">
@@ -26,4 +25,4 @@
             ...
         {% endif %}
     {% endfor %}
-{% endblock content %}
+{% endblock %}
